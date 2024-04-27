@@ -1,0 +1,15 @@
+<div class="space-y-[15px]">
+    <figure>
+        <img src="{{dataCard.image.jpg}}" alt="{{dataCard.image.title}}">
+    </figure>
+    <p class="subtitle-m">{{ dataCard.product.brand | uppercase}}</p>
+    <h3>{{ dataCard.product.name }}</h3>
+    <p>{{ (dataCard.product.description.length>30)? (dataCard.product.description | slice:0:30)+'...':(dataCard.product.description) }}</p>
+    <div class="flex gap-[5px]">
+        <app-badge *ngFor="let badge of dataCard.product.badgesText" [dataBadge]="badge"></app-badge>
+    </div>
+    <div class="flex gap-[5px]">
+        <app-badge-color *ngFor="let badge of dataCard.product.badgesColor" [dataBadge]="badge"></app-badge-color>
+    </div>
+    
+</div>

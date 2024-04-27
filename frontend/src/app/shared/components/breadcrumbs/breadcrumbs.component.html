@@ -1,0 +1,5 @@
+<span *ngFor="let link of dataBreadcrumbs; let last=last">
+    <button *ngIf="!last" class="mr-2 button-m button-link w-auto h-auto text-darkGrey">{{ link }}</button>
+    <span *ngIf="!last" class="mr-2 text-black">></span>
+    <span *ngIf="last" class="mr-2 text-secundary-700 font-bold">{{ link }}</span>
+</span>

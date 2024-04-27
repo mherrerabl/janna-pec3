@@ -1,0 +1,5 @@
+<!--<div *ngFor="let badge of dataBadges; let i = index" class="inline mr-2">
+    <span *ngIf="badge.info" class="inline-block px-2 {{badge.color}} {{badge.textSize}}">{{ badge.name }}</span>
+    <button *ngIf="!badge.info" class="inline-block px-2 badge-clickable {{badge.textSize}}" [class.badge-active]="clickedIndex === i" (click)="selected(i)">{{ badge.name }}</button>
+</div>-->
+<button class="inline-block px-2 {{dataBadge.textSize}} {{dataBadge.stock == 0 ? 'badge-disable' : 'badge-clickable'}}" >{{ dataBadge.name }}</button>

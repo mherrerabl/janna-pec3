@@ -1,0 +1,75 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    h1 {
+        @apply font-title text-h1 leading-110;
+    }
+
+    h2 {
+        @apply font-title text-h2 leading-110;
+    }
+
+    h3 {
+        @apply font-title text-h3 leading-110;
+    }
+
+    h4 {
+        @apply font-title text-h4 leading-110;
+    }
+
+    h5 {
+        @apply font-title text-h5 leading-110;
+    }
+
+    h6 {
+        @apply font-title text-h6 leading-110;
+    }
+
+    .subtitle-m {
+        @apply font-text text-m font-medium leading-110;
+    }
+
+    .subtitle-s {
+        @apply font-text text-s font-medium leading-110;
+    }
+
+    .body-l {
+        @apply font-text text-l leading-140;
+    }
+
+    .body-m,
+    p, 
+    label,
+    li, 
+    input,
+    textarea,
+    span,
+    a  {
+        @apply font-text text-m leading-140;
+    }
+
+    .body-s {
+        @apply font-text text-s leading-140;
+    }
+
+    .body-xs {
+        @apply font-text text-xs leading-140;
+    }
+
+    .body-xxs {
+        @apply font-text text-xxs leading-140;
+    }
+}
+
+@layer components {
+    @import './app/shared/components/badge/badge.component.scss';
+    @import './app/shared/components/pagination/pagination.component.scss';
+    @import './app/shared/components/button/button.component.scss';
+    
+}
