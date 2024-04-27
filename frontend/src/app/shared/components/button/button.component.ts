@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ButtonDTO } from '../../models/buttton';
+import { ButtonDTO } from '../../models/buttton.dto';
 
 @Component({
   selector: 'app-button',
@@ -7,9 +7,6 @@ import { ButtonDTO } from '../../models/buttton';
   styleUrl: './button.component.scss',
 })
 export class ButtonComponent {
-  @Input() dataButton: ButtonDTO = {
-    name: 'Enviar',
-    type: 'button-outliner',
-    size: 'button-s',
-  };
+  @Input() dataButton!: ButtonDTO;
+  @Input() stock!: number;
 }

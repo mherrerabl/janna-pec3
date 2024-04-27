@@ -1,16 +1,18 @@
-.badge-clickable {
-    @apply border-secundary border hover:border-secundary-600 active:border-secundary-700 active:border-2;
-}
+@layer badge {
+    .badge-clickable {
+        @apply shadow-badge-500 hover:shadow-badge-600 active:shadow-badge-700
+    }
 
-.badge-active {
-    @apply border-secundary-700 border-2;
-}
+    .badge-active {
+        @apply shadow-badge-700;
+    }
 
-.badge-disable {
-    @apply border-black border relative after:content-[''] after:inset-0 after:absolute cursor-default;
-    &:after {
-        background: linear-gradient(to top left, #0000 0, #0000 calc(50% - 1px), #000 50%, #0000 calc(50% + 1px), #0000), 
-        linear-gradient(to top right, #0000 0, #0000 calc(50% - 1px), #000 50%, #0000 calc(50% + 1px), #0000);
+    .badge-disable {
+        @apply flex shadow-badge-disable relative after:content-[''] after:inset-0 after:absolute cursor-default;
+        &:after {
+            background: linear-gradient(to top left, #0000 0, #0000 calc(50% - 1px), #000 50%, #0000 calc(50% + 1px), #0000), 
+            linear-gradient(to top right, #0000 0, #0000 calc(50% - 1px), #000 50%, #0000 calc(50% + 1px), #0000);
 
+        }
     }
 }

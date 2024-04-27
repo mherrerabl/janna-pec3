@@ -1,25 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BadgeDTO } from '../../models/badge';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { BadgeDTO } from '../../models/badge.dto';
 
 @Component({
   selector: 'app-badge',
   templateUrl: './badge.component.html',
   styleUrl: './badge.component.scss',
 })
-export class BadgeComponent implements OnInit {
+export class BadgeComponent {
   @Input() dataBadge!: BadgeDTO;
+  @Input() isSelected!: boolean;
+  @Output() badgeSelected = new EventEmitter<BadgeDTO>();
 
-  clickedIndex = -1;
-
-  ngOnInit(): void {
-    //this.badgeColor();
+  clicked(): void {
+    this.isSelected = !this.isSelected;
+    this.sendData();
   }
 
-  selected(i: number): void {
-    if (this.clickedIndex === i) {
-      this.clickedIndex = -1;
-    } else {
-      this.clickedIndex = i;
+  sendData(): void {
+    if (this.isSelected === true) {
+      this.badgeSelected.emit(this.dataBadge);
     }
+  }
+
+  badgeInfoColor(): string {
+    if (this.dataBadge.name === 'Trend') {
+      return 'bg-[#FF6F07]';
+    } else if (this.dataBadge.name === 'Nuevo') {
+      return 'bg-[#F80404]';
+    } else if (this.dataBadge.name === '2a 50%') {
+      return 'bg-[#0B8B00]';
+    } else if (this.dataBadge.name === '3x2') {
+      return 'bg-[#00AFFA]';
+    }
+    return '';
   }
 }

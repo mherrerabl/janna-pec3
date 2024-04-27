@@ -1,15 +1,38 @@
-<div class="space-y-[15px]">
-    <figure>
-        <img src="{{dataCard.image.jpg}}" alt="{{dataCard.image.title}}">
-    </figure>
+<div *ngIf="dataCard.product.forSale" class="space-y-[15px]">
+    <div class="relative">
+        <div class="absolute flex justify-between w-full p-2">
+            <div class="flex flex-col gap-[5px]">
+                <app-badge *ngIf="dataCard.product.trend" class="flex justify-start" [dataBadge]="badgeTrend"></app-badge>
+                <app-badge *ngIf="compareDates(dataCard.product.dateCreated)" class="flex justify-start" [dataBadge]="badgeNew"></app-badge>
+            </div>
+            <div class="flex flex-col gap-[5px]">
+                <app-badge *ngIf="dataCard.product.price.offer === '2n 50%'" class="flex justify-end" [dataBadge]="badgeProm1"></app-badge>
+                <app-badge *ngIf="dataCard.product.price.offer === '3x2'" class="flex justify-end" [dataBadge]="badgeProm2"></app-badge>
+            </div>
+        </div>
+        <figure>
+            <img src="{{dataCard.image.jpg}}" alt="{{dataCard.image.title}}">
+        </figure>
+    </div>
+    
     <p class="subtitle-m">{{ dataCard.product.brand | uppercase}}</p>
     <h3>{{ dataCard.product.name }}</h3>
-    <p>{{ (dataCard.product.description.length>30)? (dataCard.product.description | slice:0:30)+'...':(dataCard.product.description) }}</p>
-    <div class="flex gap-[5px]">
-        <app-badge *ngFor="let badge of dataCard.product.badgesText" [dataBadge]="badge"></app-badge>
+    <p>{{ dataCard.product.description | shortDescription: 10 }}</p>
+
+    <div class="flex gap-[10px]">
+        <app-badge *ngFor="let badge of dataCard.product.badgesText; let i = index" [dataBadge]="badge" [isSelected]="indexTextBadge === i" (badgeSelected)="dataSelectedBadge($event, 'textBadge')" (click)="selectedTextBadge(i)"></app-badge>
     </div>
-    <div class="flex gap-[5px]">
-        <app-badge-color *ngFor="let badge of dataCard.product.badgesColor" [dataBadge]="badge"></app-badge-color>
+    <div class="flex gap-[10px]">
+        <app-badge *ngFor="let badge of dataCard.product.badgesColor; let i = index" [dataBadge]="badge" [isSelected]="indexColorBadge === i" (badgeSelected)="dataSelectedBadge($event, 'colorBadge')" (click)="selectedColorBadge(i)"></app-badge>
+    </div>
+
+    <div class="flex justify-end gap-[10px]">
+        <p *ngIf="dataCard.product.price.discount !== null" class="body-s line-through text-darkGrey self-end">{{ dataCard.product.price.price | number: '1.2-2':'es'}}€</p>
+        <h4>{{ getPrice() | number: '1.2-2':'es' }}€</h4>
+    </div>
+    <div class="flex gap-[10px]">
+        <app-button class="w-full" [dataButton]="button" [stock]="dataCard.product.stock"></app-button>
+        <app-button class="w-full" [dataButton]="buttonAction" [stock]="dataCard.product.stock"></app-button>
     </div>
     
 </div>

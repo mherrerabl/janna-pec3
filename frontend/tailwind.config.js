@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
+
 
 module.exports = {
   content: [
@@ -36,6 +38,7 @@ module.exports = {
       lightGrey: '#F9F9F9',
       black: '#000',
       white: '#fff',
+      transparent: colors.transparent
     },
 
     fontFamily: {
@@ -67,7 +70,14 @@ module.exports = {
       '0.5': '0.5px'
     },
 
-    extend: {},
+    extend: {
+      boxShadow: {
+        'badge-500': '0 0 0 1px #CF647F',
+        'badge-600': '0 0 0 1px #B94568',
+        'badge-700': '0 0 0 2px #9B3557',
+        'badge-disable': '0 0 0 1px #000',
+      }
+    },
     plugins: [],
   }
 }
