@@ -9,7 +9,8 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
 import { ButtonComponent } from './components/button/button.component';
 import { CardComponent } from './components/card/card.component';
 import { InputComponent } from './components/input/input.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
+import { RowDetailComponent } from './components/row-detail/row-detail.component';
+import { TableComponent } from './components/table/table.component';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 import { SharedRoutingModule } from './shared-routing.module';
 
@@ -18,10 +19,11 @@ import { SharedRoutingModule } from './shared-routing.module';
     BadgeComponent,
     ButtonComponent,
     BreadcrumbsComponent,
-    PaginationComponent,
     CardComponent,
     ShortDescriptionPipe,
     InputComponent,
+    TableComponent,
+    RowDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -34,11 +36,12 @@ import { SharedRoutingModule } from './shared-routing.module';
     BadgeComponent,
     ButtonComponent,
     BreadcrumbsComponent,
-    PaginationComponent,
     NgxPaginationModule,
     CardComponent,
     InputComponent,
     ShortDescriptionPipe,
+    TableComponent,
+    RowDetailComponent,
   ],
 })
 export class SharedModule {}

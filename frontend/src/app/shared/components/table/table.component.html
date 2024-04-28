@@ -1,0 +1,45 @@
+<table class="w-full border-collapse">
+    <thead class="h-14 bg-primary">
+        <tr>
+            <th class="opacity-0 max-w-2">Expanded</th>
+            <th *ngFor="let title of dataTable.titles" class="text-start h6 text-darkGrey">{{ title }}</th>
+            <th *ngIf="dataTable.action" class="max-w-8"><button><span class="material-symbols-outlined button-icon">add</span></button></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (row of dataTable.rows| paginate: { itemsPerPage: 5, currentPage: currentPage }; track row) {
+            <tr class="h-12 border-primary" [class.border-b]="expandedElement !== row">
+                <td class="max-w-2 cursor-pointer" (click)="expandedElement = expandedElement === row ? null : row">
+                    <span class="material-symbols-outlined align-middle">{{ expandedElement === row ? 'expand_less' : 'expand_more'}}</span>
+                </td>
+                @for (content of row.rowInfo; track content; let i = $index) {
+                    <td class="cursor-pointer" (click)="expandedElement = expandedElement === row ? null : row">{{ content }}</td>
+                }
+                <td *ngIf="dataTable.action" class="max-w-8">
+                    <div class="flex justify-center">
+                        <button class="mx-2" (click)="prueba()"><span class="material-symbols-outlined button-icon">edit_square</span></button>
+                        <button class="mx-2"><span class="material-symbols-outlined button-icon">delete</span></button>
+                    </div>
+                </td>
+            </tr>
+            <tr [class.hidden]="row !== expandedElement">
+                <td [attr.colspan]="dataTable.titles.length+2" class="overflow-hidden table-cell">
+                    <div [@detailExpand]="row === expandedElement ? 'expanded' : 'collapsed'">
+                        <app-row-detail [dataDetails]="row.detail"></app-row-detail>
+                    </div>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="flex justify-center mt-8">
+    <pagination-controls 
+    (pageChange)="currentPage = $event" 
+    previousLabel=""
+    nextLabel=""
+    [maxSize]="5" 
+>
+</pagination-controls>
+</div>

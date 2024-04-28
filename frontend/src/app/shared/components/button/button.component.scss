@@ -1,48 +1,55 @@
-@layer button {
-    .button {
-        @apply w-full max-w-[250px];
-    }
-
-    .button-l {
-        @apply button h-[56px] font-text text-l font-medium tracking-0.5;
-    }
-
-    .button-m {
-        @apply button h-[48px] font-text text-m font-medium tracking-0.5;
-    }
-
-    .button-s {
-        @apply button h-[40px] font-text text-s font-medium tracking-0.5;
-    }
-
-    .button-normal {
-        @apply bg-secundary text-white
-        hover:bg-secundary-600 
-        focus:bg-secundary-900
-        active:bg-secundary-900 
-        disabled:bg-secundary-100 disabled:text-secundary-400;
-    }
-
-    .button-outliner {
-        @apply border-2 border-secundary text-secundary
-        hover:border-secundary-600 hover:text-secundary-600
-        focus:border-secundary-700 focus:text-secundary-700
-        active:border-secundary-700 active:text-secundary-700
-        disabled:border-secundary-100 disabled:text-secundary-400;
-    }
-
-    .button-link {
-        @apply text-secundary 
-        hover:text-secundary-600 
-        focus:text-secundary-700
-        disabled:text-secundary-400;
-    }
-
-    .button-action {
-        @apply bg-third text-white
-        hover:bg-third-600 
-        focus:bg-third-900
-        active:bg-third-900 
-        disabled:bg-third-100 disabled:text-third-400;
-    }
+.button {
+    @apply w-full max-w-[250px];
 }
+
+.button-l {
+    @apply button h-[56px] font-text text-l font-medium tracking-0.5;
+}
+
+.button-m {
+    @apply button h-[48px] font-text text-m font-medium tracking-0.5;
+}
+
+.button-s {
+    @apply button h-[40px] font-text text-s font-medium tracking-0.5;
+}
+
+.button-normal {
+    @apply bg-secundary text-white
+    hover:bg-secundary-600 
+    focus:bg-secundary-900
+    active:bg-secundary-900 
+    disabled:bg-secundary-100 disabled:text-secundary-400;
+}
+
+.button-outliner {
+    @apply border-2 border-secundary text-secundary
+    hover:border-secundary-600 hover:text-secundary-600
+    focus:border-secundary-700 focus:text-secundary-700
+    active:border-secundary-700 active:text-secundary-700
+    disabled:border-secundary-100 disabled:text-secundary-400;
+}
+
+.button-link {
+    @apply text-secundary 
+    hover:text-secundary-600 
+    focus:text-secundary-700
+    disabled:text-secundary-400;
+}
+
+.button-action {
+    @apply bg-third text-white
+    hover:bg-third-600 
+    focus:bg-third-900
+    active:bg-third-900 
+    disabled:bg-third-100 disabled:text-third-400;
+}
+
+.button-icon {
+    @apply text-darkGrey 
+    hover:text-secundary-600 
+    focus:text-secundary-700
+    disabled:text-secundary-400;
+}
+
+

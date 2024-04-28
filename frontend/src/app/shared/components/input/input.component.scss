@@ -1,0 +1,29 @@
+.label {
+    @apply absolute left-4 text-darkGrey bg-lightGrey translate-y-4 transition 
+    peer-[.icon-left]:left-11
+    group-hover:[&:not(&:has(~.input:focus))]:text-secundary-600 
+    group-hover:[&:not(&:has(~.input:valid))]:text-secundary-600 
+    has-[~.input:focus]:text-secundary-700 has-[~.input:focus]:-translate-x-1 has-[~.input:focus]:-translate-y-2/4 has-[~.input:focus]:px-1
+    peer-[.icon-left]:has-[~.input:focus]:-translate-x-8
+    has-[~.input:valid]:-translate-x-1 has-[~.input:valid]:-translate-y-2/4 has-[~.input:valid]:px-1
+    peer-[.icon-left]:has-[~.input:valid]:-translate-x-8
+    has-[~.invalid]:text-red-500;
+}
+
+.input {
+    @apply w-full h-14 px-4 border-b border-darkGrey bg-lightGrey placeholder:opacity-0 transition-[border] duration-150 ease-in-out 
+    has-[~.icon-right]:pr-11
+    peer-[.icon-left]:pl-11
+    group-hover:border-secundary-600 
+    focus:border-2 focus:border-secundary-700 focus:outline-none focus:placeholder:opacity-100
+    valid:border
+    [&.invalid]:border-red-500 [&.invalid]:border-2;
+}
+
+.icon-left {
+    @apply absolute left-0 top-2/4 pl-4 text-darkGrey -translate-y-2/4 has-[~textarea]:top-[1.65rem];
+}
+
+.icon-right {
+    @apply absolute right-0 top-2/4 pr-4 text-darkGrey -translate-y-2/4;
+}

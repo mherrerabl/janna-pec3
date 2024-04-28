@@ -12,27 +12,27 @@
 
 
 @layer base {
-    h1 {
+    h1, .h1 {
         @apply font-title text-h1 leading-110;
     }
 
-    h2 {
+    h2, .h2 {
         @apply font-title text-h2 leading-110;
     }
 
-    h3 {
+    h3, .h3 {
         @apply font-title text-h3 leading-110;
     }
 
-    h4 {
+    h4, .h4 {
         @apply font-title text-h4 leading-110;
     }
 
-    h5 {
+    h5, .h5 {
         @apply font-title text-h5 leading-110;
     }
 
-    h6 {
+    h6, .h6 {
         @apply font-title text-h6 leading-110;
     }
 
@@ -55,7 +55,9 @@
     input,
     textarea,
     span,
-    a  {
+    a, 
+    tr,
+    th  {
         @apply font-text text-m leading-140;
     }
 
@@ -75,45 +77,6 @@
 @layer components {
     @import './app/shared/components/badge/badge.component.scss';
     @import './app/shared/components/button/button.component.scss'; 
-    @import './app/shared/components/pagination/pagination.component.scss';
+    @import './app/shared/components/input/input.component.scss';
+    @import './app/shared/components/table/table.component.scss';
 }
-
-
-/** Override Input Angular Material**/
-.mdc-text-field--filled {
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-}
-
-.mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: $lightGrey !important;
-}
-
-.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
-    border-bottom-color: transparent !important;
-}
-
-.mdc-text-field--filled:not(.mdc-text-field--disabled):hover .mdc-line-ripple::before {
-    //border-bottom-color: $secundary-600 !important;
-}
-
-.mdc-line-ripple--active {
-
-}
-
-.mdc-text-field--filled {
-    border-bottom: 1px solid $secundary-500;
-
-    &:hover {
-        border-bottom-color: $secundary-600;
-
-        .mdc-floating-label {
-            color: $secundary-600 !important;
-        }
-    }
-
-    &:focus {
-        border: 2px solid $secundary-700;
-    }
-}
-

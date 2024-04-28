@@ -1,4 +1,4 @@
-<mat-form-field *ngIf="dataInput.field !== 'select'">
+ <!--<mat-form-field *ngIf="dataInput.field !== 'select'">
   <mat-label>{{ dataInput.label }}</mat-label>
   <input *ngIf="dataInput.field === 'input' && dataInput.type !== 'password'" matInput [type]="dataInput.type" [required]="dataInput.required"/>
   <input *ngIf="dataInput.type === 'password'" matInput [type]="hide ? 'password' : 'text'" [required]="dataInput.required"/>
@@ -7,14 +7,14 @@
     </button>
   <textarea *ngIf="dataInput.field === 'textarea'" matInput [required]="dataInput.required"></textarea>  
   <mat-error *ngFor="let error of dataInput.errors">
-    <!--<span *ngIf="dataInput.formControl.hasError(error.type)">{{ error.message }}</span>-->
+    <span *ngIf="dataInput.formControl.hasError(error.type)">{{ error.message }}</span>
     <span>{{ error.message }}</span>
   </mat-error>
 </mat-form-field>
 
 <mat-form-field *ngIf="dataInput.field === 'select'">
   <mat-label>{{dataInput.label}}: </mat-label>
- <!--<mat-select [formControl]="dataInput.formControl" multiple>
+<mat-select [formControl]="dataInput.formControl" multiple>
       <mat-option *ngFor="let category of input.selectList" [value]="category.categoryId">
           {{category.title}}
       </mat-option>
@@ -23,5 +23,19 @@
       <span *ngIf="dataInput.formControl.hasError(error.type)">
           {{error.message}}
       </span>
-  </mat-error>-->
-</mat-form-field>
+  </mat-error>
+</mat-form-field>-->
+
+<div class="group relative w-full max-w-64">
+  <span *ngIf="dataInput.iconLeft !== null" class="peer icon-left material-symbols-outlined">{{dataInput.iconLeft}}</span>
+  <label class="label">{{ dataInput.label }}<span *ngIf="dataInput.required">*</span></label>
+  <input *ngIf="dataInput.type !== 'textarea'" class="input" [type]="hide ? dataInput.type : 'text'" [placeholder]="dataInput.placeholder" [required]="dataInput.required">
+  <textarea *ngIf="dataInput.type === 'textarea'" class="input min-h-64 pt-4" [placeholder]="dataInput.placeholder" [required]="dataInput.required"></textarea>
+  <button *ngIf="dataInput.iconRight !== null && dataInput.iconRight === 'password'" class="icon-right material-symbols-outlined" (click)="toggleVisibility()">{{iconRight()}}</button>
+  <span *ngIf="dataInput.iconRight !== null && dataInput.iconRight !== 'password'" class="icon-right material-symbols-outlined" >{{dataInput.iconRight}}</span>
+
+</div>
+
+<div *ngFor="let error of dataInput.errors">
+  <small *ngIf="dataInput.formControl.hasError(error.type)" class="px-4 body-s text-red-500">{{ error.message }}</small>
+</div>

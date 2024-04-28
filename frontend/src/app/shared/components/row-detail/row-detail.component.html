@@ -1,0 +1,25 @@
+@for (detail of dataDetails; track detail) {
+    <div class="border-b border-grey my-3 last:border-secundary-500 last:border-b-2">
+        <h6 class="max-w-[1200px] mx-8 mb-1">{{ detail.title }}</h6>
+        @if (correctType(detail.type,'string')) {
+            <p class="max-w-[1200px] mx-9 my-3">{{ detail.content }}</p>
+        }
+        
+        @else if (correctType(detail.type,'list')){
+            <ul class="max-w-[1200px] mx-9 my-3">
+                @for (item of detail.content; track $index) {
+                       <li>{{ item }}</li> 
+                }
+            </ul>
+        }
+
+        @else if (correctType(detail.type,'image')){
+            @for (image of detail.content; track $index) {
+                <img [src]="image" alt="">
+            }
+        }
+
+        @else if (correctType(detail.type,'badge')){}
+        
+    </div>
+}

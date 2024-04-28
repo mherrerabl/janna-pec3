@@ -7,14 +7,14 @@ import { InputDTO } from '../../models/input.dto';
   styleUrl: './input.component.scss',
 })
 export class InputComponent {
-  @Input() dataInput: InputDTO = {
-    field: 'input',
+  @Input() dataInput!: InputDTO; /*= {
     label: 'Title',
     placeholder: 'placeholder',
-    type: 'text',
+    type: 'textarea',
     formControl: 'this.title',
     required: true,
-    icon: '',
+    iconLeft: 'email',
+    iconRight: null,
     errors: [
       {
         type: 'required',
@@ -25,7 +25,23 @@ export class InputComponent {
         message: 'Title can be max 55 characters long.',
       },
     ],
-  };
+  };*/
 
   hide: boolean = true;
+
+  iconRight(): string | null {
+    if (this.dataInput.iconRight === 'password') {
+      if (this.hide) {
+        return 'visibility_off';
+      }
+
+      return 'visibility';
+    }
+
+    return this.dataInput.iconRight;
+  }
+
+  toggleVisibility(): void {
+    this.hide = !this.hide;
+  }
 }

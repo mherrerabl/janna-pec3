@@ -8,6 +8,7 @@ module.exports = {
   ],
   theme: {
     colors: {
+      ... colors,
       primary: '#FAE9EC',
       secundary: {
         DEFAULT: '#CF647F',
@@ -38,7 +39,7 @@ module.exports = {
       lightGrey: '#F9F9F9',
       black: '#000',
       white: '#fff',
-      transparent: colors.transparent
+      transparent: colors.transparent,
     },
 
     fontFamily: {
@@ -76,6 +77,15 @@ module.exports = {
         'badge-600': '0 0 0 1px #B94568',
         'badge-700': '0 0 0 2px #9B3557',
         'badge-disable': '0 0 0 1px #000',
+      },
+      keyframes: {
+        expand: {
+          '0%': { 'max-height': 0 },
+          '100%': { 'max-height': '100%' }
+        }
+      },
+      animation: {
+        showRow: 'expand 1s ease-in'
       }
     },
     plugins: [],

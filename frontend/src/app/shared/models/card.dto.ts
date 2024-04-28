@@ -1,12 +1,9 @@
 import { BadgeDTO } from './badge.dto';
+import { ImageDTO } from './image.dto';
 import { PriceDTO } from './price.dto';
 
 export interface CardDTO {
-  image: {
-    jpg: string;
-    webp: string;
-    title: string;
-  };
+  image: ImageDTO;
   product: {
     brand: string;
     name: string;
