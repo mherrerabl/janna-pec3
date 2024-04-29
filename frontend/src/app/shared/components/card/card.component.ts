@@ -1,12 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { BadgeDTO } from '../../models/badge.dto';
-import { ButtonDTO } from '../../models/buttton.dto';
 import { CardDTO } from '../../models/card.dto';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrl: './card.component.scss',
 })
 export class CardComponent {
   @Input() dataCard: CardDTO = {
@@ -27,7 +25,6 @@ export class CardComponent {
           name: '100ml',
           textSize: 'text-s',
           stock: 5,
-          color: null,
           isButtonText: true,
           isButtonColor: false,
         },
@@ -36,7 +33,6 @@ export class CardComponent {
           name: '50ml',
           textSize: 'text-s',
           stock: 3,
-          color: null,
           isButtonText: true,
           isButtonColor: false,
         },
@@ -45,7 +41,6 @@ export class CardComponent {
         {
           id: '3',
           name: 'orange',
-          textSize: null,
           color: '#e34e2e',
           stock: 2,
           isButtonText: false,
@@ -54,7 +49,6 @@ export class CardComponent {
         {
           id: '4',
           name: 'pink',
-          textSize: null,
           color: '#EE109A',
           stock: 0,
           isButtonText: false,
@@ -74,24 +68,10 @@ export class CardComponent {
     },
   };
 
-  button: ButtonDTO = {
-    name: 'Añadir a la cesta',
-    type: 'button-normal',
-    size: 'button-s',
-  };
-
-  buttonAction: ButtonDTO = {
-    name: 'Comprar ya',
-    type: 'button-action',
-    size: 'button-s',
-  };
-
   badgeTrend: BadgeDTO = {
     id: '',
     name: 'Trend',
     textSize: 'text-s',
-    color: null,
-    stock: null,
     isButtonText: false,
     isButtonColor: false,
   };
@@ -100,8 +80,6 @@ export class CardComponent {
     id: '',
     name: 'Nuevo',
     textSize: 'text-s',
-    color: null,
-    stock: null,
     isButtonText: false,
     isButtonColor: false,
   };
@@ -110,8 +88,6 @@ export class CardComponent {
     id: '',
     name: '2a 50%',
     textSize: 'text-s',
-    color: null,
-    stock: null,
     isButtonText: false,
     isButtonColor: false,
   };
@@ -120,8 +96,6 @@ export class CardComponent {
     id: '',
     name: '3x2',
     textSize: 'text-s',
-    color: null,
-    stock: null,
     isButtonText: false,
     isButtonColor: false,
   };

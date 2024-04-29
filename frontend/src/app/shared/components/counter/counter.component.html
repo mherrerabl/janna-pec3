@@ -1,0 +1,5 @@
+<div class="flex flex-row gap-1 border border-darkGrey w-fit">
+    <button class="button-icon material-symbols-outlined" [disabled]="counter <=0" (click)="removeQuantity()">remove</button>
+    <p>{{ counter }}</p>
+    <button class="button-icon material-symbols-outlined" [disabled]="counter >= stock" (click)="addQuantity()">add</button>
+</div>

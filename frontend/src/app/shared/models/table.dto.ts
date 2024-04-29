@@ -1,7 +1,12 @@
 import { RowDTO } from './row.dto';
 
+interface titlesDTO {
+  title: string;
+  smallScreens: boolean;
+}
+
 export interface TableDTO {
-  titles: string[];
+  titles: titlesDTO[];
   rows: RowDTO[];
   action: boolean;
 }

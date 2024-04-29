@@ -12,7 +12,6 @@ import { TableDTO } from '../../models/table.dto';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
   animations: [
     trigger('detailExpand', [
       state('collapsed,void', style({ height: '0px', minHeight: '0' })),
@@ -35,45 +34,115 @@ export class TableComponent {
 }
 
 const ELEMENT_DATA: TableDTO = {
-  titles: ['id', 'fecha', 'usuario', 'estado'],
+  titles: [
+    {
+      title: 'id',
+      smallScreens: true,
+    },
+    {
+      title: 'fecha',
+      smallScreens: true,
+    },
+    {
+      title: 'usuario',
+      smallScreens: false,
+    },
+    {
+      title: 'estado',
+      smallScreens: true,
+    },
+  ],
   rows: [
     {
       rowInfo: ['1', '24/04/2024', 'Jane Doe', 'Enviado'],
       detail: [
         {
           title: 'id',
-          content: '123',
-          type: 'string',
+          content: { info: { text: '123' } },
         },
         {
           title: 'usuario',
-          content: 'jane',
-          type: 'string',
+          content: { info: { text: 'jane' } },
         },
         {
           title: 'productos',
-          content: '123',
-          type: 'string',
+          content: {
+            products: [
+              {
+                quantity: 2,
+                name: 'product 1',
+                price: 14.5,
+              },
+              {
+                quantity: 2,
+                name: 'product 1',
+                price: 14.5,
+              },
+              {
+                quantity: 2,
+                name: 'product 1',
+                price: 14.5,
+              },
+            ],
+          },
+        },
+        {
+          title: 'Sesiones',
+          content: {
+            seassons: [
+              {
+                date: new Date(),
+                state: 'Realizada',
+              },
+              {
+                date: new Date(),
+                state: 'Realizada',
+              },
+              {
+                date: new Date(),
+                state: 'Realizada',
+              },
+            ],
+          },
+        },
+        {
+          title: 'Variaciones',
+          content: {
+            badges: [
+              {
+                id: '3',
+                name: 'orange',
+                color: '#e34e2e',
+                isButtonText: false,
+                isButtonColor: false,
+              },
+              {
+                id: '4',
+                name: 'pink',
+                color: '#EE109A',
+                isButtonText: false,
+                isButtonColor: false,
+              },
+            ],
+          },
         },
         {
           title: 'precio',
-          content: '13€',
-          type: 'string',
+          content: { info: { text: '13€' } },
         },
         {
           title: 'Fecha',
-          content: '24/04/2024',
-          type: 'string',
+          content: { info: { text: '24/04/2024' } },
         },
         {
           title: 'fecha de modificación',
-          content: '24/04/2024',
-          type: 'string',
+          content: { info: { text: '24/04/2024' } },
         },
         {
           title: 'Dirección',
-          content: 'Calle Circunvalación, 170, 08240, Manresa',
-          type: 'string',
+          content: {
+            info: { text: 'Calle Circunvalación, 170, 08240, Manresa' },
+          },
         },
       ],
     },
@@ -82,70 +151,75 @@ const ELEMENT_DATA: TableDTO = {
       detail: [
         {
           title: 'id',
-          content: '123',
-          type: 'string',
+          content: { info: { text: '123' } },
         },
         {
           title: 'usuario',
-          content: 'jane',
-          type: 'string',
+          content: { info: { text: 'jane' } },
         },
         {
           title: 'productos',
-          content: ['123', 'aaa', 'aaaadd'],
-          type: 'list',
+          content: { list: ['123', 'aaa', 'aaaadd'] },
         },
         {
           title: 'precio',
-          content: '13€',
-          type: 'string',
+          content: { info: { price: 13.5 } },
         },
         {
           title: 'Fecha',
-          content: '24/04/2024',
-          type: 'string',
+          content: { info: { date: new Date() } },
         },
         {
-          title: 'fecha de modificación',
-          content: '24/04/2024',
-          type: 'string',
+          title: 'Días activo',
+          content: { info: { days: new Date('2024-04-01') } },
         },
         {
           title: 'Dirección',
-          content: 'Calle Circunvalación, 170, 08240, Manresa',
-          type: 'string',
+          content: {
+            info: {
+              direction: {
+                id: 'string',
+                name: 'Casa',
+                address: 'Calle Circunvalación',
+                number: 170,
+                zip: '08240',
+                city: 'Manresa',
+              },
+            },
+          },
         },
         {
           title: 'Imagenes',
-          content: [
-            {
-              jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              title: 'title',
-            },
-            {
-              jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              title: 'title',
-            },
-            {
-              jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              title: 'title',
-            },
-            {
-              jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              title: 'title',
-            },
+          content: {
+            images: [
+              {
+                jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                title: 'title',
+              },
+              {
+                jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                title: 'title',
+              },
+              {
+                jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                title: 'title',
+              },
+              {
+                jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                title: 'title',
+              },
 
-            {
-              jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-              title: 'title',
-            },
-          ],
-          type: 'image',
+              {
+                jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
+                title: 'title',
+              },
+            ],
+          },
         },
       ],
     },

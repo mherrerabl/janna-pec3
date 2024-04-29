@@ -5,10 +5,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MaterialModule } from '../material.module';
 import { BadgeComponent } from './components/badge/badge.component';
+import { BasketDropdownComponent } from './components/basket-dropdown/basket-dropdown.component';
+import { BasketComponent } from './components/basket/basket.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ButtonComponent } from './components/button/button.component';
 import { CardComponent } from './components/card/card.component';
+import { CounterComponent } from './components/counter/counter.component';
+import { IconTreatmentComponent } from './components/icons/icon-treatment/icon-treatment.component';
 import { InputComponent } from './components/input/input.component';
+import { MenuDropdownComponent } from './components/menu-dropdown/menu-dropdown.component';
 import { RowDetailComponent } from './components/row-detail/row-detail.component';
 import { TableComponent } from './components/table/table.component';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
@@ -24,6 +29,11 @@ import { SharedRoutingModule } from './shared-routing.module';
     InputComponent,
     TableComponent,
     RowDetailComponent,
+    BasketComponent,
+    BasketDropdownComponent,
+    CounterComponent,
+    MenuDropdownComponent,
+    IconTreatmentComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +52,11 @@ import { SharedRoutingModule } from './shared-routing.module';
     ShortDescriptionPipe,
     TableComponent,
     RowDetailComponent,
+    BasketComponent,
+    BasketDropdownComponent,
+    CounterComponent,
+    MenuDropdownComponent,
+    IconTreatmentComponent,
   ],
 })
 export class SharedModule {}

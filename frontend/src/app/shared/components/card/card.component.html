@@ -30,9 +30,9 @@
         <p *ngIf="dataCard.product.price.discount !== null" class="body-s line-through text-darkGrey self-end">{{ dataCard.product.price.price | number: '1.2-2':'es'}}€</p>
         <h4>{{ getPrice() | number: '1.2-2':'es' }}€</h4>
     </div>
-    <div class="flex gap-[10px]">
-        <app-button class="w-full" [dataButton]="button" [stock]="dataCard.product.stock"></app-button>
-        <app-button class="w-full" [dataButton]="buttonAction" [stock]="dataCard.product.stock"></app-button>
+    <div class="flex justify-between gap-[10px]">
+        <button class="button-normal button-s w-full" [disabled]="dataCard.product.stock <=0">Añadir a la cesta</button>
+        <button class="button-action button-s w-full" [disabled]="dataCard.product.stock<=0">Comprar ya</button>
     </div>
     
 </div>

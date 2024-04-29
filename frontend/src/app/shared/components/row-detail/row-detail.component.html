@@ -1,25 +1,84 @@
 @for (detail of dataDetails; track detail) {
-    <div class="border-b border-grey my-3 last:border-secundary-500 last:border-b-2">
+    <div class="border-b border-grey py-3 last:border-secundary-500 last:border-b-2">
         <h6 class="max-w-[1200px] mx-8 mb-1">{{ detail.title }}</h6>
-        @if (correctType(detail.type,'string')) {
-            <p class="max-w-[1200px] mx-9 my-3">{{ detail.content }}</p>
+        @if (detail.content.info !== undefined) {
+            @if (detail.content.info.text !== undefined) {
+                <p class="max-w-[1200px] mx-9 my-3">{{ detail.content.info.text }}</p>
+            }
+            @else if (detail.content.info.price !== undefined) {
+                <p class="max-w-[1200px] mx-9 my-3">{{ detail.content.info.price | number: '1.2-2':'es'}} €</p>
+            }
+            @else if (detail.content.info.days !== undefined) {
+                <p class="max-w-[1200px] mx-9 my-3">{{ getDays(detail.content.info.days) }}</p>
+            }
+            @else if (detail.content.info.date !== undefined) {
+                <p class="max-w-[1200px] mx-9 my-3">{{ detail.content.info.date | date: 'dd/MM/yyyy' }}</p>
+            }
+            @else if (detail.content.info.direction !== undefined) {
+                <p class="max-w-[1200px] mx-9 my-3">{{ detail.content.info.direction.address }}, {{ detail.content.info.direction.number }}, <span *ngIf="detail.content.info.direction.additionalInfo !== undefined">{{ detail.content.info.direction.additionalInfo }}, </span>{{ detail.content.info.direction.zip }}, {{ detail.content.info.direction.city }}</p>
+            }
         }
         
-        @else if (correctType(detail.type,'list')){
+        @else if (detail.content.list !== undefined){
             <ul class="max-w-[1200px] mx-9 my-3">
-                @for (item of detail.content; track $index) {
+                @for (item of detail.content.list; track $index) {
                        <li>{{ item }}</li> 
                 }
             </ul>
         }
 
-        @else if (correctType(detail.type,'image')){
-            @for (image of detail.content; track $index) {
-                <img [src]="image" alt="">
-            }
+        @else if (detail.content.products !== undefined){
+            <table class="w-full max-w-[600px] mx-9 my-3">
+                <thead>
+                    <tr>
+                        <th class="text-start w-12">Uds.</th>
+                        <th class="text-start">Producto</th>
+                        <th class="text-start w-20">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (product of detail.content.products; track $index) {
+                        <tr>
+                            <td>{{ product.quantity }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price  | number: '1.2-2':'es' }} €/u.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
 
-        @else if (correctType(detail.type,'badge')){}
+        @else if (detail.content.images !== undefined){
+            <div class="flex flex-wrap max-w-[1200px] mx-9 my-3">
+                @for (image of detail.content.images; track $index) {
+                    <img class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-3" [src]="image.jpg" [alt]="image.title">
+                }
+            </div> 
+        }
+
+        @else if (detail.content.badges !== undefined){
+            <ul class="flex flex-wrap max-w-[1200px] mx-9 my-3 gap-4">
+                @for (badge of detail.content.badges; track $index) {
+                    <li class="text-center"><span class="block w-[50px] h-[50px] m-auto" [style.background-color]="badge.color"></span>{{ badge.name }}</li>
+                }
+            </ul>
+            
+        }
+
+        @else if (detail.content.seassons !== undefined){
+            <div class="max-w-[600px]">
+                <ul class="w-full mx-9 my-3">
+                    @for (seasson of detail.content.seassons; track $index) {
+                        <li class="flex justify-between my-4"><span>{{ seasson.date | date: 'dd/MM/yyyy' }}</span><span>{{ seasson.state }}</span></li> 
+                    }
+                </ul>
+                <div class="w-full mx-9 my-3 text-right">
+                    <button class="button-normal button-s inline-block w-[150px]">Modificar cita</button>
+                </div>
+            </div>
+            
+            
+        }
         
     </div>
 }

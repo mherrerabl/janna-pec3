@@ -1,5 +1,26 @@
-<button *ngIf="dataBadge.isButtonText" class="inline-block px-2 {{dataBadge.textSize}}" [class.badge-disable]="dataBadge.stock == 0" [class.badge-clickable]="dataBadge.stock != 0 && !isSelected" [class.badge-active]="dataBadge.stock != 0 && isSelected" (click)="clicked()">{{ dataBadge.name }}</button>
+@if (dataBadge.isButtonText) {
+    <button class="inline-block px-2 {{dataBadge.textSize}}"
+            [class.badge-disable]="dataBadge.stock == 0" 
+            [class.badge-clickable]="dataBadge.stock != 0 && !isSelected" 
+            [class.badge-active]="dataBadge.stock != 0 && isSelected" 
+            (click)="clicked()"
+            [disabled]="dataBadge.stock == 0">
+        {{ dataBadge.name }}
+    </button>
+}
 
-<button *ngIf="dataBadge.isButtonColor" class="w-[32px] h-[32px]" [class.badge-disable]="dataBadge.stock == 0" [class.badge-clickable]="dataBadge.stock != 0 && !isSelected" [class.badge-active]="dataBadge.stock != 0 && isSelected" [style.background-color]="dataBadge.color" (click)="clicked()"></button>
+@else if (dataBadge.isButtonColor) {
+    <button class="w-[32px] h-[32px]" 
+            [class.badge-disable]="dataBadge.stock == 0" 
+            [class.badge-clickable]="dataBadge.stock != 0 && !isSelected" 
+            [class.badge-active]="dataBadge.stock != 0 && isSelected" 
+            [style.background-color]="dataBadge.color" 
+            (click)="clicked()" 
+            [disabled]="dataBadge.stock == 0">
+    </button>
+}
 
-<span *ngIf="!dataBadge.isButtonText && !dataBadge.isButtonColor" class="inline-block px-2 text-white {{badgeInfoColor()}} {{dataBadge.textSize}}">{{ dataBadge.name }}</span>
+@else {
+    <span class="inline-block px-2 text-white {{badgeInfoColor()}} {{dataBadge.textSize }}">{{ dataBadge.name }}</span>
+
+}

@@ -1,15 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BadgeDTO } from '../../models/badge.dto';
 
 @Component({
   selector: 'app-badge',
   templateUrl: './badge.component.html',
-  styleUrl: './badge.component.scss',
 })
-export class BadgeComponent {
+export class BadgeComponent implements OnInit {
   @Input() dataBadge!: BadgeDTO;
   @Input() isSelected!: boolean;
   @Output() badgeSelected = new EventEmitter<BadgeDTO>();
+
+  ngOnInit(): void {
+    console.log(this.dataBadge);
+  }
 
   clicked(): void {
     this.isSelected = !this.isSelected;

@@ -1,0 +1,38 @@
+<button class="button-expand w-full h4 flex justify-between p-4 " 
+    (click)="dropdownExpanded = !dropdownExpanded">
+    Detalles del pedido 
+    <span class="material-symbols-outlined align-middle">{{ dropdownExpanded ? 'expand_less' : 'expand_more'}}</span>
+</button>
+<div class="overflow-hidden">
+    <div class="flex flex-col" [@detailExpand]="dropdownExpanded ? 'expanded' : 'collapsed'">
+        <div class="p-4 bg-primary">
+            <h5 class="py-2">Productos</h5>
+            <ul class="p-4 border-b border-black">
+                @for (product of dataProducts; track $index) {
+                    <li class="mb-2">
+                        <div class="flex flex-row items-center justify-between">
+                            <div class="flex flex-row items-center gap-2">
+                                <figure class="max-w-20">
+                                    <img [src]="product.image.jpg" [alt]="product.image.title">
+                                </figure>
+                                <p>{{ product.name }}</p>
+                            </div>
+                            
+                            <div class="flex flex-row items-center gap-4">
+                                <p>{{ product.price | number: '1.2-2':'es' }} €/u.</p>
+                                <p>x{{ product.quantity }}</p>
+                                <p class="font-medium">{{ product.quantity * product.price | number: '1.2-2':'es' }} €</p>
+                            </div>
+                        
+                        </div>
+                    </li>
+                }
+            </ul>
+            
+            <p class="h5 flex justify-between items-baseline p-4 border-b border-black">Subtotal <span class="h5">{{ getSubtotal() | number: '1.2-2':'es' }} €</span></p>
+            <p class="flex justify-between items-baseline p-4 border-b border-black">Gastos de envío <span>{{ shippingCostsFree ? '' : '4,95 €' }}</span></p>
+            <p class="h4 flex justify-between items-baseline p-4 border-b border-black">Total <span class="h6">{{ getTotal() | number: '1.2-2':'es' }} €</span></p>
+        </div>
+        </div>
+        
+</div>

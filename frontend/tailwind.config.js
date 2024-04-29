@@ -4,7 +4,7 @@ const colors = require("tailwindcss/colors");
 
 module.exports = {
   content: [
-    "./src/**/*.{html,ts}"
+    "./src/**/*.{html,ts}",
   ],
   theme: {
     colors: {
@@ -78,14 +78,10 @@ module.exports = {
         'badge-700': '0 0 0 2px #9B3557',
         'badge-disable': '0 0 0 1px #000',
       },
-      keyframes: {
-        expand: {
-          '0%': { 'max-height': 0 },
-          '100%': { 'max-height': '100%' }
-        }
-      },
-      animation: {
-        showRow: 'expand 1s ease-in'
+      spacing: {
+        'section': '100px',
+        'separator-30': '30px',
+        'separator-50': '50px'
       }
     },
     plugins: [],
