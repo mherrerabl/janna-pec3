@@ -1,21 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductDTO } from '../../models/product.dto';
 
 @Component({
-  selector: 'app-basket',
-  templateUrl: './basket.component.html',
-  styleUrl: './basket.component.scss',
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
 })
-export class BasketComponent {
-  dataProducts: ProductDTO[] = products;
-  counter: number = 1;
-  stock: number = 10;
+export class CartComponent {
+  @Input() dataProducts: ProductDTO[] = products;
+  @Input() isOpen!: boolean;
 
   changeQuantity(counter: number, index: number): void {
     this.dataProducts[index].quantity = counter;
   }
 
-  getTotalBasket(): number {
+  getTotalCart(): number {
     let total: number = 0;
     for (const product of this.dataProducts) {
       total += product.price * product.quantity;

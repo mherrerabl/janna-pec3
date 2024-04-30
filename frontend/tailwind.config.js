@@ -77,11 +77,42 @@ module.exports = {
         'badge-600': '0 0 0 1px #B94568',
         'badge-700': '0 0 0 2px #9B3557',
         'badge-disable': '0 0 0 1px #000',
+        'menu': '0 0 50px 10px #4D4D4D'
       },
       spacing: {
         'section': '100px',
         'separator-30': '30px',
-        'separator-50': '50px'
+        'separator-50': '50px',
+        'limit-600': '600px',
+        'cart': 'calc(100vh - 285px)'
+      },
+      keyframes: {
+        'closeMenu': {
+          '0%': {
+            transform: 'translateX(0)'
+          },
+          '95%': {
+            transform: 'translateX(100%)'
+          },
+          '100%': {
+            display: 'none',
+          }
+        },
+        'openMenu': {
+          '0%': {
+            display: 'block',
+          },
+          '5%': {
+            transform: 'translateX(100%)'
+          },
+          '100%': {
+            transform: 'translateX(0)'
+          }
+        },
+      },
+      animation: {
+        'openMenu': 'openMenu 450ms ease-in',
+        'closeMenu': 'closeMenu 450ms ease-out'
       }
     },
     plugins: [],

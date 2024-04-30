@@ -1,0 +1,38 @@
+<div class="absolute top-0 right-0 w-[300px]" [class.animate-openMenu]="isOpen" [class.animate-closeMenu]="!isOpen">
+    <div class="flex flex-col justify-between h-fit bg-white shadow-menu">
+            <div class="sticky top-0 px-4 bg-white">
+                <button class="material-symbols-outlined button-icon h-[65px] text-start" (click)="isOpen = false">close</button>
+                <h2 class="pb-separator-30">Carrito</h2>
+            </div>
+            
+            <ul class="px-4 overflow-y-scroll h-cart">
+                @for (product of dataProducts; track $index) {
+                        <li class="flex flex-col h-fit">
+                            <div class="flex justify-between gap-2">
+                                <figure class="w-[100px]">
+                                    <img class="object-cover aspect-[4/3]" [src]="product.image.jpg" [alt]="product.image.title">
+                                </figure>
+ 
+                                <div class="flex flex-col">
+                                    <p class="subtitle-m flex-1">{{ product.name }}</p>
+                                    <div class="flex gap-2 items-center">
+                                        <p class="my-2">{{ product.price | number: '1.2-2':'es' }} €/u.</p>
+                                        <app-counter [counter]="product.quantity" [stock]="product.stock" (newCounterValue)="changeQuantity($event, $index)"></app-counter>  
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                            <p class="flex justify-between text-l mb-6 px-2 py-1 bg-primary">Precio <span>{{ product.quantity * product.price | number: '1.2-2':'es' }} €</span></p>
+                        </li>
+                    }
+            </ul>
+                
+        <div class="sticky bottom-0 h-fit flex flex-col justify-center bg-white">
+            <p class="h4 flex justify-between py-[10px] px-[15px] mb-separator-30 bg-primary">Total <span class="h4">{{ getTotalCart() | number: '1.2-2':'es' }} €</span></p>
+            <button class="button-normal button-s m-auto mb-separator-50">Realizar pedido</button>
+    
+        </div>
+    </div>    
+</div>

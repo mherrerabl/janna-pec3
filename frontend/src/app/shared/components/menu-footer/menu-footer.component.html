@@ -1,0 +1,53 @@
+<nav class="fixed bottom-0 flex justify-center w-full p-3 m-auto bg-primary">
+    <ul class="flex flex-row justify-between h-full w-full max-w-limit-600">
+        <li>
+            <a [routerLink]="'agenda'" class="button-icon flex flex-col justify-between w-8 sm:w-16 h-full items-center text-xxs">
+                <app-icon-calendar class="mt-1"></app-icon-calendar>
+                Agenda
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'tratamientos'" class="button-icon flex flex-col justify-between w-8 sm:w-16 h-full items-center text-xxs">
+                <app-icon-treatment class="mt-1"></app-icon-treatment>
+                Tratamientos
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'tienda'" class="button-icon flex flex-col justify-between w-8 sm:w-16 h-full items-center text-xxs">
+                <app-icon-shop class="mt-1"></app-icon-shop>
+                Tienda
+            </a>
+        </li>
+
+        @if (isLogin) {
+            <li>
+                <a [routerLink]="'perfil'" class="button-icon flex flex-col justify-between w-8 sm:w-16 h-full items-center text-xxs">
+                    <app-icon-user class="mt-1"></app-icon-user>
+                    Perfil
+                </a>
+            </li>
+            <li>
+                <button class="button-icon flex flex-col justify-between w-8 sm:w-16 h-full items-center text-xxs">
+                    <app-icon-cart class="mt-1"></app-icon-cart>
+                    Carrito
+                </button>
+            </li>
+        }
+        
+        @else {
+            <li>
+                <button class="button-icon flex flex-col justify-between w-8 sm:w-16 h-full items-center text-xxs">
+                    <app-icon-register class="mt-1"></app-icon-register>
+                    Registrarse
+                </button>
+            </li>
+            <li>
+                <button class="button-icon flex flex-col justify-between w-8 sm:w-16 h-full items-center text-xxs">
+                    <span class="material-symbols-outlined material-symbols-outlined-200">login</span>
+                    Iniciar sesión
+                </button>
+            </li>
+        }
+    </ul>
+</nav>
+

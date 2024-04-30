@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IconTreatmentComponent } from './icon-treatment.component';
+import { MenuFooterComponent } from './menu-footer.component';
 
-describe('IconTreatmentComponent', () => {
-  let component: IconTreatmentComponent;
-  let fixture: ComponentFixture<IconTreatmentComponent>;
+describe('MenuFooterComponent', () => {
+  let component: MenuFooterComponent;
+  let fixture: ComponentFixture<MenuFooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IconTreatmentComponent]
+      declarations: [MenuFooterComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(IconTreatmentComponent);
+    fixture = TestBed.createComponent(MenuFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

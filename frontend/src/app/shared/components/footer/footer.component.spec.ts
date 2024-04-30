@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasketDropdownComponent } from './basket-dropdown.component';
+import { FooterComponent } from './footer.component';
 
-describe('BasketDropdownComponent', () => {
-  let component: BasketDropdownComponent;
-  let fixture: ComponentFixture<BasketDropdownComponent>;
+describe('FooterComponent', () => {
+  let component: FooterComponent;
+  let fixture: ComponentFixture<FooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BasketDropdownComponent]
+      declarations: [FooterComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(BasketDropdownComponent);
+    fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,11 +3,10 @@ import { Router } from '@angular/router';
 import { Navigate } from '../../classes/navigate';
 
 @Component({
-  selector: 'app-menu-dropdown',
-  templateUrl: './menu-dropdown.component.html',
-  styleUrl: './menu-dropdown.component.scss',
+  selector: 'app-menu-footer',
+  templateUrl: './menu-footer.component.html',
 })
-export class MenuDropdownComponent extends Navigate {
+export class MenuFooterComponent extends Navigate {
   @Input() isLogin: boolean = true;
 
   constructor(router: Router) {

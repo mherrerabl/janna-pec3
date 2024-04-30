@@ -5,19 +5,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MaterialModule } from '../material.module';
 import { BadgeComponent } from './components/badge/badge.component';
-import { BasketDropdownComponent } from './components/basket-dropdown/basket-dropdown.component';
-import { BasketComponent } from './components/basket/basket.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ButtonComponent } from './components/button/button.component';
 import { CardComponent } from './components/card/card.component';
+import { CartDropdownComponent } from './components/cart-dropdown/cart-dropdown.component';
+import { CartComponent } from './components/cart/cart.component';
 import { CounterComponent } from './components/counter/counter.component';
-import { IconTreatmentComponent } from './components/icons/icon-treatment/icon-treatment.component';
 import { InputComponent } from './components/input/input.component';
 import { MenuDropdownComponent } from './components/menu-dropdown/menu-dropdown.component';
+import { MenuFooterComponent } from './components/menu-footer/menu-footer.component';
 import { RowDetailComponent } from './components/row-detail/row-detail.component';
 import { TableComponent } from './components/table/table.component';
+import { IconsModule } from './icons/icons.module';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 import { SharedRoutingModule } from './shared-routing.module';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,11 +31,12 @@ import { SharedRoutingModule } from './shared-routing.module';
     InputComponent,
     TableComponent,
     RowDetailComponent,
-    BasketComponent,
-    BasketDropdownComponent,
+    CartComponent,
+    CartDropdownComponent,
     CounterComponent,
     MenuDropdownComponent,
-    IconTreatmentComponent,
+    MenuFooterComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,7 @@ import { SharedRoutingModule } from './shared-routing.module';
     MaterialModule,
     NgxPaginationModule,
     ReactiveFormsModule,
+    IconsModule,
   ],
   exports: [
     BadgeComponent,
@@ -52,11 +56,12 @@ import { SharedRoutingModule } from './shared-routing.module';
     ShortDescriptionPipe,
     TableComponent,
     RowDetailComponent,
-    BasketComponent,
-    BasketDropdownComponent,
+    CartComponent,
+    CartDropdownComponent,
     CounterComponent,
     MenuDropdownComponent,
-    IconTreatmentComponent,
+    IconsModule,
+    MenuFooterComponent,
   ],
 })
 export class SharedModule {}

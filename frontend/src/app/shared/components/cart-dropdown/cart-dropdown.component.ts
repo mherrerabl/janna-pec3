@@ -9,8 +9,8 @@ import { Component, Input } from '@angular/core';
 import { ProductDTO } from '../../models/product.dto';
 
 @Component({
-  selector: 'app-basket-dropdown',
-  templateUrl: './basket-dropdown.component.html',
+  selector: 'app-cart-dropdown',
+  templateUrl: './cart-dropdown.component.html',
   animations: [
     trigger('detailExpand', [
       state('collapsed,void', style({ height: '0px', minHeight: '0' })),
@@ -22,7 +22,7 @@ import { ProductDTO } from '../../models/product.dto';
     ]),
   ],
 })
-export class BasketDropdownComponent {
+export class CartDropdownComponent {
   @Input() dataProducts: ProductDTO[] = products;
   dropdownExpanded: boolean = false;
   shippingCostsFree: boolean = false;
