@@ -1,5 +1,10 @@
 <router-outlet></router-outlet>
-<app-menu-footer></app-menu-footer>
+<div class="flex flex-col flex-grow min-h-screen">
+    <main class=""></main>
+    <app-footer class="mt-auto"></app-footer>
+    <app-menu-footer class="md:lg:hidden"></app-menu-footer>
+</div>
+
 <!--
 <div>
     <button class="z-50" (click)="toggleMenu()">click</button>
@@ -7,4 +12,10 @@
     
         
 </div>
-<app-cart [class.modal]="isOpen == 'open'"  [isOpen]="isOpen == 'open'" ></app-cart>-->
+<app-cart [class.modal]="isOpen == 'open'"  [isOpen]="isOpen == 'open'" ></app-cart>
+<picture>                 
+      <source srcset="/src/assets/images/players/player_1/player_1.webp" type="image/webp">
+      <img src="/src/assets/images/players/player_1/player_1.jpg" class="card-img"  alt="Retrato Jose Carlos Figueroa">
+    </picture>
+
+-->

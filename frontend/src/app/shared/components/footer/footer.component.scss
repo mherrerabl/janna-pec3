@@ -1,0 +1,29 @@
+footer {
+    display: grid;
+    grid-template-areas: 
+    "logo"
+    "legalPages"
+    "rrss"
+    "textInfo";
+    @media (width > 768px) {
+        grid-template-areas: 
+        "logo rrss"
+        "textInfo legalPages";
+    }
+}
+
+.logoFooter {
+    grid-area: logo;
+}
+
+.legalPages {
+    grid-area: legalPages;
+}
+
+.rrss {
+    grid-area: rrss;
+}
+
+.textInfo {
+    grid-area: textInfo;
+}

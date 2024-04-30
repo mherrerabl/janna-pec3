@@ -86,9 +86,10 @@
         font-size: 28px
     }
 
-    .modal {
-        @apply absolute w-full h-full top-0 z-10 bg-darkGrey/10;
+    .fa-brands {
+        font-size: 1.2rem;
     }
+    
 
     *::-webkit-scrollbar {
         width: 3px;
@@ -100,11 +101,15 @@
        
       *::-webkit-scrollbar-thumb {
         @apply bg-secundary-500
-      }
+    }
 
 }
 
 @layer components {
+    .modal {
+        @apply absolute w-full h-full top-0 z-10 bg-darkGrey/10;
+    }
+
     @import './app/shared/components/button/button.component.scss'; 
     @import './app/shared/components/input/input.component.scss';
     @import './app/shared/components/table/table.component.scss';

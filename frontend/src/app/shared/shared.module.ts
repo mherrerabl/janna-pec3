@@ -11,7 +11,9 @@ import { CardComponent } from './components/card/card.component';
 import { CartDropdownComponent } from './components/cart-dropdown/cart-dropdown.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CounterComponent } from './components/counter/counter.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { InputComponent } from './components/input/input.component';
+import { LogoComponent } from './components/logo/logo.component';
 import { MenuDropdownComponent } from './components/menu-dropdown/menu-dropdown.component';
 import { MenuFooterComponent } from './components/menu-footer/menu-footer.component';
 import { RowDetailComponent } from './components/row-detail/row-detail.component';
@@ -19,7 +21,6 @@ import { TableComponent } from './components/table/table.component';
 import { IconsModule } from './icons/icons.module';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 import { SharedRoutingModule } from './shared-routing.module';
-import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MenuDropdownComponent,
     MenuFooterComponent,
     FooterComponent,
+    LogoComponent,
   ],
   imports: [
     CommonModule,
@@ -62,6 +64,8 @@ import { FooterComponent } from './components/footer/footer.component';
     MenuDropdownComponent,
     IconsModule,
     MenuFooterComponent,
+    FooterComponent,
+    LogoComponent,
   ],
 })
 export class SharedModule {}

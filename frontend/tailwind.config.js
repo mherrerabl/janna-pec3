@@ -77,7 +77,8 @@ module.exports = {
         'badge-600': '0 0 0 1px #B94568',
         'badge-700': '0 0 0 2px #9B3557',
         'badge-disable': '0 0 0 1px #000',
-        'menu': '0 0 50px 10px #4D4D4D'
+        'menu': '0 0 50px 10px #4D4D4D',
+        'menu-footer': '0 5px 10px 1px #CF647F'
       },
       spacing: {
         'section': '100px',
