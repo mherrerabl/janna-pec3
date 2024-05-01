@@ -7,7 +7,7 @@ import { Navigate } from '../../classes/navigate';
   templateUrl: './menu-footer.component.html',
 })
 export class MenuFooterComponent extends Navigate {
-  @Input() isLogin: boolean = true;
+  @Input() isLogin: boolean = false;
 
   constructor(router: Router) {
     super(router);

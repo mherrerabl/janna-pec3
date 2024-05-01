@@ -1,7 +1,7 @@
 <button class="button-expand w-full h4 flex justify-between p-4 " 
     (click)="dropdownExpanded = !dropdownExpanded">
     Detalles del pedido 
-    <span class="material-symbols-outlined align-middle">{{ dropdownExpanded ? 'expand_less' : 'expand_more'}}</span>
+    <span class="align-middle"><fa-icon [icon]="dropdownExpanded ? iconArrowUp : iconArrowDown"></fa-icon></span>
 </button>
 <div class="overflow-hidden">
     <div class="flex flex-col" [@detailExpand]="dropdownExpanded ? 'expanded' : 'collapsed'">

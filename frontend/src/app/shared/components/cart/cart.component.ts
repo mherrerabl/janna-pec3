@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import { ProductDTO } from '../../models/product.dto';
 
 @Component({
@@ -8,6 +9,7 @@ import { ProductDTO } from '../../models/product.dto';
 export class CartComponent {
   @Input() dataProducts: ProductDTO[] = products;
   @Input() isOpen!: boolean;
+  iconClose = faXmark;
 
   changeQuantity(counter: number, index: number): void {
     this.dataProducts[index].quantity = counter;

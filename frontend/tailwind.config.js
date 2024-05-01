@@ -8,7 +8,6 @@ module.exports = {
   ],
   theme: {
     colors: {
-      ... colors,
       primary: '#FAE9EC',
       secundary: {
         DEFAULT: '#CF647F',
@@ -39,6 +38,7 @@ module.exports = {
       lightGrey: '#F9F9F9',
       black: '#000',
       white: '#fff',
+      error: colors.red,
       transparent: colors.transparent,
     },
 

@@ -6,6 +6,8 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, Input } from '@angular/core';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { ProductDTO } from '../../models/product.dto';
 
 @Component({
@@ -26,6 +28,8 @@ export class CartDropdownComponent {
   @Input() dataProducts: ProductDTO[] = products;
   dropdownExpanded: boolean = false;
   shippingCostsFree: boolean = false;
+  iconArrowUp = faChevronUp;
+  iconArrowDown = faChevronDown;
 
   getSubtotal(): number {
     let subtotal: number = 0;

@@ -1,41 +1,72 @@
- <!--<mat-form-field *ngIf="dataInput.field !== 'select'">
-  <mat-label>{{ dataInput.label }}</mat-label>
-  <input *ngIf="dataInput.field === 'input' && dataInput.type !== 'password'" matInput [type]="dataInput.type" [required]="dataInput.required"/>
-  <input *ngIf="dataInput.type === 'password'" matInput [type]="hide ? 'password' : 'text'" [required]="dataInput.required"/>
-  <button *ngIf="dataInput.type === 'password'" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  <textarea *ngIf="dataInput.field === 'textarea'" matInput [required]="dataInput.required"></textarea>  
-  <mat-error *ngFor="let error of dataInput.errors">
-    <span *ngIf="dataInput.formControl.hasError(error.type)">{{ error.message }}</span>
-    <span>{{ error.message }}</span>
-  </mat-error>
-</mat-form-field>
+<div class="group relative w-full max-w-limit-600">
+  @if (dataInput.iconLeft !== undefined) {
+    @switch (dataInput.iconLeft) {
+      @case ('email') {
+        <span class="peer icon-left"><fa-icon [icon]="iconEmail"></fa-icon></span>
+      }
 
-<mat-form-field *ngIf="dataInput.field === 'select'">
-  <mat-label>{{dataInput.label}}: </mat-label>
-<mat-select [formControl]="dataInput.formControl" multiple>
-      <mat-option *ngFor="let category of input.selectList" [value]="category.categoryId">
-          {{category.title}}
-      </mat-option>
-  </mat-select>
-  <mat-error class="error-container" *ngFor="let error of dataInput.errors">
-      <span *ngIf="dataInput.formControl.hasError(error.type)">
-          {{error.message}}
-      </span>
-  </mat-error>
-</mat-form-field>-->
+      @case ('phone') {
+        <span class="peer icon-left"><fa-icon [icon]="iconPhone"></fa-icon></span>
+      }
+    }
+  }
 
-<div class="group relative w-full max-w-64">
-  <span *ngIf="dataInput.iconLeft !== null" class="peer icon-left material-symbols-outlined">{{dataInput.iconLeft}}</span>
-  <label class="label">{{ dataInput.label }}<span *ngIf="dataInput.required">*</span></label>
-  <input *ngIf="dataInput.type !== 'textarea'" class="input" [type]="hide ? dataInput.type : 'text'" [placeholder]="dataInput.placeholder" [required]="dataInput.required">
-  <textarea *ngIf="dataInput.type === 'textarea'" class="input min-h-64 pt-4" [placeholder]="dataInput.placeholder" [required]="dataInput.required"></textarea>
-  <button *ngIf="dataInput.iconRight !== null && dataInput.iconRight === 'password'" class="icon-right material-symbols-outlined" (click)="toggleVisibility()">{{iconRight()}}</button>
-  <span *ngIf="dataInput.iconRight !== null && dataInput.iconRight !== 'password'" class="icon-right material-symbols-outlined" >{{dataInput.iconRight}}</span>
+  @if (dataInput.type !== 'select') {
+    <label class="label">{{ dataInput.label }}<span *ngIf="dataInput.required">*</span></label>
+  }
+ 
+  @if (dataInput.type === 'textarea') {
+    <textarea class="input min-h-64 pt-4 [&+.icon-right]:top-[1.65rem]" [placeholder]="dataInput.placeholder" [required]="dataInput.required"></textarea>
+  }
 
+  @else if (dataInput.type === 'select') {
+    <div class="sr-only">
+      <label>{{dataInput.label}}</label>
+      <span class="icon-right" aria-hidden="true"><fa-icon [icon]="expandSelect ? iconArrowUp : iconArrowDown"></fa-icon></span>
+      <select class="select border-0 border-b text-darkGrey" [required]="dataInput.required" [title]="dataInput.label" (click)="toogleSelect()">
+        <option class="option" value="" selected disabled>{{dataInput.label}}</option>
+        @for (option of dataInput.options; track $index) {
+          <option class="option" [value]="option.id">{{ option.name }}</option>
+        }
+      </select>
+    </div>
+    
+  
+    <div aria-hidden="true">
+      <button class="select [&>.icon-right]:top-[1.65rem]" [class.border-0]="expandSelect" (click)="toogleSelect()">{{  optionSelected === undefined ? dataInput.label : optionSelected.name}}<span class="icon-right" aria-hidden="true"><fa-icon [icon]="expandSelect ? iconArrowUp : iconArrowDown"></fa-icon></span></button>
+      
+      <div class="overflow-hidden">
+        <ul [@detailExpand]="expandSelect ? 'expanded' : 'collapsed'">
+          @for (option of dataInput.options; track $index) {
+            <li class="option" (click)="optionMenu(option.id)">{{ option.name }}</li>
+          }
+        </ul>
+      </div>
+      
+    </div>
+  }
+
+  @else {
+    <input class="input" [type]="hidePassword ? dataInput.type : 'text'" [placeholder]="dataInput.placeholder" [required]="dataInput.required">
+  }
+  
+  @if (dataInput.iconRight !== undefined) {
+    @switch (dataInput.iconRight) {
+      @case ('calendar') {
+        <span class="icon-right"><fa-icon [icon]="iconCalendar"></fa-icon></span>
+      }
+
+      @case ('password') {
+        <button class="icon-right" (click)="toogleIconPassword()"><fa-icon [icon]="hidePassword ? iconEyeSlash : iconEye"></fa-icon></button>
+      }
+    }
+  }
 </div>
 
-<div *ngFor="let error of dataInput.errors">
-  <small *ngIf="dataInput.formControl.hasError(error.type)" class="px-4 body-s text-red-500">{{ error.message }}</small>
+<div class="flex flex-col">
+  @for (error of dataInput.errors; track $index) {
+    <!--@if (dataInput.formControl.hasError(error.type)) {-->
+      <small class="px-4 py-2 body-s text-error-500">{{ error.message }}</small>
+    }
+  <!--}-->
 </div>

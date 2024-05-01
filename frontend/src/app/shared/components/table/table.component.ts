@@ -6,9 +6,15 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component } from '@angular/core';
+import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import {
+  faChevronDown,
+  faChevronUp,
+  faMinus,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { RowDTO } from '../../models/row.dto';
 import { TableDTO } from '../../models/table.dto';
-
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -27,6 +33,13 @@ export class TableComponent {
   dataTable: TableDTO = ELEMENT_DATA;
   expandedElement!: RowDTO | null;
   currentPage: number = 1;
+
+  iconPlus = faPlus;
+  iconLess = faMinus;
+  iconDelete = faTrashCan;
+  iconEdit = faEdit;
+  iconArrowUp = faChevronUp;
+  iconArrowDown = faChevronDown;
 
   prueba(): void {
     console.log('a');

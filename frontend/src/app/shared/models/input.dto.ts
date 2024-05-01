@@ -1,13 +1,18 @@
 import { FormControl } from '@angular/forms';
 import { InputErrorDTO } from './input-error.dto';
 
+export interface OptionDTO {
+  id: string;
+  name: string;
+}
 export interface InputDTO {
   label: string;
   placeholder: string;
   type: string;
-  formControl: FormControl;
+  formControl: FormControl | string;
   required: boolean;
-  iconRight: string | null;
-  iconLeft: string | null;
+  iconRight?: string;
+  iconLeft?: string;
+  options?: OptionDTO[];
   errors: InputErrorDTO[];
 }

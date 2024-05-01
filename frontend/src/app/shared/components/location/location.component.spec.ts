@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuDropdownComponent } from './menu-dropdown.component';
+import { LocationComponent } from './location.component';
 
-describe('MenuDropdownComponent', () => {
-  let component: MenuDropdownComponent;
-  let fixture: ComponentFixture<MenuDropdownComponent>;
+describe('LocationComponent', () => {
+  let component: LocationComponent;
+  let fixture: ComponentFixture<LocationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MenuDropdownComponent]
+      declarations: [LocationComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MenuDropdownComponent);
+    fixture = TestBed.createComponent(LocationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
