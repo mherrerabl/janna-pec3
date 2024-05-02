@@ -9,10 +9,10 @@ export interface InputDTO {
   label: string;
   placeholder: string;
   type: string;
-  formControl: FormControl | string;
+  formControl: FormControl;
   required: boolean;
   iconRight?: string;
   iconLeft?: string;
   options?: OptionDTO[];
-  errors: InputErrorDTO[];
+  errors?: InputErrorDTO[];
 }

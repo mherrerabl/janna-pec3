@@ -9,9 +9,10 @@ import { ButtonComponent } from './components/button/button.component';
 import { CardComponent } from './components/card/card.component';
 import { CartDropdownComponent } from './components/cart-dropdown/cart-dropdown.component';
 import { CartComponent } from './components/cart/cart.component';
-import { ContactComponent } from './components/contact/contact.component';
+import { ContactLinksComponent } from './components/contact-links/contact-links.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
 import { InputComponent } from './components/input/input.component';
 import { LocationComponent } from './components/location/location.component';
 import { LogoComponent } from './components/logo/logo.component';
@@ -40,8 +41,9 @@ import { SharedRoutingModule } from './shared-routing.module';
     MenuFooterComponent,
     FooterComponent,
     LogoComponent,
-    ContactComponent,
     LocationComponent,
+    ContactLinksComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -68,8 +70,9 @@ import { SharedRoutingModule } from './shared-routing.module';
     MenuFooterComponent,
     FooterComponent,
     LogoComponent,
-    ContactComponent,
     LocationComponent,
+    ContactLinksComponent,
+    HeaderComponent,
   ],
 })
 export class SharedModule {}

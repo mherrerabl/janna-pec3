@@ -86,12 +86,6 @@
 
 
 
-    /**Sections**/
-    section {
-        @apply mb-separator-50;
-    }
-
-
     /**Scroll style**/
     *::-webkit-scrollbar {
         width: 3px;
@@ -123,7 +117,7 @@
 
 @layer components {
     .modal {
-        @apply absolute w-full h-full top-0 z-10 bg-darkGrey/10;
+        @apply absolute w-screen h-screen top-0 z-50 bg-darkGrey/30;
     }
 
 

@@ -1,0 +1,29 @@
+<section>
+    <h2>Contáctenos</h2>
+    @if(showFeedback) {
+        <div class="bg-primary p-4 mb-6">
+            <p id="mailFeedback"></p>
+        </div>
+    }
+    
+    <form class="flex mb-separator-50
+        [&>:nth-child(1)]:md:flex-auto [&>:nth-child(2)]:md:flex-auto [&>:nth-child(3)]:md:flex-auto" 
+        [formGroup]="contactForm" 
+        (ngSubmit)="sendForm()"
+    >
+        @for (input of inputsForm; track $index;) {
+            <div class="w-full">
+                <app-input [dataInput]="input" [checkForm]="checkForm"></app-input>
+            </div>
+            
+        }
+
+        <div class="flex justify-end">
+            <button class="button-normal button-m w-fit px-6" type="submit">Enviar</button>
+        </div>     
+    </form>
+    <app-contact-links></app-contact-links>
+</section>
+<!--
+    [&>:nth-child(1)]:md:w-[30%] [&>:nth-child(2)]:md:w-[30%] [&>:nth-child(3)]:md:w-[30%]
+-->

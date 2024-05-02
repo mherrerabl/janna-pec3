@@ -6,6 +6,10 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from './app.reducers';
+import { getLoading } from './spinner/selector/spinner.selector';
 
 @Component({
   selector: 'app-root',
@@ -47,10 +51,18 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Janna';
 
+  showLoading!: Observable<boolean>;
+
+  constructor(private store: Store<AppState>) {}
+
+  ngOnInit(): void {
+    this.showLoading = this.store.select(getLoading);
+  }
+  /*
   menuState: string = 'out';
   isOpen: string = 'close';
   toggleMenu() {
     this.isOpen == 'open' ? (this.isOpen = 'close') : (this.isOpen = 'open');
     console.log(this.isOpen);
-  }
+  }*/
 }

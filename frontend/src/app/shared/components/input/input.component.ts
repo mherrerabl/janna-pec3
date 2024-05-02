@@ -6,13 +6,14 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, Input } from '@angular/core';
-import { faCalendar } from '@fortawesome/free-regular-svg-icons/faCalendar';
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons/faEnvelope';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
-import { faEye } from '@fortawesome/free-solid-svg-icons/faEye';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash';
-import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone';
+import { faCalendar, faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import {
+  faChevronDown,
+  faChevronUp,
+  faEye,
+  faEyeSlash,
+  faPhone,
+} from '@fortawesome/free-solid-svg-icons';
 import { InputDTO, OptionDTO } from '../../models/input.dto';
 
 @Component({
@@ -30,7 +31,40 @@ import { InputDTO, OptionDTO } from '../../models/input.dto';
   ],
 })
 export class InputComponent {
-  @Input() dataInput: InputDTO = {
+  @Input() dataInput!: InputDTO;
+  @Input() checkForm!: boolean;
+
+  hidePassword: boolean = true;
+  expandSelect: boolean = false;
+  optionSelected!: OptionDTO;
+  iconEmail = faEnvelope;
+  iconPhone = faPhone;
+  iconCalendar = faCalendar;
+  iconEye = faEye;
+  iconEyeSlash = faEyeSlash;
+  iconArrowUp = faChevronUp;
+  iconArrowDown = faChevronDown;
+
+  toogleIconPassword(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toogleSelect(): void {
+    this.expandSelect = !this.expandSelect;
+  }
+
+  optionMenu(value: string): void {
+    if (this.dataInput.options !== undefined) {
+      this.optionSelected = this.dataInput.options.filter(
+        ({ id }) => id === value
+      )[0];
+    }
+
+    this.toogleSelect();
+  }
+}
+/*
+= {
     label: 'Title',
     placeholder: 'placeholder',
     type: 'select',
@@ -63,33 +97,4 @@ export class InputComponent {
       },
     ],
   };
-
-  hidePassword: boolean = true;
-  expandSelect: boolean = false;
-  optionSelected!: OptionDTO;
-  iconEmail = faEnvelope;
-  iconPhone = faPhone;
-  iconCalendar = faCalendar;
-  iconEye = faEye;
-  iconEyeSlash = faEyeSlash;
-  iconArrowUp = faChevronUp;
-  iconArrowDown = faChevronDown;
-
-  toogleIconPassword(): void {
-    this.hidePassword = !this.hidePassword;
-  }
-
-  toogleSelect(): void {
-    this.expandSelect = !this.expandSelect;
-  }
-
-  optionMenu(value: string): void {
-    if (this.dataInput.options !== undefined) {
-      this.optionSelected = this.dataInput.options.filter(
-        ({ id }) => id === value
-      )[0];
-    }
-
-    this.toogleSelect();
-  }
-}
+  */
