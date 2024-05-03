@@ -1,4 +1,4 @@
-<div class="group relative w-full [&:not(:has(+div>.error))]:mb-6">
+<div class="group relative w-full {{ dataInput.type === 'search' ? 'mb-0' :'[&:not(:has(+div>.error))]:mb-6'}}">
   @if (dataInput.iconLeft !== undefined) {
     @switch (dataInput.iconLeft) {
       @case ('email') {
@@ -8,11 +8,15 @@
       @case ('phone') {
         <span class="peer icon-left"><fa-icon [icon]="iconPhone"></fa-icon></span>
       }
+
+      @case ('search') {
+        <span class="peer icon-left"><fa-icon [icon]="iconSearch"></fa-icon></span>
+      }
     }
   }
 
   @if (dataInput.type !== 'select' && dataInput.type !== 'checkbox') {
-    <label class="label">{{ dataInput.label }} <span *ngIf="dataInput.required">*</span></label>
+    <label class="{{dataInput.type === 'search' ? 'label-s' : 'label'}}">{{ dataInput.label }} <span *ngIf="dataInput.required">*</span></label>
   }
  
   @if (dataInput.type === 'textarea') {
@@ -68,12 +72,12 @@
       [required]="dataInput.required" 
       [formControl]="dataInput.formControl">
    
-    <span [innerHTML]="dataInput.label"></span></label>
+    <span [innerHTML]="dataInput.label | sanitizeHtml"></span></label>
     
   }
 
   @else {
-    <input class="input" 
+    <input class="input {{dataInput.type === 'search' ? 'h-10' : ''}}" 
     [type]="hidePassword ? dataInput.type : 'text'" 
     [placeholder]="dataInput.placeholder" 
     [required]="dataInput.required" 

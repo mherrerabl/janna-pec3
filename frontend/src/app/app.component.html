@@ -1,24 +1,42 @@
-<router-outlet></router-outlet>
-
 <div class="peer flex flex-col flex-grow min-h-screen">
-    <app-header></app-header>
-    <main class="">
-        
+    <app-header class="bg-primary"></app-header>
+    <main class="container mb-separator-50">
+        <app-treatments-categories></app-treatments-categories>
+        <router-outlet></router-outlet>
     </main>
-    <div class="mb-separator-50">
-        <div class="mb-separator-50 px-3 py-separator-30 bg-primary">
+    <div class="mt-auto mb-separator-50 lg:flex lg:gap-separator-30 lg:container">
+        <div class="mb-separator-30 py-separator-50 bg-primary lg:w-full lg:bg-transparent">
              <app-location></app-location>
         </div>
-       <div class="px-3">
+       <div class="py-separator-30 lg:w-full lg:py-separator-50">
             <app-contact></app-contact>
        </div>
         
     </div>
     
-    <app-footer class="mt-auto"></app-footer>
+    <app-footer class=" bg-primary"></app-footer>
     <app-menu-footer class="md:lg:hidden"></app-menu-footer>
 </div>
-<div class="peer-has-[.modalActive]:modal"></div>
+
+
+@if (showMenu) {
+    <app-menu class="modal-right"></app-menu>
+}
+
+@if (showCart) {
+    <app-cart class="modal-right"></app-cart>
+}
+
+@if (showLogin) {
+}
+
+@if (showRegister) {
+}
+
+@if (showMenu || showCart || showLogin ||  showRegister) {
+    <div class="modal"></div>
+}
+
 <app-spinner *ngIf="showLoading | async"></app-spinner>
 <!--
 <div>

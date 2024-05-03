@@ -70,7 +70,10 @@ module.exports = {
     letterSpacing: {
       '0.5': '0.5px'
     },
-
+    container: {
+      center: true,
+      padding: '10px'
+    },
     extend: {
       boxShadow: {
         'badge-500': '0 0 0 1px #CF647F',
@@ -85,7 +88,12 @@ module.exports = {
         'separator-30': '30px',
         'separator-50': '50px',
         'limit-600': '600px',
-        'cart': 'calc(100vh - 285px)'
+        'cart': 'calc(100vh - 285px)',
+        'home': 'calc(100vh - 270px)',
+        'home-m': 'calc(100vh - 320px)',
+      },
+      zIndex: {
+        '1000': '1000'
       },
       keyframes: {
         'closeMenu': {

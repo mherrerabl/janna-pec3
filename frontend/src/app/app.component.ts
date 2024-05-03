@@ -50,10 +50,19 @@ import { getLoading } from './spinner/selector/spinner.selector';
 })
 export class AppComponent {
   title = 'Janna';
+  showMenu: boolean;
+  showCart: boolean;
+  showLogin: boolean;
+  showRegister: boolean;
 
   showLoading!: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {
+    this.showMenu = false;
+    this.showCart = false;
+    this.showLogin = false;
+    this.showRegister = false;
+  }
 
   ngOnInit(): void {
     this.showLoading = this.store.select(getLoading);

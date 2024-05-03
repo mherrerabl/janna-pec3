@@ -1,5 +1,6 @@
-<div class="absolute top-0 right-0 w-[300px]" [class.animate-openMenu]="isOpen" [class.animate-closeMenu]="!isOpen">
-    <div class="flex flex-col justify-between h-fit bg-white shadow-menu">
+<!--<div [class.animate-openMenu]="isOpen" [class.animate-closeMenu]="!isOpen">-->
+<div>
+    <div class="flex flex-col justify-between h-fit bg-white">
             <div class="sticky top-0 px-4 bg-white">
                 <button class="icon-xl button-icon h-[65px] text-start" (click)="isOpen = false"><fa-icon [icon]="iconClose"></fa-icon></button>
                 <h2 class="pb-separator-30">Carrito</h2>
@@ -9,9 +10,10 @@
                 @for (product of dataProducts; track $index) {
                         <li class="flex flex-col h-fit">
                             <div class="flex justify-between gap-2">
-                                <figure class="w-[100px]">
+                                <picture class="w-[100px]">                 
+                                    <source [srcset]="product.image.webp" type="image/webp">
                                     <img class="object-cover aspect-[4/3]" [src]="product.image.jpg" [alt]="product.image.title">
-                                </figure>
+                                </picture>
  
                                 <div class="flex flex-col">
                                     <p class="subtitle-m flex-1">{{ product.name }}</p>

@@ -16,9 +16,12 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment.prod';
 import { appReducers, EffectsArray } from './app.reducers';
+import { CategoriesModule } from './categories/categories.module';
+import { HomeModule } from './home/home.module';
 import { MailModule } from './mail/mail.module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './spinner/components/spinner/spinner.component';
+import { TreatmentsModule } from './treatments/treatments.module';
 
 registerLocaleData(localeEs);
 
@@ -29,6 +32,9 @@ registerLocaleData(localeEs);
     AppRoutingModule,
     SharedModule,
     MailModule,
+    HomeModule,
+    CategoriesModule,
+    TreatmentsModule,
     HttpClientModule,
     StoreModule.forRoot(appReducers, {
       runtimeChecks: {

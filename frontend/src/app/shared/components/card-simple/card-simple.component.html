@@ -1,0 +1,10 @@
+
+<div class="w-full h-full min-h-36">
+    <a class="group relative block w-full h-64" [routerLink]="dataCard.route">
+        <picture class="relative block overflow-hidden w-full h-full">                 
+            <source [srcset]="dataCard.image.webp" type="image/webp">
+            <img class="absolute object-cover object-center w-full h-full" [src]="dataCard.image.jpg" [alt]="dataCard.image.title">
+        </picture>
+        <h4 class="py-4 bg-grey text-center card-simple-title">{{ dataCard.title }}</h4>
+    </a>
+</div>

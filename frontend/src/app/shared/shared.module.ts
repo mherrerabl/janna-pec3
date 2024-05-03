@@ -6,6 +6,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { BadgeComponent } from './components/badge/badge.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ButtonComponent } from './components/button/button.component';
+import { CardSimpleComponent } from './components/card-simple/card-simple.component';
 import { CardComponent } from './components/card/card.component';
 import { CartDropdownComponent } from './components/cart-dropdown/cart-dropdown.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -21,6 +22,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { RowDetailComponent } from './components/row-detail/row-detail.component';
 import { TableComponent } from './components/table/table.component';
 import { IconsModule } from './icons/icons.module';
+import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 import { SharedRoutingModule } from './shared-routing.module';
 
@@ -30,6 +32,7 @@ import { SharedRoutingModule } from './shared-routing.module';
     ButtonComponent,
     BreadcrumbsComponent,
     CardComponent,
+    CardSimpleComponent,
     ShortDescriptionPipe,
     InputComponent,
     TableComponent,
@@ -44,6 +47,7 @@ import { SharedRoutingModule } from './shared-routing.module';
     LocationComponent,
     ContactLinksComponent,
     HeaderComponent,
+    SanitizeHtmlPipe,
   ],
   imports: [
     CommonModule,
@@ -58,6 +62,7 @@ import { SharedRoutingModule } from './shared-routing.module';
     BreadcrumbsComponent,
     NgxPaginationModule,
     CardComponent,
+    CardSimpleComponent,
     InputComponent,
     ShortDescriptionPipe,
     TableComponent,

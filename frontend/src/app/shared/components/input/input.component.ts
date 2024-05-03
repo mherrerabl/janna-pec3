@@ -12,6 +12,7 @@ import {
   faChevronUp,
   faEye,
   faEyeSlash,
+  faMagnifyingGlass,
   faPhone,
 } from '@fortawesome/free-solid-svg-icons';
 import { InputDTO, OptionDTO } from '../../models/input.dto';
@@ -44,6 +45,7 @@ export class InputComponent {
   iconEyeSlash = faEyeSlash;
   iconArrowUp = faChevronUp;
   iconArrowDown = faChevronDown;
+  iconSearch = faMagnifyingGlass;
 
   toogleIconPassword(): void {
     this.hidePassword = !this.hidePassword;

@@ -1,13 +1,22 @@
 .label {
-    @apply absolute left-4 text-darkGrey bg-lightGrey translate-y-4 transition 
+    @apply absolute left-4 translate-y-4 transition text-darkGrey bg-lightGrey 
     peer-[.icon-left]:left-11
     group-hover:[&:not(&:has(~.input:focus))]:text-secundary-600 
     group-hover:[&:not(&:has(~.input:valid))]:text-secundary-600 
     has-[~.input:focus]:text-secundary-700 has-[~.input:focus]:-translate-x-1 has-[~.input:focus]:-translate-y-2/4 has-[~.input:focus]:px-1
     peer-[.icon-left]:has-[~.input:focus]:-translate-x-8
-    has-[~.input:valid]:-translate-x-1 has-[~.input:valid]:-translate-y-2/4 has-[~.input:valid]:px-1
+    has-[~.input:not(:placeholder-shown)]:-translate-x-1 has-[~.input:not(:placeholder-shown)]:-translate-y-2/4 has-[~.input:not(:placeholder-shown)]:px-1
     peer-[.icon-left]:has-[~.input:valid]:-translate-x-8
     has-[~.invalid]:text-error-500;
+}
+
+.label-s {
+    @apply absolute left-4 top-0 translate-y-1/2 transition text-darkGrey bg-lightGrey 
+    peer-[.icon-left]:left-12
+    group-hover:[&:not(&:has(~.input:focus))]:text-secundary-600 
+    group-hover:[&:not(&:has(~.input:valid))]:text-secundary-600 
+    has-[~.input:focus]:hidden
+    has-[~.input:not(:placeholder-shown)]:hidden;
 }
 
 .input {
@@ -16,7 +25,7 @@
     peer-[.icon-left]:pl-11
     group-hover:border-secundary-600 
     focus:border-2 focus:border-secundary-700 focus:outline-none focus:placeholder:opacity-100
-    valid:border
+    [&:not(:placeholder-shown)]:border
     [&.invalid]:border-error-500 [&.invalid]:border-2;
 }
 

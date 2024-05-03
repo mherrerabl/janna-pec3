@@ -10,9 +10,10 @@
                 <app-badge *ngIf="dataCard.product.price.offer === '3x2'" class="flex justify-end" [dataBadge]="badgeProm2"></app-badge>
             </div>
         </div>
-        <figure>
-            <img src="{{dataCard.image.jpg}}" alt="{{dataCard.image.title}}">
-        </figure>
+        <picture>                 
+            <source [srcset]="dataCard.image.webp" type="image/webp">
+            <img class="object-cover aspect-[4/3]" [src]="dataCard.image.jpg" [alt]="dataCard.image.title">
+        </picture>
     </div>
     
     <p class="subtitle-m">{{ dataCard.product.brand | uppercase}}</p>

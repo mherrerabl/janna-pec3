@@ -67,6 +67,7 @@
     textarea,
     span,
     a, 
+    button,
     tr,
     th  {
         @apply font-text text-m leading-140;
@@ -116,8 +117,12 @@
 }
 
 @layer components {
+    /**Modals**/
     .modal {
         @apply absolute w-screen h-screen top-0 z-50 bg-darkGrey/30;
+    }
+    .modal-right {
+        @apply absolute top-0 right-0 z-1000 w-full max-w-72 bg-white;
     }
 
 
@@ -126,6 +131,8 @@
     @import "./app/shared/components/input/input.component.scss";
     @import "./app/shared/components/table/table.component.scss";
     @import "./app/shared/components/badge/badge.component.scss";
+    @import "./app/shared/components/card-simple/card-simple.component.scss";
+
 }
 
 @layer utilities {
