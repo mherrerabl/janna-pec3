@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './app.reducers';
@@ -48,7 +48,7 @@ import { getLoading } from './spinner/selector/spinner.selector';
     ]),
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Janna';
   showMenu: boolean;
   showCart: boolean;
@@ -65,7 +65,9 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.showLoading = this.store.select(getLoading);
+    setTimeout(() => {
+      this.showLoading = this.store.select(getLoading);
+    });
   }
   /*
   menuState: string = 'out';

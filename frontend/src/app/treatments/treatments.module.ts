@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
-import { TreatmentsCategoriesComponent } from './components/treatments-categories/treatments-categories.component';
+import { TreatmentDetailComponent } from './components/treatment-detail/treatment-detail.component';
 import { TreatmentsRoutingModule } from './treatments-routing.module';
 
 @NgModule({
-  declarations: [TreatmentsCategoriesComponent],
+  declarations: [TreatmentDetailComponent],
   imports: [CommonModule, TreatmentsRoutingModule, SharedModule],
-  exports: [TreatmentsCategoriesComponent],
+  exports: [TreatmentDetailComponent],
 })
 export class TreatmentsModule {}

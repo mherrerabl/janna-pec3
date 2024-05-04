@@ -12,12 +12,15 @@ import {
   getCategoriesByDepartment,
   getCategoriesByDepartmentFailure,
   getCategoriesByDepartmentSuccess,
-  getCategoriesBySubcategory,
-  getCategoriesBySubcategoryFailure,
-  getCategoriesBySubcategorySuccess,
+  getCategoriesByParam,
+  getCategoriesByParamFailure,
+  getCategoriesByParamSuccess,
   getCategoryById,
   getCategoryByIdFailure,
   getCategoryByIdSuccess,
+  getCategoryByUrl,
+  getCategoryByUrlFailure,
+  getCategoryByUrlSuccess,
   updateCategory,
   updateCategoryFailure,
   updateCategorySuccess,
@@ -102,20 +105,40 @@ const _categoriesReducer = createReducer(
     error: { payload },
   })),
 
-  on(getCategoriesBySubcategory, (state) => ({
+  on(getCategoriesByParam, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     error: null,
   })),
-  on(getCategoriesBySubcategorySuccess, (state, action) => ({
+  on(getCategoriesByParamSuccess, (state, action) => ({
     ...state,
     categories: action.categories,
     loading: false,
     loaded: true,
     error: null,
   })),
-  on(getCategoriesBySubcategoryFailure, (state, { payload }) => ({
+  on(getCategoriesByParamFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(getCategoryByUrl, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getCategoryByUrlSuccess, (state, action) => ({
+    ...state,
+    category: action.category,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getCategoryByUrlFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

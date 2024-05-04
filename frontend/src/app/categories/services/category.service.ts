@@ -34,16 +34,21 @@ export class CategoryService {
 
   getCategoriesByDepartment(department: string): Observable<CategoryClass[]> {
     return this.http
-      .get<CategoryClass[]>(this.urlApi + '/categories/' + department)
+      .get<CategoryClass[]>(this.urlApi + '/department/' + department)
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getCategoriesBySubcategory(categoryId: string): Observable<CategoryClass[]> {
+  getCategoriesByParam(paramUrl: string): Observable<CategoryClass[]> {
     return this.http
-      .get<CategoryClass[]>(this.urlApi + '/subcategory/' + categoryId)
+      .get<CategoryClass[]>(this.urlApi + '/categories/' + paramUrl)
       .pipe(catchError(this.sharedService.handleError));
   }
 
+  getCategoryByUrl(paramUrl: string): Observable<CategoryClass> {
+    return this.http
+      .get<CategoryClass>(this.urlApi + '/category/' + paramUrl)
+      .pipe(catchError(this.sharedService.handleError));
+  }
   createCategory(category: CategoryClass): Observable<CategoryClass> {
     return this.http
       .post<CategoryClass>(this.urlApi, category)

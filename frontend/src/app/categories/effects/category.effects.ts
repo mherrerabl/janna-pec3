@@ -128,20 +128,20 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  getCategoriesBySubcategory$ = createEffect(() =>
+  getCategoriesByParam$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.getCategoriesBySubcategory),
-      exhaustMap(({ categoryId }) =>
-        this.categoryService.getCategoriesBySubcategory(categoryId).pipe(
+      ofType(CategoryActions.getCategoriesByParam),
+      exhaustMap(({ paramUrl }) =>
+        this.categoryService.getCategoriesByParam(paramUrl).pipe(
           map((categories) => {
             this.store.dispatch(isLoading({ status: false }));
-            return CategoryActions.getCategoriesBySubcategorySuccess({
+            return CategoryActions.getCategoriesByParamSuccess({
               categories: categories,
             });
           }),
           catchError((error) => {
             return of(
-              CategoryActions.getCategoriesBySubcategoryFailure({
+              CategoryActions.getCategoriesByParamFailure({
                 payload: error,
               })
             );
@@ -151,10 +151,46 @@ export class CategoryEffects {
     )
   );
 
-  getCategoriesBySubcategoryFailure$ = createEffect(
+  getCategoriesByParamFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.getCategoriesBySubcategoryFailure),
+        ofType(CategoryActions.getCategoriesByParamFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  getCategoryByUrl$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CategoryActions.getCategoryByUrl),
+      exhaustMap(({ paramUrl }) =>
+        this.categoryService.getCategoryByUrl(paramUrl).pipe(
+          map((category) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return CategoryActions.getCategoryByUrlSuccess({
+              category: category,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              CategoryActions.getCategoryByUrlFailure({
+                payload: error,
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  getCategoryByUrlFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CategoryActions.getCategoryByUrlFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;

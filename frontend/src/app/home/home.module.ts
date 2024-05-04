@@ -10,4 +10,8 @@ import { HomeRoutingModule } from './home-routing.module';
   imports: [CommonModule, HomeRoutingModule, SharedModule],
   exports: [HomeComponent],
 })
-export class HomeModule {}
+export class HomeModule {
+  constructor() {
+    console.log('HomeModule loaded.');
+  }
+}

@@ -1,7 +1,6 @@
 <div class="peer flex flex-col flex-grow min-h-screen">
     <app-header class="bg-primary"></app-header>
     <main class="container min-h-home mb-separator-50">
-        <app-treatments-categories></app-treatments-categories>
         <router-outlet></router-outlet>
     </main>
     <div class="mt-auto mb-separator-50 lg:flex lg:gap-separator-30 lg:container">
@@ -36,7 +35,7 @@
 @if (showRegister) {
 }
 
-@if (showLoading |async) {
+@if (showLoading | async) {
     <app-spinner></app-spinner>
 }
 <!--

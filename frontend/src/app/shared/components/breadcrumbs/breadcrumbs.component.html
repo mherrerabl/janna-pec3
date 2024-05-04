@@ -1,5 +1,9 @@
-@for (link of dataBreadcrumbs; track $index; let last = $last) {
-    <a *ngIf="!last" class="mr-2 button-m button-link w-auto h-auto text-darkGrey">{{ link }}</a>
-    <span *ngIf="!last" class="mr-2 text-black">></span>
-    <span *ngIf="last" class="mr-2 text-secundary-700 font-bold">{{ link }}</span>
-}
+<div class="py-4">
+    <a class="mr-2 button-m button-link w-auto h-auto text-darkGrey" [routerLink]="''">Inicio</a>
+    <span class="mr-2 text-black">></span>
+    @for (breadcrumb of dataBreadcrumbs; track $index; let last = $last) {
+        <a *ngIf="!last" class="mr-2 button-m button-link w-auto h-auto text-darkGrey" [routerLink]="breadcrumb.url">{{ breadcrumb.name }}</a>
+        <span *ngIf="!last" class="mr-2 text-black">></span>
+        <p *ngIf="last" class="inline mr-2 text-secundary-700 font-bold">{{ breadcrumb.name }}</p>
+    }    
+</div>

@@ -43,17 +43,31 @@ export const getCategoriesByDepartmentFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
-export const getCategoriesBySubcategory = createAction(
-  '[Categories list] Get categories by subcategory',
-  props<{ categoryId: string }>()
+export const getCategoriesByParam = createAction(
+  '[Categories list] Get categories by param',
+  props<{ paramUrl: string }>()
 );
-export const getCategoriesBySubcategorySuccess = createAction(
-  '[Categories list] Get categories by subcategory success',
+export const getCategoriesByParamSuccess = createAction(
+  '[Categories list] Get categories by param success',
   props<{ categories: CategoryClass[] }>()
 );
 
-export const getCategoriesBySubcategoryFailure = createAction(
-  '[Categories list] Get categories by subcategory fail',
+export const getCategoriesByParamFailure = createAction(
+  '[Categories list] Get categories by param fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getCategoryByUrl = createAction(
+  '[Category] Get category by subcategory',
+  props<{ paramUrl: string }>()
+);
+export const getCategoryByUrlSuccess = createAction(
+  '[Category] Get category by subcategory success',
+  props<{ category: CategoryClass }>()
+);
+
+export const getCategoryByUrlFailure = createAction(
+  '[Category] Get category by subcategory fail',
   props<{ payload: HttpErrorResponse }>()
 );
 
