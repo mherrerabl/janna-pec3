@@ -1,14 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { MailDTO } from '../models/mail.dto.ts';
+import { MailClass } from '../models/mail.js';
 
 export const sendMail = createAction(
   '[Contact mail] Send mail',
-  props<{ mail: MailDTO }>()
+  props<{ mail: MailClass }>()
 );
 export const sendMailSuccess = createAction(
   '[Contact mail] Send mail Success',
-  props<{ mail: MailDTO }>()
+  props<{ mail: MailClass }>()
 );
 
 export const sendMailFailure = createAction(

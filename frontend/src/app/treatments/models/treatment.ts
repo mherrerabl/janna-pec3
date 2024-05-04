@@ -1,12 +1,12 @@
-import { PriceDTO } from '../../shared/models/price-dto';
+import { PriceClass } from '../../shared/models/price';
 
-export class TreatmentDTO {
+export class TreatmentClass {
   id: string;
   name: string;
   description: string;
   sessions: number;
   duration: number;
-  price: PriceDTO;
+  price: PriceClass;
 
   constructor(
     id: string,
@@ -14,7 +14,7 @@ export class TreatmentDTO {
     description: string,
     sessions: number,
     duration: number,
-    price: PriceDTO
+    price: PriceClass
   ) {
     this.id = id;
     this.name = name;

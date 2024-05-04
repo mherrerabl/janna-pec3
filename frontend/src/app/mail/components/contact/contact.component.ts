@@ -10,7 +10,7 @@ import { AppState } from '../../../app.reducers';
 import { InputDTO } from '../../../shared/models/input.dto';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import * as MailActions from '../../actions';
-import { MailDTO } from '../../models/mail.dto.ts';
+import { MailClass } from '../../models/mail';
 
 @Component({
   selector: 'app-contact',
@@ -18,7 +18,7 @@ import { MailDTO } from '../../models/mail.dto.ts';
   styleUrl: './contact.component.scss',
 })
 export class ContactComponent {
-  contactMail: MailDTO;
+  contactMail: MailClass;
   name: FormControl;
   surname: FormControl;
   email: FormControl;
@@ -40,7 +40,7 @@ export class ContactComponent {
     this.checkForm = false;
     this.showFeedback = false;
 
-    this.contactMail = new MailDTO('', '', '', '');
+    this.contactMail = new MailClass('', '', '', '');
 
     this.name = new FormControl(this.contactMail.name, [
       Validators.required,

@@ -119,7 +119,7 @@
 @layer components {
     /**Modals**/
     .modal {
-        @apply absolute w-screen h-screen top-0 z-50 bg-darkGrey/30;
+        @apply absolute w-screen h-screen top-0 z-1000 bg-darkGrey/30;
     }
     .modal-right {
         @apply absolute top-0 right-0 z-1000 w-full max-w-72 bg-white;

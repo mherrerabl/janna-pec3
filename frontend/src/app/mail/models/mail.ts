@@ -1,4 +1,4 @@
-export class MailDTO {
+export class MailClass {
   name: string;
   surname: string;
   email: string;

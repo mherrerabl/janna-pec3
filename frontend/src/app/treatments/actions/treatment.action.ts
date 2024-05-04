@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { TreatmentDTO } from '../models/treatment.dto';
+import { TreatmentClass } from '../models/treatment';
 
 export const getAllTreatments = createAction(
   '[Treatments list] Get treatments list'
 );
 export const getAllTreatmentsSuccess = createAction(
   '[Treatments list] Get treatments list success',
-  props<{ treatments: TreatmentDTO[] }>()
+  props<{ treatments: TreatmentClass[] }>()
 );
 
 export const getAllTreatmentsFailure = createAction(
@@ -17,12 +17,12 @@ export const getAllTreatmentsFailure = createAction(
 
 export const createTreatment = createAction(
   '[Treatment form] Create new treatment',
-  props<{ treatment: TreatmentDTO }>()
+  props<{ treatment: TreatmentClass }>()
 );
 
 export const createTreatmentSuccess = createAction(
   '[Treatment form] Create new treatment success',
-  props<{ treatment: TreatmentDTO }>()
+  props<{ treatment: TreatmentClass }>()
 );
 
 export const createTreatmentFailure = createAction(
@@ -32,12 +32,12 @@ export const createTreatmentFailure = createAction(
 
 export const updateTreatment = createAction(
   '[Treatment form] Update treatment',
-  props<{ treatmentId: string; treatment: TreatmentDTO }>()
+  props<{ treatmentId: string; treatment: TreatmentClass }>()
 );
 
 export const updateTreatmentSuccess = createAction(
   '[Treatment form] Update treatment success',
-  props<{ treatmentId: string; treatment: TreatmentDTO }>()
+  props<{ treatmentId: string; treatment: TreatmentClass }>()
 );
 
 export const updateTreatmentFailure = createAction(

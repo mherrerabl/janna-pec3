@@ -95,6 +95,12 @@ module.exports = {
       zIndex: {
         '1000': '1000'
       },
+      flex: {
+        'col-1': '0 1 100%',
+        'col-2': '0 1 50%',
+        'col-3': '0 1 33%', 
+        'col-4': '0 1 25%'
+      },
       keyframes: {
         'closeMenu': {
           '0%': {

@@ -1,6 +1,6 @@
 <div class="peer flex flex-col flex-grow min-h-screen">
     <app-header class="bg-primary"></app-header>
-    <main class="container mb-separator-50">
+    <main class="container min-h-home mb-separator-50">
         <app-treatments-categories></app-treatments-categories>
         <router-outlet></router-outlet>
     </main>
@@ -18,6 +18,9 @@
     <app-menu-footer class="md:lg:hidden"></app-menu-footer>
 </div>
 
+@if (showMenu || showCart || showLogin ||  showRegister || (showLoading |async)) {
+    <div class="modal"></div>
+}
 
 @if (showMenu) {
     <app-menu class="modal-right"></app-menu>
@@ -33,11 +36,9 @@
 @if (showRegister) {
 }
 
-@if (showMenu || showCart || showLogin ||  showRegister) {
-    <div class="modal"></div>
+@if (showLoading |async) {
+    <app-spinner></app-spinner>
 }
-
-<app-spinner *ngIf="showLoading | async"></app-spinner>
 <!--
 <div>
     <button class="z-50" (click)="toggleMenu()">click</button>

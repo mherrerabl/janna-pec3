@@ -25,7 +25,7 @@ import { ProductDTO } from '../../models/product.dto';
   ],
 })
 export class CartDropdownComponent {
-  @Input() dataProducts: ProductDTO[] = products;
+  @Input() dataProducts!: ProductDTO[];
   dropdownExpanded: boolean = false;
   shippingCostsFree: boolean = false;
   iconArrowUp = faChevronUp;
@@ -54,7 +54,7 @@ export class CartDropdownComponent {
   }
 }
 
-const products: ProductDTO[] = [
+const products: ProductDTO[] | any[] = [
   {
     id: '1',
     name: 'product1',

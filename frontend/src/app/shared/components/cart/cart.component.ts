@@ -7,7 +7,7 @@ import { ProductDTO } from '../../models/product.dto';
   templateUrl: './cart.component.html',
 })
 export class CartComponent {
-  @Input() dataProducts: ProductDTO[] = products;
+  @Input() dataProducts!: ProductDTO[];
   @Input() isOpen!: boolean;
   iconClose = faXmark;
 
@@ -24,7 +24,7 @@ export class CartComponent {
   }
 }
 
-const products: ProductDTO[] = [
+const products: ProductDTO[] | any[] = [
   {
     id: '1',
     name: 'product1',

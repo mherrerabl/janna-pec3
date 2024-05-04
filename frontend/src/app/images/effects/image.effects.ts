@@ -5,17 +5,17 @@ import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, finalize, map, of } from 'rxjs';
 import { SharedService } from '../../shared/services/shared.service';
 import { isLoading } from '../../spinner/actions/spinner.actions';
-import { CategoryService } from '../services/category.service';
-import * as CategoryActions from './../actions';
+import { ImageService } from '../services/image.service';
+import * as ImageActions from './../actions';
 
 @Injectable()
-export class CategoryEffects {
+export class ImageEffects {
   private responseOK: boolean;
   private errorResponse: any;
 
   constructor(
     private actions$: Actions,
-    private categoryService: CategoryService,
+    private imageService: ImageService,
     private sharedService: SharedService,
     private router: Router,
     private store: Store
@@ -23,52 +23,48 @@ export class CategoryEffects {
     this.responseOK = false;
   }
 
-  getCategories$ = createEffect(() =>
+  getImages$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.getAllCategories),
+      ofType(ImageActions.getAllImages),
       exhaustMap(() =>
-        this.categoryService.getCategories().pipe(
-          map((categories) => {
+        this.imageService.getImages().pipe(
+          map((images) => {
             this.store.dispatch(isLoading({ status: false }));
-            return CategoryActions.getAllCategoriesSuccess({
-              categories: categories,
+            return ImageActions.getAllImagesSuccess({
+              images: images,
             });
           }),
           catchError((error) => {
-            return of(
-              CategoryActions.getAllCategoriesFailure({ payload: error })
-            );
+            return of(ImageActions.getAllImagesFailure({ payload: error }));
           })
         )
       )
     )
   );
 
-  getCategoryById$ = createEffect(() =>
+  getImageById$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.getCategoryById),
-      exhaustMap(({ categoryId }) =>
-        this.categoryService.getCategoryById(categoryId).pipe(
-          map((category) => {
+      ofType(ImageActions.getImageById),
+      exhaustMap(({ imageId }) =>
+        this.imageService.getImageById(imageId).pipe(
+          map((image) => {
             this.store.dispatch(isLoading({ status: false }));
-            return CategoryActions.getCategoryByIdSuccess({
-              category: category,
+            return ImageActions.getImageByIdSuccess({
+              image: image,
             });
           }),
           catchError((error) => {
-            return of(
-              CategoryActions.getCategoryByIdFailure({ payload: error })
-            );
+            return of(ImageActions.getImageByIdFailure({ payload: error }));
           })
         )
       )
     )
   );
 
-  getCategoryByIdFailure$ = createEffect(
+  getImageByIdFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.getCategoryByIdFailure),
+        ofType(ImageActions.getImageByIdFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
@@ -78,10 +74,10 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  getCategoriesFailure$ = createEffect(
+  getImagesFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.getAllCategoriesFailure),
+        ofType(ImageActions.getAllImagesFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
@@ -92,20 +88,20 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  getCategoriesByDepartment$ = createEffect(() =>
+  getImagesByProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.getCategoriesByDepartment),
-      exhaustMap(({ department }) =>
-        this.categoryService.getCategoriesByDepartment(department).pipe(
-          map((categories) => {
+      ofType(ImageActions.getImagesByProduct),
+      exhaustMap(({ productId }) =>
+        this.imageService.getImagesByProduct(productId).pipe(
+          map((images) => {
             this.store.dispatch(isLoading({ status: false }));
-            return CategoryActions.getCategoriesByDepartmentSuccess({
-              categories: categories,
+            return ImageActions.getImagesByProductSuccess({
+              images: images,
             });
           }),
           catchError((error) => {
             return of(
-              CategoryActions.getCategoriesByDepartmentFailure({
+              ImageActions.getImagesByProductFailure({
                 payload: error,
               })
             );
@@ -115,10 +111,10 @@ export class CategoryEffects {
     )
   );
 
-  getCategoriesByDepartmentFailure$ = createEffect(
+  getImagesByProductFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.getCategoriesByDepartmentFailure),
+        ofType(ImageActions.getImagesByProductFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
@@ -128,20 +124,56 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  getCategoriesBySubcategory$ = createEffect(() =>
+  getImagesByTreatment$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.getCategoriesBySubcategory),
+      ofType(ImageActions.getImagesByTreatment),
+      exhaustMap(({ treatmentId }) =>
+        this.imageService.getImagesByTreatment(treatmentId).pipe(
+          map((images) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return ImageActions.getImagesByTreatmentSuccess({
+              images: images,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              ImageActions.getImagesByTreatmentFailure({
+                payload: error,
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  getImagesByTreatmentFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ImageActions.getImagesByTreatmentFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  getImagesByCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ImageActions.getImageByCategory),
       exhaustMap(({ categoryId }) =>
-        this.categoryService.getCategoriesBySubcategory(categoryId).pipe(
-          map((categories) => {
+        this.imageService.getImageByCategory(categoryId).pipe(
+          map((image) => {
             this.store.dispatch(isLoading({ status: false }));
-            return CategoryActions.getCategoriesBySubcategorySuccess({
-              categories: categories,
+            return ImageActions.getImageByCategorySuccess({
+              image: image,
             });
           }),
           catchError((error) => {
             return of(
-              CategoryActions.getCategoriesBySubcategoryFailure({
+              ImageActions.getImageByCategoryFailure({
                 payload: error,
               })
             );
@@ -151,10 +183,10 @@ export class CategoryEffects {
     )
   );
 
-  getCategoriesBySubcategoryFailure$ = createEffect(
+  getImagesByCategoryFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.getCategoriesBySubcategoryFailure),
+        ofType(ImageActions.getImageByCategoryFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
@@ -164,28 +196,26 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  createCategory$ = createEffect(() =>
+  createImage$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.createCategory),
-      exhaustMap(({ category }) =>
-        this.categoryService.createCategory(category).pipe(
-          map((category) => {
-            return CategoryActions.createCategorySuccess({
-              category: category,
+      ofType(ImageActions.createImage),
+      exhaustMap(({ image }) =>
+        this.imageService.createImage(image).pipe(
+          map((image) => {
+            return ImageActions.createImageSuccess({
+              image: image,
             });
           }),
           catchError((error) => {
-            return of(
-              CategoryActions.createCategoryFailure({ payload: error })
-            );
+            return of(ImageActions.createImageFailure({ payload: error }));
           }),
           finalize(async () => {
             setTimeout(() => {
               this.sharedService.flashNotification(
-                'categoryFeedback',
+                'imageFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha creado una nueva categoría.'
+                'Se ha creado una nueva imagen.'
               );
             }, 100);
           })
@@ -194,10 +224,10 @@ export class CategoryEffects {
     )
   );
 
-  createCategorySuccess$ = createEffect(
+  createImageSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.createCategorySuccess),
+        ofType(ImageActions.createImageSuccess),
         map(() => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = true;
@@ -206,10 +236,10 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  createCategoryFailure$ = createEffect(
+  createImageFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.createCategoryFailure),
+        ofType(ImageActions.createImageFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
@@ -220,29 +250,27 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  updateCategory$ = createEffect(() =>
+  updateImage$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.updateCategory),
-      exhaustMap(({ categoryId, category }) =>
-        this.categoryService.updateCategory(categoryId, category).pipe(
-          map((category) => {
-            return CategoryActions.updateCategorySuccess({
-              categoryId: categoryId,
-              category: category,
+      ofType(ImageActions.updateImage),
+      exhaustMap(({ imageId, image }) =>
+        this.imageService.updateImage(imageId, image).pipe(
+          map((image) => {
+            return ImageActions.updateImageSuccess({
+              imageId: imageId,
+              image: image,
             });
           }),
           catchError((error) => {
-            return of(
-              CategoryActions.updateCategoryFailure({ payload: error })
-            );
+            return of(ImageActions.updateImageFailure({ payload: error }));
           }),
           finalize(async () => {
             setTimeout(() => {
               this.sharedService.flashNotification(
-                'categoryFeedback',
+                'imageFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha actualizado la categoría.'
+                'Se ha actualizado la imagen.'
               );
             }, 100);
           })
@@ -251,10 +279,10 @@ export class CategoryEffects {
     )
   );
 
-  updateCategorySuccess$ = createEffect(
+  updateImageSuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.updateCategorySuccess),
+        ofType(ImageActions.updateImageSuccess),
         map(() => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = true;
@@ -263,10 +291,10 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  updateCategoryFailure$ = createEffect(
+  updateImageFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.updateCategoryFailure),
+        ofType(ImageActions.updateImageFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;

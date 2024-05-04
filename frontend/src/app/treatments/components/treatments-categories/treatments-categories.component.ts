@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import * as CategoriesAction from '../../../categories/actions';
-import { CategoryDTO } from '../../../categories/models/category.dto';
+
+import { DomSanitizer } from '@angular/platform-browser';
+import { CategoryClass } from '../../../categories/models/category';
+import { CardSimpleDTO } from '../../../shared/models/card-simple.dto';
+import { ImageDTO } from '../../../shared/models/image.dto';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 
 @Component({
@@ -12,16 +16,26 @@ import { isLoading } from '../../../spinner/actions/spinner.actions';
   styleUrl: './treatments-categories.component.scss',
 })
 export class TreatmentsCategoriesComponent {
-  categories: CategoryDTO[];
-
+  categories: CategoryClass[];
+  dataCards!: CardSimpleDTO[];
   private url!: string;
 
-  constructor(private router: Router, private store: Store<AppState>) {
-    this.categories = new Array<CategoryDTO>();
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+    private sanitizer: DomSanitizer
+  ) {
+    this.categories = new Array<CategoryClass>();
+    this.dataCards = new Array<any>();
 
-    this.store.select('categories').subscribe((categories) => {
-      this.categories = categories.categories;
-      console.log(this.categories);
+    this.store.select('categories').subscribe((store) => {
+      this.categories = store.categories;
+
+      if (this.categories.length > 0) {
+        for (const category of this.categories) {
+          this.createDataCard(category);
+        }
+      }
     });
   }
 
@@ -31,12 +45,29 @@ export class TreatmentsCategoriesComponent {
     this.loadCategories();
   }
 
-  loadCategories(): void {
+  private loadCategories(): void {
     this.store.dispatch(isLoading({ status: true }));
-    if ((this.url = 'tratamientos')) {
-      this.store.dispatch(
-        CategoriesAction.getCategoriesByDepartment({ department: 'Treatments' })
-      );
+    this.store.dispatch(
+      CategoriesAction.getCategoriesByDepartment({ department: 'Shop' })
+    );
+  }
+
+  private createDataCard(category: CategoryClass): void {
+    let newImage: ImageDTO;
+    let newCard: CardSimpleDTO;
+
+    if (category.image !== undefined) {
+      newImage = {
+        title: category.image.title,
+        jpg: category.image.picture_jpg,
+        webp: category.image.picture_webp,
+      };
+      newCard = {
+        title: category.name,
+        url: category.url,
+        image: newImage,
+      };
+      this.dataCards.push(newCard);
     }
   }
 }

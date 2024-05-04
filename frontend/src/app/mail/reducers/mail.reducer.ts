@@ -1,16 +1,16 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { sendMail, sendMailFailure, sendMailSuccess } from '../actions';
-import { MailDTO } from '../models/mail.dto.ts';
+import { MailClass } from '../models/mail';
 
 export interface MailState {
-  mail: MailDTO;
+  mail: MailClass;
   loading: boolean;
   loaded: boolean;
   error: any;
 }
 
 export const initialState: MailState = {
-  mail: new MailDTO('', '', '', ''),
+  mail: new MailClass('', '', '', ''),
   loading: false,
   loaded: false,
   error: null,

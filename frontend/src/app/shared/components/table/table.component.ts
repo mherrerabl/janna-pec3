@@ -30,7 +30,7 @@ import { TableDTO } from '../../models/table.dto';
   ],
 })
 export class TableComponent {
-  dataTable: TableDTO = ELEMENT_DATA;
+  dataTable!: TableDTO;
   expandedElement!: RowDTO | null;
   currentPage: number = 1;
 
@@ -46,7 +46,7 @@ export class TableComponent {
   }
 }
 
-const ELEMENT_DATA: TableDTO = {
+const ELEMENT_DATA: TableDTO | any = {
   titles: [
     {
       title: 'id',

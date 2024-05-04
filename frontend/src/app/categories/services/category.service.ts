@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { SharedService } from '../../shared/services/shared.service';
-import { CategoryDTO } from '../models/category.dto';
+import { CategoryClass } from '../models/category';
+
+interface deleteResponse {
+  affected: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -16,21 +20,48 @@ export class CategoryService {
     this.urlApi = 'http://127.0.0.1:8000/api/' + this.controller;
   }
 
-  getCategories(): Observable<CategoryDTO[]> {
+  getCategories(): Observable<CategoryClass[]> {
     return this.http
-      .get<CategoryDTO[]>(this.urlApi)
+      .get<CategoryClass[]>(this.urlApi)
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getCategoriesByDepartment(department: string): Observable<CategoryDTO[]> {
+  getCategoryById(categoryId: string): Observable<CategoryClass> {
     return this.http
-      .get<CategoryDTO[]>(this.urlApi + '/categories/' + department)
+      .get<CategoryClass>(this.urlApi + categoryId)
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getCategoriesBySubcategory(categoryId: string): Observable<CategoryDTO[]> {
+  getCategoriesByDepartment(department: string): Observable<CategoryClass[]> {
     return this.http
-      .get<CategoryDTO[]>(this.urlApi + '/subcategory/' + categoryId)
+      .get<CategoryClass[]>(this.urlApi + '/categories/' + department)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  getCategoriesBySubcategory(categoryId: string): Observable<CategoryClass[]> {
+    return this.http
+      .get<CategoryClass[]>(this.urlApi + '/subcategory/' + categoryId)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  createCategory(category: CategoryClass): Observable<CategoryClass> {
+    return this.http
+      .post<CategoryClass>(this.urlApi, category)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  updateCategory(
+    categoryId: string,
+    category: CategoryClass
+  ): Observable<CategoryClass> {
+    return this.http
+      .put<CategoryClass>(this.urlApi + categoryId, category)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  deleteCategory(categoryId: string): Observable<deleteResponse> {
+    return this.http
+      .delete<deleteResponse>(this.urlApi + categoryId)
       .pipe(catchError(this.sharedService.handleError));
   }
 }

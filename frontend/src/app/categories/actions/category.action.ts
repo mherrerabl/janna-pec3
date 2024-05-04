@@ -1,17 +1,31 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { CategoryDTO } from '../models/category.dto';
+import { CategoryClass } from '../models/category';
 
 export const getAllCategories = createAction(
   '[Categories list] Get categories list'
 );
 export const getAllCategoriesSuccess = createAction(
   '[Categories list] Get categories list success',
-  props<{ categories: CategoryDTO[] }>()
+  props<{ categories: CategoryClass[] }>()
 );
 
 export const getAllCategoriesFailure = createAction(
   '[Categories list] Get categories list fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getCategoryById = createAction(
+  '[Category detail] Get category detail',
+  props<{ categoryId: string }>()
+);
+export const getCategoryByIdSuccess = createAction(
+  '[Category detail] Get category detail success',
+  props<{ category: CategoryClass }>()
+);
+
+export const getCategoryByIdFailure = createAction(
+  '[Category detail] Get category detail fail',
   props<{ payload: HttpErrorResponse }>()
 );
 
@@ -21,7 +35,7 @@ export const getCategoriesByDepartment = createAction(
 );
 export const getCategoriesByDepartmentSuccess = createAction(
   '[Categories list] Get categories by department success',
-  props<{ categories: CategoryDTO[] }>()
+  props<{ categories: CategoryClass[] }>()
 );
 
 export const getCategoriesByDepartmentFailure = createAction(
@@ -35,7 +49,7 @@ export const getCategoriesBySubcategory = createAction(
 );
 export const getCategoriesBySubcategorySuccess = createAction(
   '[Categories list] Get categories by subcategory success',
-  props<{ categories: CategoryDTO[] }>()
+  props<{ categories: CategoryClass[] }>()
 );
 
 export const getCategoriesBySubcategoryFailure = createAction(
@@ -45,12 +59,12 @@ export const getCategoriesBySubcategoryFailure = createAction(
 
 export const createCategory = createAction(
   '[Category form] Create new category',
-  props<{ category: CategoryDTO }>()
+  props<{ category: CategoryClass }>()
 );
 
 export const createCategorySuccess = createAction(
   '[Category form] Create new category success',
-  props<{ category: CategoryDTO }>()
+  props<{ category: CategoryClass }>()
 );
 
 export const createCategoryFailure = createAction(
@@ -60,12 +74,12 @@ export const createCategoryFailure = createAction(
 
 export const updateCategory = createAction(
   '[Category form] Update category',
-  props<{ categoryId: string; category: CategoryDTO }>()
+  props<{ categoryId: string; category: CategoryClass }>()
 );
 
 export const updateCategorySuccess = createAction(
   '[Category form] Update category success',
-  props<{ categoryId: string; category: CategoryDTO }>()
+  props<{ categoryId: string; category: CategoryClass }>()
 );
 
 export const updateCategoryFailure = createAction(

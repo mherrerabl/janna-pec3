@@ -1,5 +1,5 @@
 export interface ImageDTO {
-  jpg: string;
-  webp: string;
+  jpg: Blob;
+  webp: Blob;
   title: string;
 }

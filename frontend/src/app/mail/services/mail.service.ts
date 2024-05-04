@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { SharedService } from '../../shared/services/shared.service';
-import { MailDTO } from '../models/mail.dto.ts.js';
+import { MailClass } from '../models/mail.js';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +16,9 @@ export class MailService {
     this.urlApi = 'http://127.0.0.1:8000/api/' + this.controller;
   }
 
-  sendEmail(mail: MailDTO): Observable<MailDTO> {
+  sendEmail(mail: MailClass): Observable<MailClass> {
     return this.http
-      .post<MailDTO>(this.urlApi, mail)
+      .post<MailClass>(this.urlApi, mail)
       .pipe(catchError(this.sharedService.handleError));
   }
 }

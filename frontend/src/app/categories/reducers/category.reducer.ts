@@ -15,23 +15,26 @@ import {
   getCategoriesBySubcategory,
   getCategoriesBySubcategoryFailure,
   getCategoriesBySubcategorySuccess,
+  getCategoryById,
+  getCategoryByIdFailure,
+  getCategoryByIdSuccess,
   updateCategory,
   updateCategoryFailure,
   updateCategorySuccess,
 } from '../actions';
-import { CategoryDTO, Department } from '../models/category.dto';
+import { CategoryClass, Department } from '../models/category';
 
 export interface CategoriesState {
-  categories: CategoryDTO[];
-  category: CategoryDTO;
+  categories: CategoryClass[];
+  category: CategoryClass;
   loading: boolean;
   loaded: boolean;
   error: any;
 }
 
 export const initialState: CategoriesState = {
-  categories: new Array<CategoryDTO>(),
-  category: new CategoryDTO('', '', Department.init),
+  categories: new Array<CategoryClass>(),
+  category: new CategoryClass('', '', Department.init, ''),
   loading: false,
   loaded: false,
   error: null,
@@ -53,6 +56,26 @@ const _categoriesReducer = createReducer(
     error: null,
   })),
   on(getAllCategoriesFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(getCategoryById, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getCategoryByIdSuccess, (state, action) => ({
+    ...state,
+    category: action.category,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getCategoryByIdFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,
