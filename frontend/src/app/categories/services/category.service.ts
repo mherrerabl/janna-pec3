@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
+import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import { SharedService } from '../../shared/services/shared.service';
 import { CategoryClass } from '../models/category';
 
@@ -17,7 +19,7 @@ export class CategoryService {
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'category';
-    this.urlApi = 'http://127.0.0.1:8000/api/' + this.controller;
+    this.urlApi = environment.API_URL + '/api/' + this.controller;
   }
 
   getCategories(): Observable<CategoryClass[]> {
@@ -38,7 +40,7 @@ export class CategoryService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getCategoriesByParam(paramUrl: string): Observable<CategoryClass[]> {
+  getCategoriesByUrl(paramUrl: string): Observable<CategoryClass[]> {
     return this.http
       .get<CategoryClass[]>(this.urlApi + '/categories/' + paramUrl)
       .pipe(catchError(this.sharedService.handleError));
@@ -49,6 +51,13 @@ export class CategoryService {
       .get<CategoryClass>(this.urlApi + '/category/' + paramUrl)
       .pipe(catchError(this.sharedService.handleError));
   }
+
+  getCategoryNamebyUrl(paramUrl: string): Observable<BreadcrumbDTO> {
+    return this.http
+      .get<BreadcrumbDTO>(this.urlApi + '/name/' + paramUrl)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
   createCategory(category: CategoryClass): Observable<CategoryClass> {
     return this.http
       .post<CategoryClass>(this.urlApi, category)

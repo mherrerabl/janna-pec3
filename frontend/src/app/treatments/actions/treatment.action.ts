@@ -15,6 +15,35 @@ export const getAllTreatmentsFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
+export const getTreatmentById = createAction(
+  '[Treatment detail] Get treatment detail',
+  props<{ treatmentId: string }>()
+);
+
+export const getTreatmentByIdSuccess = createAction(
+  '[Treatment detail] Get treatment detail success',
+  props<{ treatment: TreatmentClass }>()
+);
+
+export const getTreatmentByIdFailure = createAction(
+  '[Treatment detail] Get treatment detail fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+export const getTreatmentByUrl = createAction(
+  '[Treatment detail] Get treatment detail',
+  props<{ paramUrl: string }>()
+);
+
+export const getTreatmentByUrlSuccess = createAction(
+  '[Treatment detail] Get treatment detail success',
+  props<{ treatment: TreatmentClass }>()
+);
+
+export const getTreatmentByUrlFailure = createAction(
+  '[Treatment detail] Get treatment detail fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
 export const createTreatment = createAction(
   '[Treatment form] Create new treatment',
   props<{ treatment: TreatmentClass }>()

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
-import { BreadcrumbDTO } from '../../../shared/models/breadcrumb.dto';
 import { CardSimpleDTO } from '../../../shared/models/card-simple.dto';
 import { ImageDTO } from '../../../shared/models/image.dto';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
@@ -18,9 +17,8 @@ export class CategoriesComponent {
   categories: CategoryClass[];
   prevCategories: CategoryClass[];
   dataCards: CardSimpleDTO[];
-  private urlCategory!: string;
-  private urlSubcategory!: string | null;
-  breadcrumbs!: BreadcrumbDTO[];
+  private urlDeparmtent!: string;
+  private urlCategory!: string | null;
 
   constructor(
     private router: Router,
@@ -30,11 +28,8 @@ export class CategoriesComponent {
     this.categories = [];
     this.prevCategories = [];
     this.dataCards = [];
-    this.breadcrumbs = [];
 
     this.store.select('categories').subscribe((store) => {
-      this.categories = [];
-      this.dataCards = [];
       this.categories = store.categories;
 
       if (
@@ -55,21 +50,15 @@ export class CategoriesComponent {
   ngOnInit(): void {
     this.categories = [];
     this.dataCards = [];
-    console.log(this.route.url);
 
-    this.urlCategory = this.router.url.slice(1);
-    this.urlSubcategory = this.route.snapshot.paramMap.get('subcategory');
+    this.urlDeparmtent = this.router.url.slice(1).split('/').slice(0, 1).join();
+    this.urlCategory = this.route.snapshot.paramMap.get('category');
 
-    if (this.urlSubcategory !== null && this.urlSubcategory !== undefined) {
-      this.loadSubcategories(this.urlSubcategory);
+    if (this.urlCategory !== null && this.urlCategory !== undefined) {
+      this.loadSubcategories(this.urlCategory);
     } else {
-      this.loadCategories(this.urlCategory);
+      this.loadCategories(this.urlDeparmtent);
     }
-
-    this.breadcrumbs.push({
-      name: this.urlCategory[0].toUpperCase() + this.urlCategory.slice(1),
-      url: this.urlCategory,
-    });
   }
 
   private loadCategories(department: string): void {
@@ -86,7 +75,7 @@ export class CategoriesComponent {
       this.store.dispatch(isLoading({ status: true }));
     });
     this.store.dispatch(
-      CategoriesAction.getCategoriesByParam({ paramUrl: paramUrl })
+      CategoriesAction.getCategoriesByUrl({ paramUrl: paramUrl })
     );
   }
 
@@ -102,17 +91,10 @@ export class CategoriesComponent {
       };
       newCard = {
         title: category.name,
-        url: category.url,
+        url: category.isParent === true ? category.url : 'info/' + category.url,
         image: newImage,
       };
       this.dataCards.push(newCard);
     }
-  }
-
-  private loadCategoryByUrl(param: string): void {
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-    });
-    this.store.dispatch(CategoriesAction.getCategoryByUrl({ paramUrl: param }));
   }
 }

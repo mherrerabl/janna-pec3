@@ -43,6 +43,19 @@ export class CategoryEffects {
       )
     )
   );
+  getCategoriesFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CategoryActions.getAllCategoriesFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
 
   getCategoryById$ = createEffect(() =>
     this.actions$.pipe(
@@ -71,20 +84,6 @@ export class CategoryEffects {
         ofType(CategoryActions.getCategoryByIdFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
-          this.errorResponse = error.payload.error;
-          this.sharedService.errorLog(error.payload.error);
-        })
-      ),
-    { dispatch: false }
-  );
-
-  getCategoriesFailure$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(CategoryActions.getAllCategoriesFailure),
-        map((error) => {
-          this.store.dispatch(isLoading({ status: false }));
-          this.responseOK = false;
           this.errorResponse = error.payload.error;
           this.sharedService.errorLog(error.payload.error);
         })
@@ -128,20 +127,20 @@ export class CategoryEffects {
     { dispatch: false }
   );
 
-  getCategoriesByParam$ = createEffect(() =>
+  getCategoriesByUrl$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.getCategoriesByParam),
+      ofType(CategoryActions.getCategoriesByUrl),
       exhaustMap(({ paramUrl }) =>
-        this.categoryService.getCategoriesByParam(paramUrl).pipe(
+        this.categoryService.getCategoriesByUrl(paramUrl).pipe(
           map((categories) => {
             this.store.dispatch(isLoading({ status: false }));
-            return CategoryActions.getCategoriesByParamSuccess({
+            return CategoryActions.getCategoriesByUrlSuccess({
               categories: categories,
             });
           }),
           catchError((error) => {
             return of(
-              CategoryActions.getCategoriesByParamFailure({
+              CategoryActions.getCategoriesByUrlFailure({
                 payload: error,
               })
             );
@@ -151,10 +150,10 @@ export class CategoryEffects {
     )
   );
 
-  getCategoriesByParamFailure$ = createEffect(
+  getCategoriesByUrlFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.getCategoriesByParamFailure),
+        ofType(CategoryActions.getCategoriesByUrlFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
@@ -191,6 +190,42 @@ export class CategoryEffects {
     () =>
       this.actions$.pipe(
         ofType(CategoryActions.getCategoryByUrlFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  getCategoryNamebyUrl$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CategoryActions.getCategoryNamebyUrl),
+      exhaustMap(({ paramUrl }) =>
+        this.categoryService.getCategoryNamebyUrl(paramUrl).pipe(
+          map((breadcrumb) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return CategoryActions.getCategoryNamebyUrlSuccess({
+              breadcrumb: breadcrumb,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              CategoryActions.getCategoryNamebyUrlFailure({
+                payload: error,
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  getCategoryNamebyUrlFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CategoryActions.getCategoryNamebyUrlFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;

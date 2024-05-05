@@ -1,3 +1,4 @@
+import { ImageClass } from '../../images/models/image';
 import { PriceClass } from '../../shared/models/price';
 
 export class TreatmentClass {
@@ -6,7 +7,9 @@ export class TreatmentClass {
   description: string;
   sessions: number;
   duration: number;
-  price: PriceClass;
+  price_id: string;
+  price?: PriceClass;
+  images?: ImageClass[];
 
   constructor(
     id: string,
@@ -14,13 +17,13 @@ export class TreatmentClass {
     description: string,
     sessions: number,
     duration: number,
-    price: PriceClass
+    price_id: string
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.sessions = sessions;
     this.duration = duration;
-    this.price = price;
+    this.price_id = price_id;
   }
 }

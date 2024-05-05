@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
+import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import { CategoryClass } from '../models/category';
 
 export const getAllCategories = createAction(
@@ -43,16 +44,16 @@ export const getCategoriesByDepartmentFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
-export const getCategoriesByParam = createAction(
+export const getCategoriesByUrl = createAction(
   '[Categories list] Get categories by param',
   props<{ paramUrl: string }>()
 );
-export const getCategoriesByParamSuccess = createAction(
+export const getCategoriesByUrlSuccess = createAction(
   '[Categories list] Get categories by param success',
   props<{ categories: CategoryClass[] }>()
 );
 
-export const getCategoriesByParamFailure = createAction(
+export const getCategoriesByUrlFailure = createAction(
   '[Categories list] Get categories by param fail',
   props<{ payload: HttpErrorResponse }>()
 );
@@ -67,6 +68,20 @@ export const getCategoryByUrlSuccess = createAction(
 );
 
 export const getCategoryByUrlFailure = createAction(
+  '[Category] Get category by subcategory fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getCategoryNamebyUrl = createAction(
+  '[Category] Get category by subcategory',
+  props<{ paramUrl: string }>()
+);
+export const getCategoryNamebyUrlSuccess = createAction(
+  '[Category] Get category by subcategory success',
+  props<{ breadcrumb: BreadcrumbDTO }>()
+);
+
+export const getCategoryNamebyUrlFailure = createAction(
   '[Category] Get category by subcategory fail',
   props<{ payload: HttpErrorResponse }>()
 );

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 import { SharedService } from '../../shared/services/shared.service';
 import { ImageClass } from '../models/image';
 
@@ -17,7 +18,7 @@ export class ImageService {
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'image';
-    this.urlApi = 'http://127.0.0.1:8000/api/' + this.controller;
+    this.urlApi = environment + '/api/' + this.controller;
   }
 
   getImages(): Observable<ImageClass[]> {

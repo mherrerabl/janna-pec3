@@ -12,6 +12,7 @@ export class CategoryClass {
   department: Department;
   url: string;
   category_id?: CategoryClass;
+  isParent?: boolean;
   image?: ImageClass;
 
   constructor(

@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import {
   createCategory,
   createCategoryFailure,
@@ -12,15 +13,18 @@ import {
   getCategoriesByDepartment,
   getCategoriesByDepartmentFailure,
   getCategoriesByDepartmentSuccess,
-  getCategoriesByParam,
-  getCategoriesByParamFailure,
-  getCategoriesByParamSuccess,
+  getCategoriesByUrl,
+  getCategoriesByUrlFailure,
+  getCategoriesByUrlSuccess,
   getCategoryById,
   getCategoryByIdFailure,
   getCategoryByIdSuccess,
   getCategoryByUrl,
   getCategoryByUrlFailure,
   getCategoryByUrlSuccess,
+  getCategoryNamebyUrl,
+  getCategoryNamebyUrlFailure,
+  getCategoryNamebyUrlSuccess,
   updateCategory,
   updateCategoryFailure,
   updateCategorySuccess,
@@ -30,6 +34,7 @@ import { CategoryClass, Department } from '../models/category';
 export interface CategoriesState {
   categories: CategoryClass[];
   category: CategoryClass;
+  breadcrumb: BreadcrumbDTO;
   loading: boolean;
   loaded: boolean;
   error: any;
@@ -38,6 +43,7 @@ export interface CategoriesState {
 export const initialState: CategoriesState = {
   categories: new Array<CategoryClass>(),
   category: new CategoryClass('', '', Department.init, ''),
+  breadcrumb: { name: '', url: '' },
   loading: false,
   loaded: false,
   error: null,
@@ -105,20 +111,20 @@ const _categoriesReducer = createReducer(
     error: { payload },
   })),
 
-  on(getCategoriesByParam, (state) => ({
+  on(getCategoriesByUrl, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     error: null,
   })),
-  on(getCategoriesByParamSuccess, (state, action) => ({
+  on(getCategoriesByUrlSuccess, (state, action) => ({
     ...state,
     categories: action.categories,
     loading: false,
     loaded: true,
     error: null,
   })),
-  on(getCategoriesByParamFailure, (state, { payload }) => ({
+  on(getCategoriesByUrlFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,
@@ -139,6 +145,26 @@ const _categoriesReducer = createReducer(
     error: null,
   })),
   on(getCategoryByUrlFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(getCategoryNamebyUrl, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getCategoryNamebyUrlSuccess, (state, action) => ({
+    ...state,
+    breadcrumb: action.breadcrumb,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getCategoryNamebyUrlFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

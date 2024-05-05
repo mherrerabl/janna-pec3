@@ -8,15 +8,8 @@ const routes: Routes = [
     component: CategoriesComponent,
   },
   {
-    path: ':subcategory',
+    path: ':category',
     component: CategoriesComponent,
-  },
-  {
-    path: 'info/:treatment',
-    loadChildren: () =>
-      import('../treatments/treatments.module').then(
-        (mod) => mod.TreatmentsModule
-      ),
   },
 ];
 

@@ -1,1 +1,21 @@
-<p>treatment-detail works!</p>
+<app-breadcrumbs></app-breadcrumbs>
+@if (treatment.name.length > 0 ) {
+    <h1>{{ treatment.name }}</h1>
+    
+
+    @if (treatment.images !== undefined) {
+        <swiper-container>
+       @for (image of treatment.images; track $index) {
+        <swiper-slide>
+            <picture class="relative block overflow-hidden w-full h-32 sm:h-40 md:h-52 xl:h-64">                 
+                <source [srcset]="'data:image/jpg;base64,'+image.picture_webp" type="image/webp">
+                <img class="absolute object-cover object-center w-full h-full" 
+                    [src]="'data:image/jpg;base64,'+image.picture_jpg" 
+                    [alt]="image.title">
+            </picture>
+        </swiper-slide>
+       }
+    </swiper-container>
+    }
+    
+}

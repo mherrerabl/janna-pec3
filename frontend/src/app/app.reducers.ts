@@ -1,17 +1,19 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { ImageEffects } from './images/effects';
-import * as ImageReducer from './images/reducers';
-
 import { CategoryEffects } from './categories/effects';
 import * as CategoryReducer from './categories/reducers';
+import { ImageEffects } from './images/effects';
+import * as ImageReducer from './images/reducers';
 import { MailEffects } from './mail/effects';
 import * as MailReducer from './mail/reducers';
 import * as SpinnerReducer from './spinner/reducer';
+import { TreatmentEffects } from './treatments/effects';
+import * as TreatmentReducer from './treatments/reducers';
 
 export interface AppState {
   mail: MailReducer.MailState;
   images: ImageReducer.ImagesState;
   categories: CategoryReducer.CategoriesState;
+  treatments: TreatmentReducer.TreatmentsState;
   spinner: SpinnerReducer.SpinnerState;
 }
 
@@ -19,7 +21,13 @@ export const appReducers: ActionReducerMap<AppState> = {
   mail: MailReducer.mailReducer,
   images: ImageReducer.imagesReducer,
   categories: CategoryReducer.categoriesReducer,
+  treatments: TreatmentReducer.treatmentsReducer,
   spinner: SpinnerReducer.spinnerReducer,
 };
 
-export const EffectsArray: any[] = [MailEffects, ImageEffects, CategoryEffects];
+export const EffectsArray: any[] = [
+  MailEffects,
+  ImageEffects,
+  CategoryEffects,
+  TreatmentEffects,
+];

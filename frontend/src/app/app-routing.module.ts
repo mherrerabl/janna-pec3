@@ -22,15 +22,22 @@ const routes: Routes = [
         (mod) => mod.CategoriesModule
       ),
   },
-  /*{
-    path: ':department/:tratamiento',
+  {
+    path: ':department/info/:treatment',
     loadChildren: () =>
       import('./treatments/treatments.module').then(
         (mod) => mod.TreatmentsModule
       ),
   },
   {
-    path: ':department/:category/:tratamiento',
+    path: ':department/:category/info/:treatment',
+    loadChildren: () =>
+      import('./treatments/treatments.module').then(
+        (mod) => mod.TreatmentsModule
+      ),
+  },
+  /*{
+    /*path: ':department/:category/:tratamiento',
     loadChildren: () =>
       import('./treatments/treatments.module').then(
         (mod) => mod.TreatmentsModule
