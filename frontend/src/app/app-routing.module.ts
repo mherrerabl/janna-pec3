@@ -11,8 +11,34 @@ const routes: Routes = [
   {
     path: 'tratamientos',
     loadChildren: () =>
+      import('./treatments/treatments.module').then(
+        (mod) => mod.TreatmentsModule
+      ),
+  },
+  {
+    path: 'tienda',
+    loadChildren: () =>
+      import('./products/products.module').then((mod) => mod.ProductsModule),
+  },
+  /*{
+    path: 'tratamientos/:category',
+    loadChildren: () =>
       import('./categories/categories.module').then(
         (mod) => mod.CategoriesModule
+      ),
+  },
+  {
+    path: 'tratamientos/info/:treatment',
+    loadChildren: () =>
+      import('./treatments/treatments.module').then(
+        (mod) => mod.TreatmentsModule
+      ),
+  },
+  {
+    path: 'tratamientos/:category/info/:treatment',
+    loadChildren: () =>
+      import('./treatments/treatments.module').then(
+        (mod) => mod.TreatmentsModule
       ),
   },
   {
@@ -23,17 +49,26 @@ const routes: Routes = [
       ),
   },
   {
-    path: ':department/info/:treatment',
+    path: 'tienda/ofertas',
     loadChildren: () =>
-      import('./treatments/treatments.module').then(
-        (mod) => mod.TreatmentsModule
-      ),
+      import('./products/products.module').then((mod) => mod.ProductsModule),
   },
   {
-    path: ':department/:category/info/:treatment',
+    path: 'tienda/tendencias',
     loadChildren: () =>
-      import('./treatments/treatments.module').then(
-        (mod) => mod.TreatmentsModule
+      import('./products/products.module').then((mod) => mod.ProductsModule),
+  },
+  {
+    path: 'tienda/:category/producto/:id',
+    loadChildren: () =>
+      import('./products/products.module').then((mod) => mod.ProductsModule),
+  },
+ 
+  {
+    path: 'tienda/:category',
+    loadChildren: () =>
+      import('./categories/categories.module').then(
+        (mod) => mod.CategoriesModule
       ),
   },
   /*{

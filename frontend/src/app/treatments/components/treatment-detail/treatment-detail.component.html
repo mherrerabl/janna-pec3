@@ -1,21 +1,50 @@
 <app-breadcrumbs></app-breadcrumbs>
 @if (treatment.name.length > 0 ) {
-    <h1>{{ treatment.name }}</h1>
+    <h1 class="my-separator-30">{{ treatment.name }}</h1>
+    
+    <div class="flex flex-col md:flex-row-reverse md:gap-4">
+        <div class="md:w-1/2 md:mt-2">
+            @if (treatment.images !== undefined) {
+                <swiper-container navigation="true" pagination="true" scrollbar="true">
+               @for (image of treatment.images; track $index) {
+                <swiper-slide>
+                    <picture class="relative block overflow-hidden w-full h-full min-h-[300px]">                 
+                        <source [srcset]="'data:image/jpg;base64,'+image.picture_webp" type="image/webp">
+                        <img class="absolute object-cover object-center w-full h-full" 
+                            [src]="'data:image/jpg;base64,'+image.picture_jpg" 
+                            [alt]="image.title">
+                    </picture>
+                </swiper-slide>
+               }
+            </swiper-container>
+            }
+        </div>
+        
+        <p class="py-separator-30 md:pt-0 md:text-justify">{{ treatment.description }}</p>
+    </div>
+
+    
     
 
-    @if (treatment.images !== undefined) {
-        <swiper-container>
-       @for (image of treatment.images; track $index) {
-        <swiper-slide>
-            <picture class="relative block overflow-hidden w-full h-32 sm:h-40 md:h-52 xl:h-64">                 
-                <source [srcset]="'data:image/jpg;base64,'+image.picture_webp" type="image/webp">
-                <img class="absolute object-cover object-center w-full h-full" 
-                    [src]="'data:image/jpg;base64,'+image.picture_jpg" 
-                    [alt]="image.title">
-            </picture>
-        </swiper-slide>
-       }
-    </swiper-container>
-    }
+    <div class="flex flex-row justify-between mb-separator-50 py-separator-30 px-4 bg-primary md:py-2 lg:my-separator-30">
+        <div class="icon-2xl md:icon-3xl flex flex-col [&>*]:flex-auto w-1/3">
+            <fa-icon [icon]="iconHourglass"></fa-icon>
+            <p class="body-l text-center">{{ treatment.duration }} minutos</p>
+        </div>
+        <div class="icon-2xl md:icon-3xl flex flex-col [&>*]:flex-auto w-1/3">
+            <fa-icon [icon]="iconClock"></fa-icon>
+            <p class="body-l text-center">{{ treatment.sessions }} sesiones</p>
+        </div>
+        <div class="icon-2xl md:icon-3xl flex flex-col [&>*]:flex-auto w-1/3">
+            <fa-icon [icon]="iconEuro"></fa-icon>
+            <p *ngIf="treatment.price!= undefined" class="body-l text-center">{{ treatment.price.price | number: '1.2-2':'es'}} € la sesión</p>
+
+        </div>
+    </div>
+
+    <div class="flex flex-col items-center lg:my-separator-50">
+        <button class="button-normal button-m w-[150px]" [routerLink]="'agenda'">Pedir cita</button>
+        <button class="button-link button-m" (click)="navigateToSection('mailContact')">Para cualquier duda contáctenos</button>
+    </div>
     
 }

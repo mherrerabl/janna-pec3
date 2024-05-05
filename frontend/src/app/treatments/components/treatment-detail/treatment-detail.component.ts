@@ -1,5 +1,8 @@
+import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { faClock, faHourglass } from '@fortawesome/free-regular-svg-icons';
+import { faEuro } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
@@ -16,7 +19,15 @@ export class TreatmentDetailComponent {
   prevTreatment: TreatmentClass;
   private urlTreatment!: string | null;
 
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) {
+  iconHourglass = faHourglass;
+  iconClock = faClock;
+  iconEuro = faEuro;
+
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<AppState>,
+    private scroller: ViewportScroller
+  ) {
     this.treatment = new TreatmentClass('', '', '', 0, 0, '');
     this.prevTreatment = new TreatmentClass('', '', '', 0, 0, '');
 
@@ -45,6 +56,7 @@ export class TreatmentDetailComponent {
       this.store.dispatch(isLoading({ status: true }));
     });
     this.urlTreatment = this.route.snapshot.paramMap.get('treatment');
+    console.log(this.urlTreatment);
 
     if (this.urlTreatment !== null && this.urlTreatment !== undefined) {
       this.loadTreatments(this.urlTreatment);
@@ -58,5 +70,9 @@ export class TreatmentDetailComponent {
     this.store.dispatch(
       TreatmentsAction.getTreatmentByUrl({ paramUrl: paramUrl })
     );
+  }
+
+  navigateToSection(section: string) {
+    this.scroller.scrollToAnchor(section);
   }
 }

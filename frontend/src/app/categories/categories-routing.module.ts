@@ -7,10 +7,6 @@ const routes: Routes = [
     path: '',
     component: CategoriesComponent,
   },
-  {
-    path: ':category',
-    component: CategoriesComponent,
-  },
 ];
 
 @NgModule({

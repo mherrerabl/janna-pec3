@@ -2,8 +2,8 @@ import { ImageClass } from '../../images/models/image';
 
 export enum Department {
   init = 'null',
-  shop = 'Shop',
-  treatments = 'Treatments',
+  shop = 'Tienda',
+  treatments = 'Tratamientos',
 }
 
 export class CategoryClass {

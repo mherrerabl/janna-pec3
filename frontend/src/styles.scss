@@ -12,10 +12,19 @@
 @tailwind utilities;
 
 @layer normalize {
+    :root {
+        --swiper-navigation-color: #CF647F;
+        --swiper-theme-color:#CF647F;
+        --swiper-pagination-color:#CF647F;
+        --swiper-scrollbar-drag-bg-color:#CF647F;
+    }
+
+
     *:focus {
         outline: none;
     }
 
+    
     body {
         overflow-x: hidden
     }
@@ -113,6 +122,16 @@
 
     .icon-xl fa-icon {
         font-size: 1.75rem;
+    }
+
+    .icon-2xl fa-icon {
+        font-size: 2.2rem;
+        margin: auto;
+    }
+
+    .icon-3xl fa-icon {
+        font-size: 3rem;
+        margin: auto;
     }
 }
 

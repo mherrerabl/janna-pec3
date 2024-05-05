@@ -57,7 +57,7 @@ export class TreatmentEffects {
       ),
     { dispatch: false }
   );
-
+  /*
   getTreatmentById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TreatmentActions.getTreatmentById),
@@ -77,6 +77,18 @@ export class TreatmentEffects {
         )
       )
     )
+  );
+*/
+  getTreatmentByIdSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TreatmentActions.getTreatmentByIdSuccess),
+        map(() => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = true;
+        })
+      ),
+    { dispatch: false }
   );
 
   getTreatmentByIdFailure$ = createEffect(

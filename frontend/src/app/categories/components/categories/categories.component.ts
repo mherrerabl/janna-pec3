@@ -91,9 +91,14 @@ export class CategoriesComponent {
       };
       newCard = {
         title: category.name,
-        url: category.isParent === true ? category.url : 'info/' + category.url,
+        url:
+          category.isParent === true
+            ? category.url
+            : (this.urlDeparmtent == 'tratamientos' ? 'info/' : 'productos/') +
+              category.url,
         image: newImage,
       };
+
       this.dataCards.push(newCard);
     }
   }

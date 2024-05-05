@@ -1,13 +1,13 @@
 <div class="peer flex flex-col flex-grow min-h-screen">
     <app-header class="bg-primary"></app-header>
-    <main class="container min-h-home mb-separator-50">
+    <main class="container min-h-home mb-section">
         <router-outlet></router-outlet>
     </main>
     <div class="mt-auto mb-separator-50 lg:flex lg:gap-separator-30 lg:container">
         <div class="mb-separator-30 py-separator-50 bg-primary lg:w-full lg:bg-transparent">
              <app-location></app-location>
         </div>
-       <div class="py-separator-30 lg:w-full lg:py-separator-50">
+       <div id="mailContact"  class="py-separator-30 lg:w-full lg:py-separator-50">
             <app-contact></app-contact>
        </div>
         

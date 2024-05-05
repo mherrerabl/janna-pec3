@@ -8,5 +8,6 @@ import { CategoriesComponent } from './components/categories/categories.componen
 @NgModule({
   declarations: [CategoriesComponent],
   imports: [CommonModule, CategoriesRoutingModule, SharedModule],
+  exports: [CategoriesComponent],
 })
 export class CategoriesModule {}
