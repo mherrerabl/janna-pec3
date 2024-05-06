@@ -5,7 +5,7 @@
     <div class="flex flex-col md:flex-row-reverse md:gap-4">
         <div class="md:w-1/2 md:mt-2">
             @if (treatment.images !== undefined) {
-                <swiper-container navigation="true" pagination="true" scrollbar="true">
+                <swiper-container navigation="true" scrollbar="true">
                @for (image of treatment.images; track $index) {
                 <swiper-slide>
                     <picture class="relative block overflow-hidden w-full h-full min-h-[300px]">                 

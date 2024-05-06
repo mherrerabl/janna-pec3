@@ -1,6 +1,6 @@
+import { ImageClass } from '../../images/models/image';
 import { BadgeDTO } from './badge.dto';
 import { DirectionDTO } from './direction.dto';
-import { ImageDTO } from './image.dto';
 import { ListProductsDTO } from './list-products.dto';
 
 interface SeassonsDTO {
@@ -20,7 +20,7 @@ export interface RowDetailDTO {
     };
     list?: string[];
     products?: ListProductsDTO[];
-    images?: ImageDTO[];
+    images?: ImageClass[];
     badges?: BadgeDTO[];
     seassons?: SeassonsDTO[];
   };

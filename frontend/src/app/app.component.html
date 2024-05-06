@@ -16,7 +16,17 @@
     <app-footer class=" bg-primary"></app-footer>
     <app-menu-footer class="md:lg:hidden"></app-menu-footer>
 </div>
+<app-cart></app-cart>
+<app-menu></app-menu>
 
+@if (showLoading | async) {
+    <div class="block fixed top-0 left-0 right-0 bottom-0 bg-darkGrey/40 transition-opacity z-1000">
+        <app-spinner></app-spinner>
+    </div>
+    
+}
+
+<!--
 @if (showMenu || showCart || showLogin ||  showRegister || (showLoading |async)) {
     <div class="modal"></div>
 }
@@ -26,7 +36,7 @@
 }
 
 @if (showCart) {
-    <app-cart class="modal-right"></app-cart>
+    <app-cart></app-cart>
 }
 
 @if (showLogin) {
@@ -38,7 +48,7 @@
 @if (showLoading | async) {
     <app-spinner></app-spinner>
 }
-<!--
+
 <div>
     <button class="z-50" (click)="toggleMenu()">click</button>
     <app-menu-footer></app-menu-footer>

@@ -1,5 +1,5 @@
 @if (dataBadge.isButtonText) {
-    <button class="inline-block px-2 {{dataBadge.textSize}}"
+    <button class="inline-block px-2 {{dataBadge.textSize}} z-40"
             [class.badge-disable]="dataBadge.stock == 0" 
             [class.badge-clickable]="dataBadge.stock != 0 && !isSelected" 
             [class.badge-active]="dataBadge.stock != 0 && isSelected" 
@@ -10,7 +10,7 @@
 }
 
 @else if (dataBadge.isButtonColor) {
-    <button class="w-[32px] h-[32px]" 
+    <button class="w-[32px] h-[32px] z-40" 
             [class.badge-disable]="dataBadge.stock == 0" 
             [class.badge-clickable]="dataBadge.stock != 0 && !isSelected" 
             [class.badge-active]="dataBadge.stock != 0 && isSelected" 
@@ -21,6 +21,6 @@
 }
 
 @else {
-    <span class="inline-block px-2 text-white {{badgeInfoColor()}} {{dataBadge.textSize }}">{{ dataBadge.name }}</span>
+    <span class="inline-block px-2 text-white {{badgeInfoColor()}} {{dataBadge.textSize }} z-40">{{ dataBadge.name }}</span>
 
 }

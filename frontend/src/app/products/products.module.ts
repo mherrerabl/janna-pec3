@@ -23,4 +23,8 @@ import { ProductsRoutingModule } from './products-routing.module';
     SharedModule,
   ],
 })
-export class ProductsModule {}
+export class ProductsModule {
+  constructor() {
+    console.log('TreatmentsModule loaded.');
+  }
+}

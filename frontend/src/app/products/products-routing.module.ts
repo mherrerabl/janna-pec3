@@ -27,12 +27,20 @@ const routes: Routes = [
     component: ProductsListComponent,
   },
   {
+    path: 'productos/:products/producto/:id',
+    component: ProductDetailComponent,
+  },
+  {
+    path: 'producto/:id',
+    component: ProductDetailComponent,
+  },
+  {
     path: ':category',
     component: ProductsCategoriesComponent,
   },
 
   {
-    path: ':category/product/:id',
+    path: ':category/producto/:id',
     component: ProductDetailComponent,
   },
   {
@@ -40,7 +48,7 @@ const routes: Routes = [
     component: ProductsListComponent,
   },
   {
-    path: ':category/productos/:products/product/:id',
+    path: ':category/productos/:products/producto/:id',
     component: ProductDetailComponent,
   },
 ];

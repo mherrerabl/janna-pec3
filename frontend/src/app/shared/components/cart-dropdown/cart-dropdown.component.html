@@ -13,7 +13,8 @@
                         <div class="flex flex-row items-center justify-between">
                             <div class="flex flex-row items-center gap-2">
                                 <figure class="max-w-20">
-                                    <img [src]="product.image.jpg" [alt]="product.image.title">
+                                    <source [srcset]="product.image.picture_webp">
+                                    <img [src]="product.image.picture_jpg" [alt]="product.image.title">
                                 </figure>
                                 <p>{{ product.name }}</p>
                             </div>

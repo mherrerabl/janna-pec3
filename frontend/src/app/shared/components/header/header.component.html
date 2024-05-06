@@ -39,7 +39,9 @@
         }
         
         <div class="flex">
-            <button class="button-icon icon-l mr-3 xl:hidden"><fa-icon [icon]="iconBars"></fa-icon></button>
+            <button class="button-icon icon-l mr-3 xl:hidden" (click)="openMenu()">
+                <fa-icon [icon]="iconBars"></fa-icon>
+            </button>
             <nav class="hidden xl:block m-auto">
                 <ul class="flex align-middle gap-10">
                     <li class="py-2">

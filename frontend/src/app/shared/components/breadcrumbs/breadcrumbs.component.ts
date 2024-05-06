@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
@@ -10,6 +10,7 @@ import { BreadcrumbDTO } from '../../models/breadcrumb.dto';
   templateUrl: './breadcrumbs.component.html',
 })
 export class BreadcrumbsComponent implements OnInit {
+  @Output() emitTitle = new EventEmitter<BreadcrumbDTO>();
   dataBreadcrumbs!: BreadcrumbDTO[];
 
   prevBreadcrumb: BreadcrumbDTO;
@@ -36,6 +37,9 @@ export class BreadcrumbsComponent implements OnInit {
         this.dataBreadcrumbs.push(store.breadcrumb);
         this.prevBreadcrumb = store.breadcrumb;
         this.index++;
+        this.sendBreadcrumb(
+          this.dataBreadcrumbs[this.dataBreadcrumbs.length - 1]
+        );
       }
     });
   }
@@ -47,11 +51,18 @@ export class BreadcrumbsComponent implements OnInit {
     this.currentUrl = this.router.url
       .slice(1)
       .split('/')
-      .filter((val) => val !== 'info');
+      .filter((val) => val !== 'info' && val !== 'productos');
 
     if (this.currentUrl.length > 0) {
       this.addBreadcrumbs(this.currentUrl);
+      this.sendBreadcrumb(
+        this.dataBreadcrumbs[this.dataBreadcrumbs.length - 1]
+      );
     }
+  }
+
+  sendBreadcrumb(value: BreadcrumbDTO): void {
+    this.emitTitle.emit(value);
   }
 
   private loadBreadcrumbsCategory(paramUrl: string): void {

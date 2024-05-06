@@ -1,7 +1,7 @@
-import { ImageDTO } from './image.dto';
+import { ImageClass } from '../../images/models/image';
 
 export interface CardSimpleDTO {
   title: string;
-  image: ImageDTO;
+  image: ImageClass;
   url: string;
 }

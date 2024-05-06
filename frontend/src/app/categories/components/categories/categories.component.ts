@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
+import { ImageClass } from '../../../images/models/image';
 import { CardSimpleDTO } from '../../../shared/models/card-simple.dto';
-import { ImageDTO } from '../../../shared/models/image.dto';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import * as CategoriesAction from '../../actions';
 import { CategoryClass } from '../../models/category';
@@ -80,14 +80,15 @@ export class CategoriesComponent {
   }
 
   private createDataCard(category: CategoryClass): void {
-    let newImage: ImageDTO;
+    let newImage: ImageClass;
     let newCard: CardSimpleDTO;
 
     if (category.image !== undefined) {
       newImage = {
+        id: '',
         title: category.image.title,
-        jpg: category.image.picture_jpg,
-        webp: category.image.picture_webp,
+        picture_jpg: category.image.picture_jpg,
+        picture_webp: category.image.picture_webp,
       };
       newCard = {
         title: category.name,

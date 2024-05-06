@@ -52,8 +52,8 @@
             <div class="flex flex-wrap max-w-[1200px] mx-9 my-3">
                 @for (image of detail.content.images; track $index) {
                     <picture>                 
-                        <source [srcset]="image.webp" type="image/webp">
-                        <img class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-3" [src]="image.jpg" [alt]="image.title">
+                        <source [srcset]="image.picture_webp" type="image/webp">
+                        <img class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-3" [src]="image.picture_jpg" [alt]="image.title">
                     </picture>
                 }
             </div> 

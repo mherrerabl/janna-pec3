@@ -6,13 +6,13 @@ export class PriceClass {
   id: string;
   price: number;
   offer: Offer | null;
-  discount: boolean | null;
+  discount: number | null;
 
   constructor(
     id: string,
     price: number,
     offer: Offer | null,
-    discount: boolean | null
+    discount: number | null
   ) {
     this.id = id;
     this.price = price;

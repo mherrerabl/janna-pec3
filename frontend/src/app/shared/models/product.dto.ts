@@ -1,10 +1,11 @@
-import { ImageDTO } from './image.dto';
+import { ImageClass } from '../../images/models/image';
 
 export interface ProductDTO {
-  id: string;
+  product_id: string;
+  product_variation_id: string | null;
   name: string;
   price: number;
+  image: ImageClass;
   quantity: number;
-  image: ImageDTO;
   stock: number;
 }

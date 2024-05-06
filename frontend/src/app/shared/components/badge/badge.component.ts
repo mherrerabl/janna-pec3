@@ -10,9 +10,7 @@ export class BadgeComponent implements OnInit {
   @Input() isSelected!: boolean;
   @Output() badgeSelected = new EventEmitter<BadgeDTO>();
 
-  ngOnInit(): void {
-    console.log(this.dataBadge);
-  }
+  ngOnInit(): void {}
 
   clicked(): void {
     this.isSelected = !this.isSelected;

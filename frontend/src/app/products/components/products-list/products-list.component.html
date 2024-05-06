@@ -1,1 +1,7 @@
-<p>products-list works!</p>
+<app-breadcrumbs (emitTitle)="receiveBreadcrumb($event)"></app-breadcrumbs>
+<h1>{{ title }}</h1>
+@if (products.length > 0) {
+    @for (product of products; track $index) {
+        <app-card [dataCard]="product"></app-card>
+    }
+}

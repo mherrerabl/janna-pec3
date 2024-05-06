@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { InputDTO } from '../../models/input.dto';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-header',
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.search = new FormControl('');
@@ -65,5 +67,9 @@ export class HeaderComponent implements OnInit {
       required: false,
       iconLeft: 'search',
     };
+  }
+
+  openMenu(): void {
+    this.modalService.openMenu();
   }
 }

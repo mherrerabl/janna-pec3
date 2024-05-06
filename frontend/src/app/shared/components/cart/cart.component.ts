@@ -1,15 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
+import { Observable } from 'rxjs';
 import { ProductDTO } from '../../models/product.dto';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
 })
-export class CartComponent {
-  @Input() dataProducts!: ProductDTO[];
-  @Input() isOpen!: boolean;
+export class CartComponent implements OnInit {
+  @Input() dataProducts: ProductDTO[] = [];
   iconClose = faXmark;
+
+  showCart$!: Observable<'open' | 'close'>;
+
+  constructor(
+    private localService: LocalStorageService,
+    private modalService: ModalService
+  ) {}
+
+  ngOnInit(): void {
+    this.showCart$ = this.modalService.watchCart();
+    this.getCart();
+  }
+
+  getCart(): void {
+    this.dataProducts = this.localService.getCart();
+  }
 
   changeQuantity(counter: number, index: number): void {
     this.dataProducts[index].quantity = counter;
@@ -22,103 +40,8 @@ export class CartComponent {
     }
     return total;
   }
-}
 
-const products: ProductDTO[] | any[] = [
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 2,
-    stock: 10,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 1,
-    stock: 3,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 2,
-    stock: 10,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 1,
-    stock: 3,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 2,
-    stock: 10,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 1,
-    stock: 3,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 2,
-    stock: 10,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 1,
-    stock: 3,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-];
+  closeCart(): void {
+    this.modalService.closeCart();
+  }
+}

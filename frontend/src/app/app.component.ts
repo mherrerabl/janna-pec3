@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
 
   constructor(private store: Store<AppState>) {
     this.showMenu = false;
-    this.showCart = false;
+    this.showCart = true;
     this.showLogin = false;
     this.showRegister = false;
   }
