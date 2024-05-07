@@ -1,3 +1,5 @@
+
+
 <div class="peer flex flex-col flex-grow min-h-screen">
     <app-header class="bg-primary"></app-header>
     <main class="container min-h-home mb-section">
@@ -16,8 +18,11 @@
     <app-footer class=" bg-primary"></app-footer>
     <app-menu-footer class="md:lg:hidden"></app-menu-footer>
 </div>
+
 <app-cart></app-cart>
 <app-menu></app-menu>
+<app-register></app-register>
+<app-login></app-login>
 
 @if (showLoading | async) {
     <div class="block fixed top-0 left-0 right-0 bottom-0 bg-darkGrey/40 transition-opacity z-1000">
@@ -25,40 +30,3 @@
     </div>
     
 }
-
-<!--
-@if (showMenu || showCart || showLogin ||  showRegister || (showLoading |async)) {
-    <div class="modal"></div>
-}
-
-@if (showMenu) {
-    <app-menu class="modal-right"></app-menu>
-}
-
-@if (showCart) {
-    <app-cart></app-cart>
-}
-
-@if (showLogin) {
-}
-
-@if (showRegister) {
-}
-
-@if (showLoading | async) {
-    <app-spinner></app-spinner>
-}
-
-<div>
-    <button class="z-50" (click)="toggleMenu()">click</button>
-    <app-menu-footer></app-menu-footer>
-    
-        
-</div>
-<app-cart [class.modal]="isOpen == 'open'"  [isOpen]="isOpen == 'open'" ></app-cart>
-<picture>                 
-      <source srcset="/src/assets/images/players/player_1/player_1.webp" type="image/webp">
-      <img src="/src/assets/images/players/player_1/player_1.jpg" class="card-img"  alt="Retrato Jose Carlos Figueroa">
-    </picture>
-
--->

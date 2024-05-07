@@ -34,8 +34,10 @@ export class CartDropdownComponent {
   getSubtotal(): number {
     let subtotal: number = 0;
 
-    for (const product of this.dataProducts) {
-      subtotal += product.price;
+    if (this.dataProducts !== undefined && this.dataProducts.length > 0) {
+      for (const product of this.dataProducts) {
+        subtotal += product.price;
+      }
     }
 
     return subtotal;

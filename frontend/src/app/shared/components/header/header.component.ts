@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit {
 
   private getDataInput(): InputDTO {
     return {
+      id: 'searcherHeader',
       label: 'Buscador',
       placeholder: this.inputPlaceholder,
       type: 'search',

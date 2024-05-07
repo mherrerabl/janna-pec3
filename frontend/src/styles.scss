@@ -138,7 +138,7 @@
 @layer components {
     /**Modals**/
     .modal-center {
-        @apply absolute w-screen h-screen top-0 z-1000 bg-darkGrey/30;
+        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[500px] p-6 bg-white;
     }
     .modal-right {
         @apply absolute top-0 right-0 z-1000 w-full max-w-72 bg-white;

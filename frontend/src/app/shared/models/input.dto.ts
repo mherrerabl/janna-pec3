@@ -6,6 +6,7 @@ export interface OptionDTO {
   name: string;
 }
 export interface InputDTO {
+  id: string;
   label: string;
   placeholder: string;
   type: string;

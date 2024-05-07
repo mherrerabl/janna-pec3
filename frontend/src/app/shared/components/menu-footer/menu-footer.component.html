@@ -37,13 +37,15 @@
         
         @else {
             <li>
-                <button class="button-icon flex flex-col justify-between w-full min-w-8 sm:w-16 h-full items-center text-xxs">
+                <button class="button-icon flex flex-col justify-between w-full min-w-8 sm:w-16 h-full items-center text-xxs"
+                    (click)="openRegister()">
                     <app-icon-register class="mt-1"></app-icon-register>
                     Registrarse
                 </button>
             </li>
             <li>
-                <button class="button-icon flex flex-col justify-between w-full min-w-8 sm:w-16 h-full items-center text-xxs">
+                <button class="button-icon flex flex-col justify-between w-full min-w-8 sm:w-16 h-full items-center text-xxs" 
+                    (click)="openLogin()">
                     <app-icon-login class="mt-1"></app-icon-login>
                     Iniciar sesión
                 </button>

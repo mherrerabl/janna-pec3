@@ -303,7 +303,7 @@ export class ProductEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'productFeedback',
                 this.responseOK,
                 this.errorResponse,
@@ -358,7 +358,7 @@ export class ProductEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'productFeedback',
                 this.responseOK,
                 this.errorResponse,

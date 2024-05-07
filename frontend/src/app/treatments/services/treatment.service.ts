@@ -29,7 +29,7 @@ export class TreatmentService {
 
   getTreatmentById(id: string): Observable<TreatmentClass> {
     return this.http
-      .get<TreatmentClass>(this.urlApi + '/id/' + id)
+      .get<TreatmentClass>(this.urlApi + '/' + id)
       .pipe(catchError(this.sharedService.handleError));
   }
   getTreatmentByUrl(paramUrl: string): Observable<TreatmentClass> {

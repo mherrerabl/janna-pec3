@@ -20,6 +20,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('./products/products.module').then((mod) => mod.ProductsModule),
   },
+  {
+    path: 'perfil',
+    loadChildren: () =>
+      import('./profile-user/profile-user.module').then(
+        (mod) => mod.ProfileUserModule
+      ),
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./profile-admin/profile-admin.module').then(
+        (mod) => mod.ProfileAdminModule
+      ),
+  },
   /*{
     path: 'tratamientos/:category',
     loadChildren: () =>

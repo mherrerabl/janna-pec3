@@ -252,7 +252,7 @@ export class CategoryEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'categoryFeedback',
                 this.responseOK,
                 this.errorResponse,
@@ -309,7 +309,7 @@ export class CategoryEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'categoryFeedback',
                 this.responseOK,
                 this.errorResponse,

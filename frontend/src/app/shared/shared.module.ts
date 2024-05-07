@@ -12,6 +12,7 @@ import { CartDropdownComponent } from './components/cart-dropdown/cart-dropdown.
 import { CartComponent } from './components/cart/cart.component';
 import { ContactLinksComponent } from './components/contact-links/contact-links.component';
 import { CounterComponent } from './components/counter/counter.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { InputComponent } from './components/input/input.component';
@@ -48,6 +49,7 @@ import { SharedRoutingModule } from './shared-routing.module';
     ContactLinksComponent,
     HeaderComponent,
     SanitizeHtmlPipe,
+    DropdownComponent,
   ],
   imports: [
     CommonModule,
@@ -78,6 +80,7 @@ import { SharedRoutingModule } from './shared-routing.module';
     LocationComponent,
     ContactLinksComponent,
     HeaderComponent,
+    DropdownComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -16,11 +16,14 @@
   }
 
   @if (dataInput.type !== 'select' && dataInput.type !== 'checkbox') {
-    <label class="{{dataInput.type === 'search' ? 'label-s' : 'label'}}">{{ dataInput.label }} <span *ngIf="dataInput.required">*</span></label>
+    <label [for]="dataInput.id" class="{{dataInput.type === 'search' ? 'label-s' : 'label'}}">
+      {{ dataInput.label }} 
+      <span *ngIf="dataInput.required">*</span>
+    </label>
   }
  
   @if (dataInput.type === 'textarea') {
-    <textarea class="input min-h-64 pt-4 [&+.icon-right]:top-[1.65rem]" 
+    <textarea [id]="dataInput.id" class="input min-h-64 pt-4 [&+.icon-right]:top-[1.65rem]" 
       [placeholder]="dataInput.placeholder" 
       [required]="dataInput.required" 
       [formControl]="dataInput.formControl"></textarea>
@@ -28,9 +31,9 @@
 
   @else if (dataInput.type === 'select') {
     <div class="sr-only">
-      <label>{{dataInput.label}}</label>
+      <label [for]="dataInput.id">{{dataInput.label}}</label>
       <span class="icon-right" aria-hidden="true"><fa-icon [icon]="expandSelect ? iconArrowUp : iconArrowDown"></fa-icon></span>
-      <select class="select border-0 border-b text-darkGrey" 
+      <select [id]="dataInput.id" class="select border-0 border-b text-darkGrey" 
       [required]="dataInput.required" 
       [title]="dataInput.label" 
       [formControl]="dataInput.formControl"
@@ -43,7 +46,7 @@
     </div>
     
   
-    <div aria-hidden="true" [formControl]="dataInput.formControl">
+    <div [id]="dataInput.id" aria-hidden="true" [formControl]="dataInput.formControl">
       <button class="select [&>.icon-right]:top-[1.65rem]" 
         [class.border-0]="expandSelect" 
         (click)="toogleSelect()">
@@ -65,19 +68,20 @@
   }
 
   @else if (dataInput.type === 'checkbox') {
-    <label class="flex items-center cursor-pointer">
-      <input class="w-4 h-4 mr-2 border-2 accent-secundary-500 focus:ring-2 focus:ring-secundary-500"
-       [class.invalid:ring-2]="checkForm" [class.invalid:ring-error-500]="checkForm" 
-      type="checkbox" 
-      [required]="dataInput.required" 
-      [formControl]="dataInput.formControl">
-   
-    <span [innerHTML]="dataInput.label | sanitizeHtml"></span></label>
+    <label [for]="dataInput.id" class="flex items-center cursor-pointer">
+        <input [id]="dataInput.id" class="w-4 h-4 mr-2 border-2 accent-secundary-500 focus:ring-2 focus:ring-secundary-500"
+        [class.invalid:ring-2]="checkForm" [class.invalid:ring-error-500]="checkForm" 
+        type="checkbox" 
+        [required]="dataInput.required" 
+        [formControl]="dataInput.formControl">
+    
+      <span [innerHTML]="dataInput.label | sanitizeHtml"></span>
+    </label>
     
   }
 
   @else {
-    <input class="input {{dataInput.type === 'search' ? 'h-10' : ''}}" 
+    <input [id]="dataInput.id" class="input {{dataInput.type === 'search' ? 'h-10' : ''}}" 
     [type]="hidePassword ? dataInput.type : 'text'" 
     [placeholder]="dataInput.placeholder" 
     [required]="dataInput.required" 

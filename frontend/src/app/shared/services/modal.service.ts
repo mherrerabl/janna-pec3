@@ -26,6 +26,9 @@ export class ModalService {
   }
 
   openCart(): void {
+    this.showLogin.next('close');
+    this.showRegister.next('close');
+    this.showMenu.next('close');
     this.showCart.next('open');
   }
 
@@ -38,6 +41,9 @@ export class ModalService {
   }
 
   openMenu(): void {
+    this.showLogin.next('close');
+    this.showRegister.next('close');
+    this.showCart.next('close');
     this.showMenu.next('open');
   }
 
@@ -50,6 +56,9 @@ export class ModalService {
   }
 
   openLogin(): void {
+    this.showCart.next('close');
+    this.showRegister.next('close');
+    this.showMenu.next('close');
     this.showLogin.next('open');
   }
 
@@ -62,6 +71,9 @@ export class ModalService {
   }
 
   openRegister(): void {
+    this.showLogin.next('close');
+    this.showCart.next('close');
+    this.showMenu.next('close');
     this.showRegister.next('open');
   }
 

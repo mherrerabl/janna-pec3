@@ -19,7 +19,7 @@
                         </div>
                         
                         <ul class="px-4 overflow-y-scroll h-cart">
-                            @if (dataProducts.length > 0) {
+                            @if (dataProducts != null && dataProducts.length > 0) {
                                 @for (product of dataProducts; track $index) {
                                     <li class="flex flex-col h-fit">
                                         <div class="flex justify-between gap-2">

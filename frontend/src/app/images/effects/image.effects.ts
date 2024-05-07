@@ -211,7 +211,7 @@ export class ImageEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'imageFeedback',
                 this.responseOK,
                 this.errorResponse,
@@ -266,7 +266,7 @@ export class ImageEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'imageFeedback',
                 this.responseOK,
                 this.errorResponse,

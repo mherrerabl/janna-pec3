@@ -65,38 +65,3 @@ export class InputComponent {
     this.toogleSelect();
   }
 }
-/*
-= {
-    label: 'Title',
-    placeholder: 'placeholder',
-    type: 'select',
-    formControl: 'this.title',
-    required: true,
-    //iconLeft: 'phone',
-    //iconRight: 'password',
-    options: [
-      {
-        id: '1',
-        name: 'Masajes',
-      },
-      {
-        id: '2',
-        name: 'Mesoterapia',
-      },
-      {
-        id: '3',
-        name: 'Presoterapia',
-      },
-    ],
-    errors: [
-      {
-        type: 'required',
-        message: 'Title is required.',
-      },
-      {
-        type: 'maxlength',
-        message: 'Title can be max 55 characters long.',
-      },
-    ],
-  };
-  */

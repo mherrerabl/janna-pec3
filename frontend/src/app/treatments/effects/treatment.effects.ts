@@ -158,7 +158,7 @@ export class TreatmentEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'treatmentFeedback',
                 this.responseOK,
                 this.errorResponse,
@@ -215,7 +215,7 @@ export class TreatmentEffects {
           }),
           finalize(async () => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'treatmentFeedback',
                 this.responseOK,
                 this.errorResponse,

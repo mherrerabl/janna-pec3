@@ -23,6 +23,7 @@ export class ContactComponent {
   surname: FormControl;
   email: FormControl;
   query: FormControl;
+  confirmPrivacity: FormControl;
 
   contactForm: FormGroup;
   isValidForm: boolean | null;
@@ -40,7 +41,7 @@ export class ContactComponent {
     this.checkForm = false;
     this.showFeedback = false;
 
-    this.contactMail = new MailClass('', '', '', '');
+    this.contactMail = new MailClass('', '', '', '', false);
 
     this.name = new FormControl(this.contactMail.name, [
       Validators.required,
@@ -62,17 +63,22 @@ export class ContactComponent {
       Validators.maxLength(255),
     ]);
 
+    this.confirmPrivacity = new FormControl(this.contactMail.confirmPrivacity, [
+      Validators.required,
+    ]);
+
     this.contactForm = this.formerBuilder.group({
       name: this.name,
       surname: this.surname,
       email: this.email,
       query: this.query,
+      confirmPrivacity: this.confirmPrivacity,
     });
 
     this.inputsForm = this.getDataInputs();
 
-    this.store.select('mail').subscribe((resp) => {
-      if (resp.loaded) {
+    this.store.select('mail').subscribe((store) => {
+      if (store.loaded) {
         this.contactForm.reset();
         this.showFeedback = true;
         this.checkForm = false;
@@ -102,6 +108,7 @@ export class ContactComponent {
   private getDataInputs(): InputDTO[] {
     return [
       {
+        id: 'nameFormContact',
         label: 'Nombre',
         placeholder: 'Escriba su nombre',
         type: 'text',
@@ -119,6 +126,7 @@ export class ContactComponent {
         ],
       },
       {
+        id: 'surnameFormContact',
         label: 'Apellidos',
         placeholder: 'Escriba sus apellidos',
         type: 'text',
@@ -136,6 +144,7 @@ export class ContactComponent {
         ],
       },
       {
+        id: 'emailFormContact',
         label: 'Correo electrónico',
         placeholder: 'Escriba su correo electrónico',
         type: 'text',
@@ -154,6 +163,7 @@ export class ContactComponent {
         ],
       },
       {
+        id: 'queryFormContact',
         label: 'Consulta',
         placeholder: 'Escriba su consulta',
         type: 'textarea',
@@ -171,11 +181,12 @@ export class ContactComponent {
         ],
       },
       {
+        id: 'privacityFormContact',
         label:
           'He leído y acepto la <a class="button-link" [routerLink]="&apos;privacidad&apos;">Política de Privacidad</a>.',
         placeholder: '',
         type: 'checkbox',
-        formControl: this.query,
+        formControl: this.confirmPrivacity,
         required: true,
       },
     ];

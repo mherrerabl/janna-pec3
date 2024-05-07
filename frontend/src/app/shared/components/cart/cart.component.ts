@@ -10,7 +10,7 @@ import { ModalService } from '../../services/modal.service';
   templateUrl: './cart.component.html',
 })
 export class CartComponent implements OnInit {
-  @Input() dataProducts: ProductDTO[] = [];
+  @Input() dataProducts!: ProductDTO[];
   iconClose = faXmark;
 
   showCart$!: Observable<'open' | 'close'>;
@@ -35,9 +35,12 @@ export class CartComponent implements OnInit {
 
   getTotalCart(): number {
     let total: number = 0;
-    for (const product of this.dataProducts) {
-      total += product.price * product.quantity;
+    if (this.dataProducts !== null && this.dataProducts.length > 0) {
+      for (const product of this.dataProducts) {
+        total += product.price * product.quantity;
+      }
     }
+
     return total;
   }
 

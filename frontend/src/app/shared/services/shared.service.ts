@@ -1,5 +1,6 @@
+import { DOCUMENT } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 
 export interface ResponseError {
@@ -16,15 +17,15 @@ export interface ResponseError {
   providedIn: 'root',
 })
 export class SharedService {
-  constructor() {}
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  async flashNotification(
+  async notification(
     el: string,
     validRequest: boolean,
     error?: ResponseError,
     message?: string
   ): Promise<void> {
-    const element = document.getElementById(el);
+    const element = this.document.getElementById(el);
     if (element) {
       if (validRequest) {
         element.textContent =

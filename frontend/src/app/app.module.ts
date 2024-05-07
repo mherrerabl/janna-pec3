@@ -19,6 +19,7 @@ import { appReducers, EffectsArray } from './app.reducers';
 import { MailModule } from './mail/mail.module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './spinner/components/spinner/spinner.component';
+import { UsersModule } from './users/users.module';
 
 registerLocaleData(localeEs);
 
@@ -29,6 +30,7 @@ registerLocaleData(localeEs);
     AppRoutingModule,
     SharedModule,
     MailModule,
+    UsersModule,
     HttpClientModule,
     StoreModule.forRoot(appReducers, {
       runtimeChecks: {

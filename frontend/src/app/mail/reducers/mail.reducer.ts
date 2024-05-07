@@ -10,7 +10,7 @@ export interface MailState {
 }
 
 export const initialState: MailState = {
-  mail: new MailClass('', '', '', ''),
+  mail: new MailClass('', '', '', '', false),
   loading: false,
   loaded: false,
   error: null,

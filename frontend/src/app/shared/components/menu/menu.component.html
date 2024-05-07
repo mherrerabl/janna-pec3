@@ -1,9 +1,10 @@
 <div *ngIf="showMenu$ | async as showMenu">
-    <div class="block fixed top-0 left-0 right-0 bottom-0 bg-darkGrey/40 transition-opacity z-1000" 
+    <div class="block fixed top-0 left-0 right-0 bottom-0 bg-darkGrey/40 transition-opacity z-[9000]" 
         [class.invisible]="showMenu === 'close'"  
         [class.opacity-0]="showMenu === 'close'" 
         [class.visible]="showMenu === 'open'"  
         [class.opacity-1]="showMenu === 'open'" 
+        [class.modal]="showMenu === 'open'"
         (click)="closeMenu()"
         >
         <div (click)="$event.stopPropagation()">
@@ -16,7 +17,7 @@
                     <nav>
                         <ul>
                             <li class="py-2">
-                                <a class="button-icon inline-flex items-center" [routerLink]="'agenda'">
+                                <a class="button-icon inline-flex items-center" [routerLink]="'agenda'" (click)="closeMenu()">
                                     <app-icon-calendar class="w-9"></app-icon-calendar>
                                     Agenda
                                 </a>
@@ -28,7 +29,7 @@
                                 </a>
                             </li>
                             <li class="py-2">
-                                <a class="button-icon inline-flex items-center" [routerLink]="'tienda'">
+                                <a class="button-icon inline-flex items-center" [routerLink]="'tienda'" (click)="closeMenu()">
                                     <app-icon-shop class="w-9"></app-icon-shop>
                                     Tienda
                                 </a>
@@ -42,13 +43,13 @@
                 
                             @if (isLogin) {
                                 <li class="py-2">
-                                    <a class="button-icon inline-flex items-center" [routerLink]="'perfil'">
+                                    <a class="button-icon inline-flex items-center" [routerLink]="'perfil'" (click)="closeMenu()">
                                         <app-icon-user class="w-9"></app-icon-user>
                                         Perfil
                                     </a>
                                 </li>
                                 <li class="py-2">
-                                    <button class="button-icon inline-flex items-center">
+                                    <button class="button-icon inline-flex items-center" (click)="logout()">
                                         <app-icon-logout class="w-9"></app-icon-logout>
                                         Cerrar sesión
                                     </button>
@@ -57,13 +58,13 @@
                             
                             @else {
                                 <li class="py-2">
-                                    <button class="button-icon inline-flex items-center">
+                                    <button class="button-icon inline-flex items-center" (click)="openRegister()">
                                         <app-icon-register class="w-9"></app-icon-register>
                                         Registrarse
                                     </button>
                                 </li>
                                 <li class="py-2">
-                                    <button class="button-icon inline-flex items-center">
+                                    <button class="button-icon inline-flex items-center" (click)="openLogin()">
                                         <app-icon-login class="w-9"></app-icon-login>
                                         Iniciar sesión
                                     </button>

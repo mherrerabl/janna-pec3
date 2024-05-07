@@ -1,52 +1,16 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './app.reducers';
+import { LocalStorageService } from './shared/services/local-storage.service';
 import { getLoading } from './spinner/selector/spinner.selector';
+import * as UserAction from './users/actions';
+import { UserDTO } from './users/models/user.dto';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  /*animations: [
-    trigger('sidebarTrigger', [
-      // To add a cool "enter" animation for the sidebar
-      transition(':enter', [
-        style({ transform: 'translateX(100%)' }),
-        animate('300ms ease-in', style({ transform: 'translateY(0%)' })),
-      ]),
-
-      // To define animations based on trigger actions
-      state('open', style({ transform: 'translateX(0%)' })),
-      state('close', style({ transform: 'translateX(100%)' })),
-      transition('open => close', [animate('300ms ease-in')]),
-      transition('close => open', [animate('300ms ease-out')]),
-    ]),
-  ],*/
-  animations: [
-    trigger('sidebarTrigger', [
-      state(
-        'close',
-        style({
-          transform: 'translateX(100%)',
-        })
-      ),
-      state(
-        'open',
-        style({
-          transform: 'translateX(0)',
-        })
-      ),
-      transition('* => *', [animate(250)]),
-    ]),
-  ],
 })
 export class AppComponent implements OnInit {
   title = 'Janna';
@@ -57,23 +21,35 @@ export class AppComponent implements OnInit {
 
   showLoading!: Observable<boolean>;
 
-  constructor(private store: Store<AppState>) {
+  user!: UserDTO;
+
+  constructor(
+    private store: Store<AppState>,
+    private localService: LocalStorageService
+  ) {
     this.showMenu = false;
     this.showCart = true;
     this.showLogin = false;
     this.showRegister = false;
+
+    this.store.select('user').subscribe((store) => {
+      if (store.user.id === '' || store.user.id === undefined) {
+        this.user = this.localService.getUser();
+      }
+    });
   }
 
   ngOnInit(): void {
+    if (this.user !== undefined && this.user !== null) {
+      this.loadUser();
+    }
+  }
+
+  loadUser(): void {
     setTimeout(() => {
       this.showLoading = this.store.select(getLoading);
     });
+
+    this.store.dispatch(UserAction.getUserLogin({ user: this.user }));
   }
-  /*
-  menuState: string = 'out';
-  isOpen: string = 'close';
-  toggleMenu() {
-    this.isOpen == 'open' ? (this.isOpen = 'close') : (this.isOpen = 'open');
-    console.log(this.isOpen);
-  }*/
 }

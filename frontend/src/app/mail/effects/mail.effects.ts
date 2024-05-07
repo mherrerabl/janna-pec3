@@ -37,7 +37,7 @@ export class MailEffects {
           }),
           finalize(() => {
             setTimeout(() => {
-              this.sharedService.flashNotification(
+              this.sharedService.notification(
                 'mailFeedback',
                 this.responseOK,
                 this.errorResponse,
