@@ -349,7 +349,6 @@ export class ProductEffects {
         this.productService.updateProduct(productId, product).pipe(
           map((product) => {
             return ProductActions.updateProductSuccess({
-              productId: productId,
               product: product,
             });
           }),
@@ -390,6 +389,38 @@ export class ProductEffects {
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.deleteProduct),
+      exhaustMap(({ productId }) =>
+        this.productService.deleteProduct(productId).pipe(
+          map(() => {
+            this.store.dispatch(isLoading({ status: false }));
+            return ProductActions.deleteProductSuccess({
+              productId: productId,
+            });
+          }),
+          catchError((error) => {
+            return of(ProductActions.deleteProductFailure({ payload: error }));
+          })
+        )
+      )
+    )
+  );
+
+  deleteProductFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ProductActions.deleteProductFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
           this.sharedService.errorLog(error.payload.error);
         })

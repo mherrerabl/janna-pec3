@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit {
           name: 'Datos personales',
         },
         {
-          link: 'address',
+          link: 'direcciones',
           name: 'Direcciones',
         },
         {

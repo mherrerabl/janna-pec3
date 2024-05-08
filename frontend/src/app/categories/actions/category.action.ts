@@ -108,7 +108,7 @@ export const updateCategory = createAction(
 
 export const updateCategorySuccess = createAction(
   '[Category form] Update category success',
-  props<{ categoryId: string; category: CategoryClass }>()
+  props<{ category: CategoryClass }>()
 );
 
 export const updateCategoryFailure = createAction(

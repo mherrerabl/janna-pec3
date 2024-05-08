@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileUserAddressesTableComponent } from './components/addresses/profile-user-addresses-table/profile-user-addresses-table.component';
+import { ProfileUserOrdersTableComponent } from './components/orders/profile-user-orders-table/profile-user-orders-table.component';
 import { ProfileUserPersonalFormComponent } from './components/personal/profile-user-personal-form/profile-user-personal-form.component';
-import { ProfileUserFormComponent } from './components/profile-user-form/profile-user-form.component';
-import { ProfileUserTableComponent } from './components/profile-user-table/profile-user-table.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
@@ -15,12 +15,24 @@ const routes: Routes = [
         component: ProfileUserPersonalFormComponent,
       },
       {
-        path: ':type',
-        component: ProfileUserTableComponent,
+        path: 'direcciones',
+        component: ProfileUserAddressesTableComponent,
+        children: [
+          {
+            path: ':form',
+            component: ProfileUserAddressesTableComponent,
+          },
+        ],
       },
       {
-        path: ':type/:form',
-        component: ProfileUserFormComponent,
+        path: 'pedidos',
+        component: ProfileUserOrdersTableComponent,
+        children: [
+          {
+            path: ':form',
+            component: ProfileUserOrdersTableComponent,
+          },
+        ],
       },
     ],
   },

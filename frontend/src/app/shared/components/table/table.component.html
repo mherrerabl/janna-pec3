@@ -1,31 +1,65 @@
+<form [formGroup]="form" class="mb-6 lg:max-w-[500px]">
+    <div class="group relative w-full">
+        <span class="peer icon-left"><fa-icon [icon]="iconSearch"></fa-icon></span>
+        <label for="searcherProfile" class="label">Buscar</label>
+        <input id="searcherProfile" class="input" type="searcher" placeholder="Busca..." [formControl]="searcherControl" (keyup)="filter()">
+      </div>
+</form>
+
 <table class="w-full border-collapse">
     <thead class="h-14 bg-primary">
         <tr>
             <th class="opacity-0 max-w-2">Expanded</th>
-            @for (title of dataTable.titles; track title) {
-                <th class="text-start h6 text-darkGrey {{ title.smallScreens ? 'table-cell' : 'hidden md:table-cell'}}">{{ title.title }}</th>
+            @for (title of dataTable.titles; track $index) {
+                <th class="text-start {{ title.smallScreens ? 'table-cell' : 'hidden md:table-cell'}}">
+                    <button class="button-icon h6" (click)="sort($index)">
+                        <span><fa-icon [icon]="iconSort"></fa-icon></span>
+                        {{ title.title }}
+                    </button>
+                   
+                </th>
             }
             
-            <th *ngIf="dataTable.action" class="max-w-8"><button class="button-icon icon-l"><fa-icon [icon]="iconPlus"></fa-icon></button></th>
+            @if (dataTable.action) {
+                <th class="max-w-8">
+                    <a class="button-icon icon-m md:icon-l" [routerLink]="'nuevo'">
+                        <fa-icon [icon]="iconPlus"></fa-icon>
+                    </a>
+                </th>
+            }
+            
         </tr>
     </thead>
     <tbody>
         @for (row of dataTable.rows| paginate: { itemsPerPage: 5, currentPage: currentPage }; track row; let index = $index;) {
-            <tr class="button-icon text-black h-12 border-primary" [class.border-b]="expandedElement !== row" [tabindex]="index">
-                <td class="max-w-2 cursor-pointer" (click)="expandedElement = expandedElement === row ? null : row">
+            <tr class="button-icon text-black h-12 border-primary" 
+                [class.border-b]="expandedElement !== row" 
+                [tabindex]="index">
+                <td class="max-w-2 cursor-pointer" 
+                    (click)="expandedElement = expandedElement === row ? null : row">
                     <span class="block text-center align-middle">
                         <fa-icon [icon]="expandedElement ? iconArrowUp : iconArrowDown"></fa-icon>
                     </span>
                 </td>
                 @for (content of row.rowInfo; track content; let i = $index) {
-                    <td class="cursor-pointer {{ dataTable.titles[i].smallScreens ? 'table-cell' : 'hidden md:table-cell'}}" (click)="expandedElement = expandedElement === row ? null : row">{{ content }}</td>
+                    <td class="cursor-pointer {{ dataTable.titles[i].smallScreens ? 'table-cell' : 'hidden md:table-cell'}}" 
+                        (click)="expandedElement = expandedElement === row ? null : row">
+                        {{ content }}
+                    </td>
                 }
-                <td *ngIf="dataTable.action" class="max-w-8">
-                    <div class="flex justify-center">
-                        <button class="mx-2 button-icon icon-m"><fa-icon [icon]="iconEdit"></fa-icon></button>
-                        <button class="mx-2 button-icon icon-m"><fa-icon [icon]="iconDelete"></fa-icon></button>
-                    </div>
-                </td>
+                @if (dataTable.action) {
+                    <td class="max-w-8">
+                        <div class="flex justify-center">
+                            <a class="mx-2 button-icon icon-s lg:icon-m" [routerLink]="'editar'">
+                                <fa-icon [icon]="iconEdit"></fa-icon>
+                            </a>
+                            <button class="mx-2 button-icon icon-s lg:icon-m" (click)="delete(row.id)">
+                                <fa-icon [icon]="iconDelete"></fa-icon>
+                            </button>
+                        </div>
+                    </td>
+                }
+                
             </tr>
             <tr>
                 <td [attr.colspan]="dataTable.titles.length+2" class="overflow-hidden table-cell">

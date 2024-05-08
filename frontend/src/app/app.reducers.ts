@@ -1,4 +1,6 @@
 import { ActionReducerMap } from '@ngrx/store';
+import { AddressEffects } from './addresses/effects';
+import * as AddressReducer from './addresses/reducers';
 import { CategoryEffects } from './categories/effects';
 import * as CategoryReducer from './categories/reducers';
 import { ImageEffects } from './images/effects';
@@ -12,10 +14,16 @@ import { TreatmentEffects } from './treatments/effects';
 import * as TreatmentReducer from './treatments/reducers';
 import { UserEffects } from './users/effects';
 import * as UserReducer from './users/reducers';
+
+import { OrderEffects } from './orders/effects';
+import * as OrderReducer from './orders/reducers';
+
 export interface AppState {
   mail: MailReducer.MailState;
   images: ImageReducer.ImagesState;
   user: UserReducer.UserState;
+  address: AddressReducer.AddressesState;
+  order: OrderReducer.OrdersState;
   categories: CategoryReducer.CategoriesState;
   treatments: TreatmentReducer.TreatmentsState;
   products: ProductReducer.ProductsState;
@@ -26,6 +34,8 @@ export const appReducers: ActionReducerMap<AppState> = {
   mail: MailReducer.mailReducer,
   images: ImageReducer.imagesReducer,
   user: UserReducer.userReducer,
+  address: AddressReducer.addressesReducer,
+  order: OrderReducer.ordersReducer,
   categories: CategoryReducer.categoriesReducer,
   treatments: TreatmentReducer.treatmentsReducer,
   products: ProductReducer.productsReducer,
@@ -36,6 +46,8 @@ export const EffectsArray: any[] = [
   MailEffects,
   ImageEffects,
   UserEffects,
+  AddressEffects,
+  OrderEffects,
   CategoryEffects,
   TreatmentEffects,
   ProductEffects,

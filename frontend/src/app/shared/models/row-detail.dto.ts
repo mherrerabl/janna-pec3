@@ -1,6 +1,6 @@
+import { AddressClass } from '../../addresses/models/address';
 import { ImageClass } from '../../images/models/image';
 import { BadgeDTO } from './badge.dto';
-import { DirectionDTO } from './direction.dto';
 import { ListProductsDTO } from './list-products.dto';
 
 interface SeassonsDTO {
@@ -16,7 +16,7 @@ export interface RowDetailDTO {
       price?: number;
       days?: Date;
       date?: Date;
-      direction?: DirectionDTO;
+      address?: AddressClass;
     };
     list?: string[];
     products?: ListProductsDTO[];

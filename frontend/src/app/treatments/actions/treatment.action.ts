@@ -66,7 +66,7 @@ export const updateTreatment = createAction(
 
 export const updateTreatmentSuccess = createAction(
   '[Treatment form] Update treatment success',
-  props<{ treatmentId: string; treatment: TreatmentClass }>()
+  props<{ treatment: TreatmentClass }>()
 );
 
 export const updateTreatmentFailure = createAction(

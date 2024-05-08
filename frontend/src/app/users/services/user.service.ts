@@ -4,14 +4,11 @@ import { Store } from '@ngrx/store';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { AppState } from '../../app.reducers';
+import { deleteResponse } from '../../shared/models/deleteResponse.dto';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { SharedService } from '../../shared/services/shared.service';
 import { UserClass } from '../models/user';
 import { UserDTO } from '../models/user.dto';
-
-interface deleteResponse {
-  affected: number;
-}
 
 @Injectable({
   providedIn: 'root',

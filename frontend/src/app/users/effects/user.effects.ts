@@ -247,4 +247,36 @@ export class UserEffects {
       ),
     { dispatch: false }
   );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.deleteUser),
+      exhaustMap(({ userId }) =>
+        this.userService.deleteUser(userId).pipe(
+          map(() => {
+            this.store.dispatch(isLoading({ status: false }));
+            return UserActions.deleteUserSuccess({
+              userId: userId,
+            });
+          }),
+          catchError((error) => {
+            return of(UserActions.deleteUserFailure({ payload: error }));
+          })
+        )
+      )
+    )
+  );
+
+  deleteUserFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(UserActions.deleteUserFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
 }

@@ -91,7 +91,7 @@ export const updateImage = createAction(
 
 export const updateImageSuccess = createAction(
   '[Image form] Update image success',
-  props<{ imageId: string; image: ImageClass }>()
+  props<{ image: ImageClass }>()
 );
 
 export const updateImageFailure = createAction(

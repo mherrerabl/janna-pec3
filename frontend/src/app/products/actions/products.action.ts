@@ -130,7 +130,7 @@ export const updateProduct = createAction(
 
 export const updateProductSuccess = createAction(
   '[Product form] Update product success',
-  props<{ productId: string; product: ProductClass }>()
+  props<{ product: ProductClass }>()
 );
 
 export const updateProductFailure = createAction(

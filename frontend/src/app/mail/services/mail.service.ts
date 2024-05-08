@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 import { SharedService } from '../../shared/services/shared.service';
 import { MailClass } from '../models/mail.js';
 
@@ -13,7 +14,7 @@ export class MailService {
 
   constructor(private http: HttpClient, private sharedService: SharedService) {
     this.controller = 'mail';
-    this.urlApi = 'http://127.0.0.1:8000/api/' + this.controller;
+    this.urlApi = environment.API_URL + '/api/' + this.controller;
   }
 
   sendEmail(mail: MailClass): Observable<MailClass> {

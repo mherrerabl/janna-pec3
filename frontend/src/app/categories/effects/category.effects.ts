@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, finalize, map, of } from 'rxjs';
@@ -17,7 +16,6 @@ export class CategoryEffects {
     private actions$: Actions,
     private categoryService: CategoryService,
     private sharedService: SharedService,
-    private router: Router,
     private store: Store
   ) {
     this.responseOK = false;
@@ -298,7 +296,6 @@ export class CategoryEffects {
         this.categoryService.updateCategory(categoryId, category).pipe(
           map((category) => {
             return CategoryActions.updateCategorySuccess({
-              categoryId: categoryId,
               category: category,
             });
           }),
@@ -341,6 +338,40 @@ export class CategoryEffects {
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CategoryActions.deleteCategory),
+      exhaustMap(({ categoryId }) =>
+        this.categoryService.deleteCategory(categoryId).pipe(
+          map(() => {
+            this.store.dispatch(isLoading({ status: false }));
+            return CategoryActions.deleteCategorySuccess({
+              categoryId: categoryId,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              CategoryActions.deleteCategoryFailure({ payload: error })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  deleteCategoryFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CategoryActions.deleteCategoryFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
           this.sharedService.errorLog(error.payload.error);
         })

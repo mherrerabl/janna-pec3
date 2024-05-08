@@ -204,7 +204,6 @@ export class TreatmentEffects {
         this.treatmentService.updateTreatment(treatmentId, treatment).pipe(
           map((treatment) => {
             return TreatmentActions.updateTreatmentSuccess({
-              treatmentId: treatmentId,
               treatment: treatment,
             });
           }),
@@ -247,6 +246,40 @@ export class TreatmentEffects {
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteTreatment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TreatmentActions.deleteTreatment),
+      exhaustMap(({ treatmentId }) =>
+        this.treatmentService.deleteTreatment(treatmentId).pipe(
+          map(() => {
+            this.store.dispatch(isLoading({ status: false }));
+            return TreatmentActions.deleteTreatmentSuccess({
+              treatmentId: treatmentId,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              TreatmentActions.deleteTreatmentFailure({ payload: error })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  deleteTreatmentFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TreatmentActions.deleteTreatmentFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
           this.sharedService.errorLog(error.payload.error);
         })

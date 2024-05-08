@@ -14,8 +14,8 @@
             @else if (detail.content.info.date !== undefined) {
                 <p class="max-w-[1200px] mx-9 my-3">{{ detail.content.info.date | date: 'dd/MM/yyyy' }}</p>
             }
-            @else if (detail.content.info.direction !== undefined) {
-                <p class="max-w-[1200px] mx-9 my-3">{{ detail.content.info.direction.address }}, {{ detail.content.info.direction.number }}, <span *ngIf="detail.content.info.direction.additionalInfo !== undefined">{{ detail.content.info.direction.additionalInfo }}, </span>{{ detail.content.info.direction.zip }}, {{ detail.content.info.direction.city }}</p>
+            @else if (detail.content.info.address !== undefined) {
+                <p class="max-w-[1200px] mx-9 my-3">{{ detail.content.info.address.address }}, {{ detail.content.info.address.number }}, <span *ngIf="detail.content.info.address.additionalInfo !== undefined">{{ detail.content.info.address.additionalInfo }}, </span>{{ detail.content.info.address.zip }}, {{ detail.content.info.address.city }}</p>
             }
         }
         

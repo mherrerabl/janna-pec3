@@ -9,4 +9,5 @@ export interface TableDTO {
   titles: titlesDTO[];
   rows: RowDTO[];
   action: boolean;
+  bd: string;
 }

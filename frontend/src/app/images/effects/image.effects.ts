@@ -257,7 +257,6 @@ export class ImageEffects {
         this.imageService.updateImage(imageId, image).pipe(
           map((image) => {
             return ImageActions.updateImageSuccess({
-              imageId: imageId,
               image: image,
             });
           }),
@@ -298,6 +297,38 @@ export class ImageEffects {
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ImageActions.deleteImage),
+      exhaustMap(({ imageId }) =>
+        this.imageService.deleteImage(imageId).pipe(
+          map(() => {
+            this.store.dispatch(isLoading({ status: false }));
+            return ImageActions.deleteImageSuccess({
+              imageId: imageId,
+            });
+          }),
+          catchError((error) => {
+            return of(ImageActions.deleteImageFailure({ payload: error }));
+          })
+        )
+      )
+    )
+  );
+
+  deleteImageFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ImageActions.deleteImageFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;
           this.sharedService.errorLog(error.payload.error);
         })

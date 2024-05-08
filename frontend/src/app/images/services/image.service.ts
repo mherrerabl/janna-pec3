@@ -2,12 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { deleteResponse } from '../../shared/models/deleteResponse.dto';
 import { SharedService } from '../../shared/services/shared.service';
 import { ImageClass } from '../models/image';
-
-interface deleteResponse {
-  affected: number;
-}
 
 @Injectable({
   providedIn: 'root',
