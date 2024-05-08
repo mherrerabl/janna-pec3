@@ -62,7 +62,7 @@ export const updateUser = createAction(
 );
 export const updateUserSuccess = createAction(
   '[Profile Page] Update User Success',
-  props<{ userId: string; user: UserClass }>()
+  props<{ user: UserClass }>()
 );
 
 export const updateUserFailure = createAction(

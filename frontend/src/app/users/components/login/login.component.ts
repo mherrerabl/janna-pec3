@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.store.select('user').subscribe((store) => {
-      if (store.loaded) {
+      if (this.isValidForm) {
         this.resetErrors();
         if (store.user.id !== undefined) {
           if (this.keepLogin) {
@@ -127,6 +127,7 @@ export class LoginComponent implements OnInit {
     this.errorEmail = false;
     this.errorPassword = false;
     this.showFeedback = false;
+    this.isValidForm = false;
   }
 
   notificationErrors(error: any): void {
@@ -200,6 +201,7 @@ export class LoginComponent implements OnInit {
         placeholder: 'Escriba una constraseña',
         type: 'password',
         formControl: this.password,
+        iconRight: 'password',
         required: true,
         errors: [
           {
@@ -218,6 +220,7 @@ export class LoginComponent implements OnInit {
         placeholder: 'Repita la constraseña',
         type: 'password',
         formControl: this.passwordConfirm,
+        iconRight: 'password',
         required: true,
         errors: [
           {

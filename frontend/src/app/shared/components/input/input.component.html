@@ -47,7 +47,7 @@
     
   
     <div [id]="dataInput.id" aria-hidden="true" [formControl]="dataInput.formControl">
-      <button class="select [&>.icon-right]:top-[1.65rem]" 
+      <button type="button" class="select [&>.icon-right]:top-[1.65rem]" 
         [class.border-0]="expandSelect" 
         (click)="toogleSelect()">
         {{  optionSelected === undefined ? dataInput.label : optionSelected.name}}
@@ -95,7 +95,9 @@
       }
 
       @case ('password') {
-        <button class="icon-right" (click)="toogleIconPassword()"><fa-icon [icon]="hidePassword ? iconEyeSlash : iconEye"></fa-icon></button>
+        <button type="button" class="icon-right" (click)="toogleIconPassword()">
+          <fa-icon [icon]="hidePassword ? iconEyeSlash : iconEye"></fa-icon>
+        </button>
       }
     }
   }

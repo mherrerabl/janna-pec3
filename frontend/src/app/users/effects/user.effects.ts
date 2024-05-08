@@ -201,7 +201,6 @@ export class UserEffects {
         this.userService.updateUser(userId, user).pipe(
           map((user) => {
             return UserActions.updateUserSuccess({
-              userId: userId,
               user: user,
             });
           }),
@@ -211,10 +210,10 @@ export class UserEffects {
           finalize(async () => {
             setTimeout(() => {
               this.sharedService.notification(
-                'userFeedback',
+                'personalFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha actualizado la categoría.'
+                'Se han actualizado los datos.'
               );
             }, 100);
           })

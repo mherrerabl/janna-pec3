@@ -4,10 +4,9 @@
     group-hover:[&:not(&:has(~.input:focus))]:text-secundary-600 
     group-hover:[&:not(&:has(~.input:valid))]:text-secundary-600 
     has-[~.input:focus]:text-secundary-700 has-[~.input:focus]:-translate-x-1 has-[~.input:focus]:-translate-y-2/4 has-[~.input:focus]:px-1
-    peer-[.icon-left]:has-[~.input:focus]:-translate-x-8
-    has-[~.input:not(:placeholder-shown)]:-translate-x-1 has-[~.input:not(:placeholder-shown)]:-translate-y-2/4 has-[~.input:not(:placeholder-shown)]:px-1
-    peer-[.icon-left]:has-[~.input:valid]:-translate-x-8
-    has-[~.invalid]:text-error-500;
+    peer-[.icon-left]:has-[+.input:focus]:-translate-x-8
+    has-[+.input:not(:placeholder-shown)]:-translate-x-1 has-[+.input:not(:placeholder-shown)]:-translate-y-2/4 has-[+.input:not(:placeholder-shown)]:px-1
+    peer-[.icon-left]:has-[~.input:valid:not(:placeholder-shown)]:-translate-x-8;
 }
 
 .label-s {
@@ -26,7 +25,6 @@
     group-hover:border-secundary-600 
     focus:border-2 focus:border-secundary-700 focus:outline-none focus:placeholder:opacity-100
     [&:not(:placeholder-shown)]:border
-    [&.invalid]:border-error-500 [&.invalid]:border-2;
 }
 
 .select {
@@ -36,7 +34,6 @@
     group-hover:border-secundary-600 group-hover:text-secundary-600 
     focus-visible:border-2 focus-visible:border-secundary-700 focus-visible:text-secundary-700
     
-    [&.invalid]:border-error-500 [&.invalid]:border-2;
 }
 
 .option {
@@ -63,4 +60,17 @@
     has-[~.input:focus]:text-secundary-700;
 }
 
+form.ng-touched.ng-submitted {
+    .label:has(+input.ng-invalid) {
+        @apply text-error-500;
+    }
+
+    .input.ng-invalid {
+        @apply border-2 border-error-500;
+    }
+
+    .select.ng-invalid {
+        @apply border-2 border-error-500;
+    }
+}
 

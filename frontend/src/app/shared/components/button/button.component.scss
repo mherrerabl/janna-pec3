@@ -59,3 +59,7 @@
     focus-visible:bg-secundary-700 focus-visible:text-white
     disabled:bg-secundary-100 disabled:text-secundary-400;
 }
+
+.button-expand-active {
+    @apply bg-secundary-700 text-white;
+}

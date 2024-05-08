@@ -5,37 +5,30 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AppState } from '../../../app.reducers';
-import { InputDTO } from '../../../shared/models/input.dto';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { ModalService } from '../../../shared/services/modal.service';
-import { CustomValidator } from '../../../shared/validators/custom-validator';
-import { isLoading } from '../../../spinner/actions/spinner.actions';
-import * as UserAction from '../../actions';
-import { UserClass } from '../../models/user';
-import { UserDTO } from '../../models/user.dto';
-
+import { AppState } from '../../../../app.reducers';
+import { InputDTO } from '../../../../shared/models/input.dto';
+import { CustomValidator } from '../../../../shared/validators/custom-validator';
+import { isLoading } from '../../../../spinner/actions/spinner.actions';
+import * as UserAction from '../../../../users/actions';
+import { UserClass } from '../../../../users/models/user';
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  selector: 'app-profile-user-personal-form',
+  templateUrl: './profile-user-personal-form.component.html',
+  styleUrl: './profile-user-personal-form.component.scss',
 })
-export class RegisterComponent implements OnInit {
+export class ProfileUserPersonalFormComponent implements OnInit {
   user: UserClass;
   name: FormControl;
   surname: FormControl;
   email: FormControl;
+  phone: FormControl;
   password: FormControl;
   passwordConfirm: FormControl;
-  checkLogin: FormControl;
-  keepLogin: boolean;
 
   passwordConfirmData: string;
 
-  registerForm: FormGroup;
+  personalForm: FormGroup;
   isValidForm: boolean | null;
   checkForm: boolean;
 
@@ -44,24 +37,38 @@ export class RegisterComponent implements OnInit {
   showFeedback: boolean;
   showErrorFeedback: boolean;
 
-  showRegister$!: Observable<'open' | 'close'>;
-  iconClose = faXmark;
-
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>,
-    private modalService: ModalService,
-    private localService: LocalStorageService
+    private store: Store<AppState>
   ) {
     this.showFeedback = false;
     this.showErrorFeedback = false;
 
     this.isValidForm = null;
     this.checkForm = false;
-    this.keepLogin = false;
 
     this.user = new UserClass('', '', '', '', '', null);
     this.passwordConfirmData = '';
+
+    this.store.select('user').subscribe((store) => {
+      this.user = store.user;
+      console.log(this.user);
+      console.log(store);
+
+      if (this.isValidForm) {
+        if (store.loaded) {
+          this.resetErrors();
+          this.showFeedback = true;
+          this.checkForm = false;
+
+          setTimeout(() => {
+            this.showFeedback = false;
+          }, 5000);
+        } else {
+          this.showErrorFeedback = true;
+        }
+      }
+    });
 
     this.name = new FormControl(this.user.name, [
       Validators.required,
@@ -78,6 +85,12 @@ export class RegisterComponent implements OnInit {
       Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
     ]);
 
+    this.phone = new FormControl(this.user.phone, [
+      Validators.pattern('^[0-9]*$'),
+      Validators.maxLength(9),
+      Validators.minLength(9),
+    ]);
+
     this.password = new FormControl(this.user.password, [
       Validators.required,
       Validators.minLength(8),
@@ -91,93 +104,53 @@ export class RegisterComponent implements OnInit {
         CustomValidator.matchValidator('password'),
       ]));
 
-    this.checkLogin = new FormControl();
-
     this.inputsForm = this.getDataInputs();
 
-    this.registerForm = this.formBuilder.group({
+    this.personalForm = this.formBuilder.group({
       name: this.name,
       surname: this.surname,
       email: this.email,
+      phone: this.phone,
       password: this.password,
       passwordConfirm: this.passwordConfirm,
-      checkLogin: this.checkLogin,
-    });
-
-    this.store.select('user').subscribe((store) => {
-      if (store.loaded) {
-        this.resetErrors();
-        if (store.user.id !== undefined) {
-          if (this.keepLogin) {
-            let user: UserDTO = {
-              email: store.user.email,
-              password: store.user.password,
-            };
-            this.localService.saveUser(user);
-          }
-
-          this.registerForm.reset();
-          this.showFeedback = true;
-          this.checkForm = false;
-          this.keepLogin = false;
-
-          setTimeout(() => {
-            this.showFeedback = false;
-            this.closeRegister();
-          }, 3000);
-        } else {
-          this.showErrorFeedback = true;
-        }
-      }
     });
   }
 
-  ngOnInit(): void {
-    this.showRegister$ = this.modalService.watchRegister();
-  }
+  ngOnInit(): void {}
 
   resetErrors(): void {
     this.showErrorFeedback = false;
     this.showFeedback = false;
+    this.isValidForm = false;
   }
 
-  register(): void {
+  updateUser(): void {
     this.checkForm = true;
 
-    if (this.registerForm.invalid) {
+    if (this.personalForm.invalid) {
       return;
     }
 
     this.isValidForm = true;
     this.user = {
-      id: '',
-      name: this.registerForm.controls['name'].value,
-      surname: this.registerForm.controls['surname'].value,
-      password: this.registerForm.controls['password'].value,
-      email: this.registerForm.controls['email'].value,
-      phone: null,
+      id: this.user.id,
+      name: this.personalForm.controls['name'].value,
+      surname: this.personalForm.controls['surname'].value,
+      email: this.personalForm.controls['email'].value,
+      phone: this.personalForm.controls['phone'].value,
+      password: this.personalForm.controls['password'].value,
     };
 
     this.store.dispatch(isLoading({ status: true }));
-    this.store.dispatch(UserAction.createUser({ user: this.user }));
+    this.store.dispatch(
+      UserAction.updateUser({ userId: this.user.id, user: this.user })
+    );
   }
 
-  getKeepLogin(): void {
-    this.keepLogin = !this.keepLogin;
-  }
-
-  closeRegister(): void {
-    this.modalService.closeRegister();
-  }
-
-  openLogin(): void {
-    this.modalService.closeRegister();
-    this.modalService.openLogin();
-  }
   private getDataInputs(): InputDTO[] {
     return [
       {
-        id: 'nameRegister',
+        id: 'namePersonalData',
         label: 'Nombre',
         placeholder: 'Escriba su nombre',
         type: 'text',
@@ -195,7 +168,7 @@ export class RegisterComponent implements OnInit {
         ],
       },
       {
-        id: 'surnameRegister',
+        id: 'surnamePersonalData',
         label: 'Apellidos',
         placeholder: 'Escriba sus apellidos',
         type: 'text',
@@ -213,7 +186,7 @@ export class RegisterComponent implements OnInit {
         ],
       },
       {
-        id: 'emailRegister',
+        id: 'emailPersonalData',
         label: 'Correo electrónico',
         placeholder: 'Escriba su correo electrónico',
         type: 'text',
@@ -232,7 +205,30 @@ export class RegisterComponent implements OnInit {
         ],
       },
       {
-        id: 'passwordRegister',
+        id: 'phonePersonalData',
+        label: 'Teléfono/Móvil',
+        placeholder: 'Escriba su teléfono de contacto',
+        type: 'tel',
+        formControl: this.phone,
+        required: false,
+        iconLeft: 'phone',
+        errors: [
+          {
+            type: 'maxlength',
+            message: 'Máximo 9 números',
+          },
+          {
+            type: 'minlength',
+            message: 'Mínimo 9 números',
+          },
+          {
+            type: 'pattern',
+            message: 'El formato no es válido. Solo se aceptan números',
+          },
+        ],
+      },
+      {
+        id: 'passwordPersonalData',
         label: 'Contraseña',
         placeholder: 'Escriba una constraseña',
         type: 'password',
@@ -251,7 +247,7 @@ export class RegisterComponent implements OnInit {
         ],
       },
       {
-        id: 'passwordConfirmationRegister',
+        id: 'passwordConfirmationPersonalData',
         label: 'Confimración de contraseña',
         placeholder: 'Repita la constraseña',
         type: 'password',

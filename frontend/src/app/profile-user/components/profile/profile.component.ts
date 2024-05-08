@@ -1,28 +1,61 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { DropdownDTO } from '../../../shared/models/dropdown.dto';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   dataDropdown: DropdownDTO;
+  title: string = 'Perfil';
 
-  title!: string;
+  iconBars = faBars;
+  dropdownExpanded: boolean = false;
 
-  constructor(private route: Router) {
-    this.title = 'Perfil';
+  constructor(private router: Router) {
     this.dataDropdown = this.getData();
+    this.getTitle(this.router.url.split('/').pop());
 
-    this.dataDropdown.list.forEach((list) => {
-      if (list.link === this.route.url.split('/').pop()) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        let page = event.url.split('/').pop();
+        this.getTitle(page);
+      }
+    });
+  }
+
+  ngOnInit(): void {}
+
+  getTitle(page: any): void {
+    this.title = 'Perfil';
+    this.getData().list.forEach((list) => {
+      if (list.link === page) {
         this.title = list.name;
       }
     });
     this.dataDropdown = this.getData();
   }
+
   getData(): DropdownDTO {
     return {
       title: this.title,
