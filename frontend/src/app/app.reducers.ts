@@ -18,12 +18,20 @@ import * as UserReducer from './users/reducers';
 import { OrderEffects } from './orders/effects';
 import * as OrderReducer from './orders/reducers';
 
+import { AppointmentEffects } from './appointments/effects';
+import * as AppointmentReducer from './appointments/reducers';
+
+import { UserTreatmentEffects } from './user-treatments/effects';
+import * as UserTreatmentReducer from './user-treatments/reducers';
+
 export interface AppState {
   mail: MailReducer.MailState;
   images: ImageReducer.ImagesState;
   user: UserReducer.UserState;
   address: AddressReducer.AddressesState;
   order: OrderReducer.OrdersState;
+  appointment: AppointmentReducer.AppointmentsState;
+  userTreatment: UserTreatmentReducer.UserTreatmentsState;
   categories: CategoryReducer.CategoriesState;
   treatments: TreatmentReducer.TreatmentsState;
   products: ProductReducer.ProductsState;
@@ -36,6 +44,8 @@ export const appReducers: ActionReducerMap<AppState> = {
   user: UserReducer.userReducer,
   address: AddressReducer.addressesReducer,
   order: OrderReducer.ordersReducer,
+  userTreatment: UserTreatmentReducer.userTreatmentsReducer,
+  appointment: AppointmentReducer.appointmentsReducer,
   categories: CategoryReducer.categoriesReducer,
   treatments: TreatmentReducer.treatmentsReducer,
   products: ProductReducer.productsReducer,
@@ -48,6 +58,9 @@ export const EffectsArray: any[] = [
   UserEffects,
   AddressEffects,
   OrderEffects,
+  AppointmentEffects,
+  UserTreatmentEffects,
+  UserEffects,
   CategoryEffects,
   TreatmentEffects,
   ProductEffects,

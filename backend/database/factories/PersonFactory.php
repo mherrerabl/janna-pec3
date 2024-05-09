@@ -19,7 +19,7 @@ class PersonFactory extends Factory
         return [
             'name' => $this->faker->firstName(),
             'surname' => $this->faker->lastName(),
-            'email' => '$this->faker->email()',
+            'email' => $this->faker->email(),
             'phone' => $this->faker->numberBetween(60000000, 799999999)
         ];
     }

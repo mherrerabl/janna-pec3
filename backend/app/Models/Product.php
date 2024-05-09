@@ -24,6 +24,7 @@ class Product extends Model
         'purchasePrice',
         'trend',
         'forSale',
-        'treatment_id'
+        'treatment_id',
+        'creation_date'
     ];
 }

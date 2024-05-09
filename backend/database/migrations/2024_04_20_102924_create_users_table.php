@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('password');
             $table->unsignedBigInteger('person_id');
+            $table->enum('type', ['user', 'admin'])->default('user');
             $table->foreign('person_id')->references('id')->on('persons'); 
         });
     }

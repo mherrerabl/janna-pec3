@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50)->unique();
-            $table->enum('department', ['Shop', 'Treatments']);
+            $table->enum('department', ['tienda', 'tratamientos']);
+            $table->string('url', 50)->unique();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
         });

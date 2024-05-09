@@ -1,7 +1,7 @@
 export enum StateProductOrder {
-  'En preparación',
-  'Listo para envío',
-  'Pedido al proveedor',
+  'En preparación' = 'En preparación',
+  'Listo para envío' = 'Listo para envío',
+  'Pedido al proveedor' = 'Pedido al proveedor',
 }
 
 export class ProductOrderClass {

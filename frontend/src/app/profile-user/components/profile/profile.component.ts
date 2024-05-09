@@ -38,18 +38,21 @@ export class ProfileComponent implements OnInit {
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        let page = event.url.split('/').pop();
-        this.getTitle(page);
+        let url = event.url.split('/').shift();
+
+        if (url) {
+          this.getTitle(url);
+        }
       }
     });
   }
 
   ngOnInit(): void {}
 
-  getTitle(page: any): void {
+  getTitle(url: any): void {
     this.title = 'Perfil';
     this.getData().list.forEach((list) => {
-      if (list.link === page) {
+      if (list.link === url) {
         this.title = list.name;
       }
     });

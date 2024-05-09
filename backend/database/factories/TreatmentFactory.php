@@ -33,7 +33,11 @@ class TreatmentFactory extends Factory
             'Carboxiterapia corporal',
             'Mesoterapia corporal',
             'Presoterapia',
-            'Tratamiento anticelulítico'
+            'Tratamiento anticelulítico',
+            'Manicura y pedicura',
+            'Depilaciones',
+            'Micro pigmentación',
+            'Cambio de look',
         ];
 
 		$i = $this::$counter += 1;

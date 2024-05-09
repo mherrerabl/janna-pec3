@@ -9,11 +9,12 @@ class ProductOrder extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = 'prodcuts_order';
+    protected $table = 'products_order';
     protected $fillable = [
-        'product_id',
+        'name',
+        'price',
+        'quantity',
         'state',
-        'price_id',
         'order_id'
     ];
 }

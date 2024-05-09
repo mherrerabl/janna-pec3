@@ -26,11 +26,12 @@ return new class extends Migration
             $table->float('purchasePrice', 2);
             $table->boolean('trend');
             $table->boolean('forSale');
-            $table->unsignedBigInteger('treatment_id');
+            $table->unsignedBigInteger('treatment_id')->nullable();
+            $table->date('creation_date');
             $table->foreign('category_id')->references('id')->on('categories'); 
             $table->foreign('saleperson_id')->references('id')->on('salepersons');
             $table->foreign('price_id')->references('id')->on('prices');       
-            $table->foreign('treatment_id')->references('id')->on('treatments');       
+            $table->foreign('treatment_id')->references('id')->on('treatments');     
         });
     }
 

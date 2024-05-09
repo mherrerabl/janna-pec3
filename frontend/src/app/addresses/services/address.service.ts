@@ -24,6 +24,12 @@ export class AddressService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
+  getAddressById(addressId: string): Observable<AddressClass> {
+    return this.http
+      .get<AddressClass>(this.urlApi + '/' + addressId)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
   getAddressByUserId(userId: string): Observable<AddressClass[]> {
     return this.http
       .get<AddressClass[]>(this.urlApi + '/user/' + userId)

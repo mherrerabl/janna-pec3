@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->float('total_price');
+            $table->unsignedBigInteger('address_id');
             $table->enum('state', ['Pago realizado', 'En preparación', 'Pendiente de envío', 'Enviado', 'Pendiente de recoger en tienda', 'Entregado']);
+            $table->date('creation_date');
             $table->date('modification_date');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('address_id')->references('id')->on('addresses');
         });
     }
 

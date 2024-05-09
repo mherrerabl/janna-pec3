@@ -6,6 +6,9 @@ import {
   deleteAddress,
   deleteAddressFailure,
   deleteAddressSuccess,
+  getAddressById,
+  getAddressByIdFailure,
+  getAddressByIdSuccess,
   getAddressByUserId,
   getAddressByUserIdFailure,
   getAddressByUserIdSuccess,
@@ -28,7 +31,7 @@ export interface AddressesState {
 
 export const initialState: AddressesState = {
   addresses: new Array<AddressClass>(),
-  address: new AddressClass('', '', '', 0, '', '', '', ''),
+  address: new AddressClass('', '', '', 0, '', '', '', false, ''),
   loading: false,
   loaded: false,
   error: null,
@@ -50,6 +53,26 @@ const _addressesReducer = createReducer(
     error: null,
   })),
   on(getAllAddressesFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(getAddressById, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getAddressByIdSuccess, (state, action) => ({
+    ...state,
+    address: action.address,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getAddressByIdFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

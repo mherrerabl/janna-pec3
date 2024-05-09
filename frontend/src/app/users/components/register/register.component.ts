@@ -110,6 +110,7 @@ export class RegisterComponent implements OnInit {
         if (store.user.id !== undefined) {
           if (this.keepLogin) {
             let user: UserDTO = {
+              id: store.user.id,
               email: store.user.email,
               password: store.user.password,
             };

@@ -7,13 +7,71 @@ use Illuminate\Http\Request;
 
 
 Use App\Models\Image;
+
 Use Log;
 
 class ImageController extends Controller {
 
     public function getAll(){
         $data = Image::get();
-        return response()->json($data, 200);
+        $newData = [];
+
+        for ($i=0; $i < count($data); $i++) { 
+            $newData[$i]['id'] = $data[$i]['id'];
+            $newData[$i]['title'] = $data[$i]['title'];
+            $newData[$i]['picture_jpg'] = utf8_encode($data[$i]['picture_jpg']);
+            $newData[$i]['picture_webp'] = utf8_encode($data[$i]['picture_webp']);
+            $newData[$i]['product_id'] = $data[$i]['product_id'];
+            $newData[$i]['treatment_id'] = $data[$i]['treatment_id'];
+            $newData[$i]['category_id'] = $data[$i]['category_id'];            
+        }
+        return response()->json($newData, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getByProduct($product_id){
+        $data = Image::get()->where('product_id', $product_id)->get();
+        $newData = [];
+
+        for ($i=0; $i < count($data); $i++) { 
+            $newData[$i]['id'] = $data[$i]['id'];
+            $newData[$i]['title'] = $data[$i]['title'];
+            $newData[$i]['picture_jpg'] = utf8_encode($data[$i]['picture_jpg']);
+            $newData[$i]['picture_webp'] = utf8_encode($data[$i]['picture_webp']);
+            $newData[$i]['product_id'] = $data[$i]['product_id'];
+            $newData[$i]['treatment_id'] = $data[$i]['treatment_id'];
+            $newData[$i]['category_id'] = $data[$i]['category_id'];            
+        }
+        return response()->json($newData, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getByTreatment($treatment_id){
+        $data = Image::where('treatment_id', $treatment_id)->get();
+        $newData = [];
+
+        for ($i=0; $i < count($data); $i++) { 
+            $newData[$i]['id'] = $data[$i]['id'];
+            $newData[$i]['title'] = $data[$i]['title'];
+            $newData[$i]['picture_jpg'] = utf8_encode($data[$i]['picture_jpg']);
+            $newData[$i]['picture_webp'] = utf8_encode($data[$i]['picture_webp']);
+            $newData[$i]['product_id'] = $data[$i]['product_id'];
+            $newData[$i]['treatment_id'] = $data[$i]['treatment_id'];
+            $newData[$i]['category_id'] = $data[$i]['category_id'];            
+        }
+        return response()->json($newData, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
+    }
+    public function getByCategory($category_id){
+        $data = Image::where('category_id', $category_id)->get()[0];
+        $newData = [];
+
+            $newData['id'] = $data['id'];
+            $newData['title'] = $data['title'];
+            $newData['picture_jpg'] = utf8_encode($data['picture_jpg']);
+            $newData['picture_webp'] = utf8_encode($data['picture_webp']);
+            $newData['product_id'] = $data['product_id'];
+            $newData['treatment_id'] = $data['treatment_id'];
+            $newData['category_id'] = $data['category_id'];            
+            
+        return response()->json($newData, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
     public function create(Request $request){
@@ -40,7 +98,16 @@ class ImageController extends Controller {
 
     public function get($id){
       $data = Image::find($id);
-      return response()->json($data, 200);
+
+      $newData['id'] = $data['id'];
+      $newData['title'] = $data['title'];
+      $newData['picture_jpg'] = utf8_encode($data['picture_jpg']);
+      $newData['picture_webp'] = utf8_encode($data['picture_webp']);
+      $newData['product_id'] = $data['product_id'];
+      $newData['treatment_id'] = $data['treatment_id'];
+      $newData['category_id'] = $data['category_id'];
+
+      return response()->json($newData, 200, ['Content-type'=> 'application/json; charset=utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
     public function update(Request $request,$id){

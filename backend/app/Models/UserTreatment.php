@@ -14,7 +14,6 @@ class UserTreatment extends Model
         'user_id',
         'state',
         'sessions',
-        'category_id',
         'treatment_id',
     ];
 }

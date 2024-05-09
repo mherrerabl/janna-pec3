@@ -15,17 +15,31 @@ export const getAllAddressesFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
-export const getAddressByUserId = createAction(
+export const getAddressById = createAction(
   '[Address detail] Get address detail by user id',
+  props<{ addressId: string }>()
+);
+export const getAddressByIdSuccess = createAction(
+  '[Address detail] Get address detail by user id success',
+  props<{ address: AddressClass }>()
+);
+
+export const getAddressByIdFailure = createAction(
+  '[Address detail] Get address detail by user id fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getAddressByUserId = createAction(
+  '[Addresses detail] Get addresses detail by user id',
   props<{ userId: string }>()
 );
 export const getAddressByUserIdSuccess = createAction(
-  '[Address detail] Get address detail by user id success',
+  '[Addresses detail] Get addresses detail by user id success',
   props<{ addresses: AddressClass[] }>()
 );
 
 export const getAddressByUserIdFailure = createAction(
-  '[Address detail] Get address detail by user id fail',
+  '[Addresses detail] Get addresses detail by user id fail',
   props<{ payload: HttpErrorResponse }>()
 );
 

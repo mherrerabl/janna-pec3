@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../app.reducers';
 import * as OrdersAction from '../../../../orders/actions';
 import { OrderClass, StateOrder } from '../../../../orders/models/order';
+import { StateProductOrder } from '../../../../orders/models/product-order';
 import { ListProductsDTO } from '../../../../shared/models/list-products.dto';
 import { RowDetailDTO } from '../../../../shared/models/row-detail.dto';
 import { RowDTO } from '../../../../shared/models/row.dto';
@@ -14,7 +15,7 @@ import { isLoading } from '../../../../spinner/actions/spinner.actions';
   templateUrl: './profile-user-orders-table.component.html',
   styleUrl: './profile-user-orders-table.component.scss',
 })
-export class ProfileUserOrdersTableComponent {
+export class ProfileUserOrdersTableComponent implements OnInit {
   orders: OrderClass[];
   userId!: string;
   dataTable!: TableDTO;
@@ -28,8 +29,10 @@ export class ProfileUserOrdersTableComponent {
     });
 
     this.store.select('order').subscribe((store) => {
-      this.orders = store.orders;
-      this.dataTable = this.getTable();
+      if (store.orders.length > 0) {
+        this.orders = store.orders;
+        this.dataTable = this.getTable();
+      }
     });
   }
   ngOnInit(): void {
@@ -68,6 +71,7 @@ export class ProfileUserOrdersTableComponent {
             name: product.name,
             quantity: product.quantity,
             price: product.price,
+            state: StateProductOrder[product.state],
           });
         }
       }
@@ -140,7 +144,7 @@ export class ProfileUserOrdersTableComponent {
     return {
       titles: [
         {
-          title: 'ID',
+          title: 'id',
           smallScreens: true,
         },
         {
@@ -153,7 +157,7 @@ export class ProfileUserOrdersTableComponent {
         },
       ],
       rows: rows,
-      action: true,
+      action: false,
       bd: 'order',
     };
   }

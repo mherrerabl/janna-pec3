@@ -15,8 +15,13 @@ class ProductFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+     public static $counter = 0;
+
     public function definition(): array
     {
+        $i = $this::$counter += 1;
+
         return [
             'name' => $this->faker->sentence(1,6),
             'brand' => $this->faker->word(),
@@ -36,7 +41,8 @@ class ProductFactory extends Factory
             },
             'trend' => $this->faker->boolean(),
             'forSale' => $this->faker->boolean(),
-            'treatment_id' =>rand(1, 13)
+            'treatment_id' =>rand(1, 17),
+            'creation_date' => $this->faker->unique()->dateTimeInInterval($startDate = '-20 days', $interval = '+ 5 days', $timezone = null) 
         ];
     }
 }

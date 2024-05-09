@@ -30,21 +30,21 @@ export class OrderService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  createOrder(address: OrderClass): Observable<OrderClass> {
+  createOrder(order: OrderClass): Observable<OrderClass> {
     return this.http
-      .post<OrderClass>(this.urlApi + '/', address)
+      .post<OrderClass>(this.urlApi + '/', order)
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  updateOrder(addressId: string, address: OrderClass): Observable<OrderClass> {
+  updateOrder(orderId: string, order: OrderClass): Observable<OrderClass> {
     return this.http
-      .put<OrderClass>(this.urlApi + '/' + addressId, address)
+      .put<OrderClass>(this.urlApi + '/' + orderId, order)
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  deleteOrder(addressId: string): Observable<deleteResponse> {
+  deleteOrder(orderId: string): Observable<deleteResponse> {
     return this.http
-      .delete<deleteResponse>(this.urlApi + '/' + addressId)
+      .delete<deleteResponse>(this.urlApi + '/' + orderId)
       .pipe(catchError(this.sharedService.handleError));
   }
 }

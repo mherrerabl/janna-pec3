@@ -6,12 +6,12 @@
       </div>
 </form>
 
-<table class="w-full border-collapse">
+<table class="w-full border-collapse table-fixed">
     <thead class="h-14 bg-primary">
         <tr>
-            <th class="opacity-0 max-w-2">Expanded</th>
-            @for (title of dataTable.titles; track $index) {
-                <th class="text-start {{ title.smallScreens ? 'table-cell' : 'hidden md:table-cell'}}">
+            <th class="opacity-0 w-10 max-w-10 overflow-hidden">Expanded</th>
+            @for (title of dataTable.titles; track $index;) {
+                <th class="text-start {{ title.smallScreens ? 'table-cell' : 'hidden md:table-cell'}} {{ title.title === 'id' ?'w-1/2': 'w-full'}}">
                     <button class="button-icon h6" (click)="sort($index)">
                         <span><fa-icon [icon]="iconSort"></fa-icon></span>
                         {{ title.title }}
@@ -21,7 +21,7 @@
             }
             
             @if (dataTable.action) {
-                <th class="max-w-8">
+                <th class="w-1/2 md:w-full max-w-8 pr-4 md:px-16 text-end">
                     <a class="button-icon icon-m md:icon-l" [routerLink]="'nuevo'">
                         <fa-icon [icon]="iconPlus"></fa-icon>
                     </a>
@@ -49,13 +49,16 @@
                 }
                 @if (dataTable.action) {
                     <td class="max-w-8">
-                        <div class="flex justify-center">
-                            <a class="mx-2 button-icon icon-s lg:icon-m" [routerLink]="'editar'">
+                        <div class="flex md:px-10 justify-end">
+                            <a class="button-icon icon-s md:icon-m {{dataTable.bd !=='appointment' ? 'mx-2' : 'mx-5'}}" [routerLink]="'editar/'+row.id">
                                 <fa-icon [icon]="iconEdit"></fa-icon>
                             </a>
-                            <button class="mx-2 button-icon icon-s lg:icon-m" (click)="delete(row.id)">
-                                <fa-icon [icon]="iconDelete"></fa-icon>
-                            </button>
+                            @if (dataTable.bd !=='appointment') {
+                                <button class="mx-2 button-icon icon-s md:icon-m" (click)="delete(row.id)">
+                                    <fa-icon [icon]="iconDelete"></fa-icon>
+                                </button>
+                            }
+                           
                         </div>
                     </td>
                 }

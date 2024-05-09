@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Direction extends Model
+class Address extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = 'directions';
+    protected $table = 'addresses';
     protected $fillable = [
         'name',
         'address',
         'number',
-        'additonalInfo',
+        'additionalInfo',
         'zip',
         'city',
-        'user_id'
+        'predetermined',
+        'user_id',
     ];
 }

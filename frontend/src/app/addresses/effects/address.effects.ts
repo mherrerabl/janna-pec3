@@ -55,6 +55,38 @@ export class AddressEffects {
     { dispatch: false }
   );
 
+  getAddressById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AddressActions.getAddressById),
+      exhaustMap(({ addressId }) =>
+        this.addressService.getAddressById(addressId).pipe(
+          map((address) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return AddressActions.getAddressByIdSuccess({
+              address: address,
+            });
+          }),
+          catchError((error) => {
+            return of(AddressActions.getAddressByIdFailure({ payload: error }));
+          })
+        )
+      )
+    )
+  );
+
+  getAddressByIdFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AddressActions.getAddressByIdFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
   getAddressByUserId$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AddressActions.getAddressByUserId),

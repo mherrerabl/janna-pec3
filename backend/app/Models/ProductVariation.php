@@ -9,13 +9,15 @@ class ProductVariation extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = 'prodcuts_variation';
+    protected $table = 'products_variation';
     protected $fillable = [
         'name',
         'stock',
         'price_id',
         'purchasePrice',
         'color',
-        'product_id'
+        'product_id',
+        'product_variation_id',
+        'creation_date',
     ];
 }

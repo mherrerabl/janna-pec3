@@ -2,12 +2,12 @@ import { AddressClass } from '../../addresses/models/address';
 import { ProductOrderClass } from './product-order';
 
 export enum StateOrder {
-  'Pago realizado',
-  'En preparación',
-  'Pendiente de envío',
-  'Enviado',
-  'Pendiente de recoger en tienda',
-  'Entregado',
+  'Pago realizado' = 'Pago realizado',
+  'En preparación' = 'En preparación',
+  'Pendiente de envío' = 'Pendiente de envío',
+  'Enviado' = 'Enviado',
+  'Pendiente de recoger en tienda' = 'Pendiente de recoger en tienda',
+  'Entregado' = 'Entregado',
 }
 
 export class OrderClass {

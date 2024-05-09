@@ -111,19 +111,14 @@ export class TableComponent implements OnInit {
 
   filter(): void {
     let rowsFiltered: RowDTO[] = [];
-    console.log(this.rows);
-
-    rowsFiltered = this.rows.filter((row) => {
-      for (const val of row.rowInfo) {
-        console.log(val);
-        console.log(this.searcherControl.value.toLowerCase());
-
-        return val
+    rowsFiltered = this.rows.filter((row) =>
+      row.rowInfo.find((val) =>
+        val
+          .toString()
           .toLowerCase()
-          .includes(this.searcherControl.value.toLowerCase());
-      }
-      return false;
-    });
+          .includes(this.searcherControl.value.toLowerCase())
+      )
+    );
 
     this.dataTable.rows = rowsFiltered;
   }

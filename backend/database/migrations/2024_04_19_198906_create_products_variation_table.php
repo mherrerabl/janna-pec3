@@ -18,9 +18,12 @@ return new class extends Migration
             $table->unsignedBigInteger('price_id');
             $table->float('purchasePrice', 2);
             $table->string('color', 7)->nullable();
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->unsignedBigInteger('product_variation_id')->nullable();
+            $table->date('creation_date');
             $table->foreign('price_id')->references('id')->on('prices');     
-            $table->foreign('product_id')->references('id')->on('products');     
+            $table->foreign('product_id')->references('id')->on('products');  
+            $table->foreign('product_variation_id')->references('id')->on('products_variation');        
         });
     }
 

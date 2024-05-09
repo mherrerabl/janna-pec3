@@ -22,18 +22,14 @@ class ProductOrderController extends Controller {
         $data['price_id'] = $request['price_id'];
         $data['order_id'] = $request['order_id'];
         ProductOrder::create($data);
-        return response()->json([
-            'message' => "Successfully created",
-            'success' => true
-        ], 200);
+
+        return response()->json($data, 200);
     }
 
     public function delete($id){
         $res = ProductOrder::find($id)->delete();
-        return response()->json([
-            'message' => "Successfully deleted",
-            'success' => true
-        ], 200);
+        
+        return response()->json($id, 200);
     }
 
     public function get($id){
@@ -47,9 +43,7 @@ class ProductOrderController extends Controller {
         $data['price_id'] = $request['price_id'];
         $data['order_id'] = $request['order_id'];
         ProductOrder::find($id)->update($data);
-        return response()->json([
-            'message' => "Successfully updated",
-            'success' => true
-        ], 200);
+        
+        return response()->json($data, 200);
     }
 }

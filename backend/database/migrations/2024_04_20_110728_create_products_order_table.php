@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('products_order', function (Blueprint $table) {
             $table->id();
-            $table->boolean('state');
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('price_id');
+            $table->string('name');
+            $table->float('price', 2);
+            $table->tinyInteger('quantity');
+            $table->enum('state',['En preparación', 'Listo para envío', 'Pedido al proveedor']);
             $table->unsignedBigInteger('order_id');
-            $table->foreign('price_id')->references('id')->on('prices');     
-            $table->foreign('product_id')->references('id')->on('products');     
             $table->foreign('order_id')->references('id')->on('orders');
         });
     }

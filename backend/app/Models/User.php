@@ -12,6 +12,8 @@ class User extends Model
     protected $table = 'users';
     protected $fillable = [
         'person_id',
+        'password',
+        'type'
     ];
 
     protected $casts = [

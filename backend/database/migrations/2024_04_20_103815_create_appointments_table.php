@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->enum('state', ['Pendiente', 'Próxima sesión', 'Realizada', 'No realizada']); 
+            $table->datetime('date');
+            $table->enum('state', ['Pendiente', 'Próxima sesión', 'Realizada', 'No realizada', 'Cancelada']); 
             $table->unsignedBigInteger('user_treatment_id');
             $table->foreign('user_treatment_id')->references('id')->on('user_treatments'); 
         });

@@ -52,8 +52,6 @@ export class ProfileUserPersonalFormComponent implements OnInit {
 
     this.store.select('user').subscribe((store) => {
       this.user = store.user;
-      console.log(this.user);
-      console.log(store);
 
       if (this.isValidForm) {
         if (store.loaded) {

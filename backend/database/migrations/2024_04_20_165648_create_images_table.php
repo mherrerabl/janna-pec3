@@ -22,8 +22,8 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories'); 
         });
         
-        DB::statement('ALTER TABLE images ADD picture_jpg LONGBLOB NOT NULL');
-        DB::statement('ALTER TABLE images ADD picture_webp LONGBLOB NOT NULL');
+        DB::statement('ALTER TABLE images ADD picture_jpg LONGBLOB NOT NULL AFTER title');
+        DB::statement('ALTER TABLE images ADD picture_webp LONGBLOB NOT NULL AFTER picture_jpg');
 
     }
 

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
  */
@@ -20,20 +21,34 @@ class ImageFactory extends Factory
     {
         $i = $this::$counter += 1;
 
-        //$faker = \Faker\Factory::create();
-        //$faker->addProvider(new \Smknstd\FakerPicsumImages\FakerPicsumImagesProvider($faker));
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Smknstd\FakerPicsumImages\FakerPicsumImagesProvider($faker));
 
+        //For Products  
         return [
             'title'=> $this->faker->sentence(1,6),
-            'picture_jpg' => file_get_contents($this->faker->imageUrl(360, 360, 'beauty', true, 'makeup', true, 'jpg')),
-            'picture_webp'=> file_get_contents($this->faker->imageUrl(360, 360, 'beauty', true, 'makeup', true, 'jpg')),
-            /*
-             'picture_jpg' => file_get_contents($faker->imageUrl(360, 360, null, true, false, null, 'jpg')),
+            'picture_jpg' => file_get_contents($faker->imageUrl(360, 360, null, true, false, null, 'jpg')),
             'picture_webp'=> file_get_contents($faker->imageUrl(360, 360, null, true, false, null, 'webp')),
-            */
-            'product_id' => $i,
-            //'treatment_id',
-            //'category_id'
+            'product_id' => (string)$i
+        
         ];
+        
+        //For Treatments
+        /*return [
+            'title'=> $this->faker->sentence(1,6),
+            'picture_jpg' => file_get_contents($faker->imageUrl(360, 360, null, true, false, null, 'jpg')),
+            'picture_webp'=> file_get_contents($faker->imageUrl(360, 360, null, true, false, null, 'webp')),
+            'treatment_id' => (string)$i
+        ];
+*/
+        //For Categories
+        /*
+        return [
+            'title'=> $this->faker->sentence(1,6),
+            'picture_jpg' => file_get_contents($faker->imageUrl(360, 360, null, true, false, null, 'jpg')),
+            'picture_webp'=> file_get_contents($faker->imageUrl(360, 360, null, true, false, null, 'webp')),,
+            'category_id' => (string)$i
+        ];
+        */
     }
 }

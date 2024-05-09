@@ -16,10 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->enum('state', ['En proceso', 'Finalizado', 'No realizado']);
             $table->tinyInteger('sessions');
-            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('treatment_id');
             $table->foreign('user_id')->references('id')->on('users'); 
-            $table->foreign('category_id')->references('id')->on('categories'); 
             $table->foreign('treatment_id')->references('id')->on('treatments'); 
         });
     }

@@ -1,11 +1,13 @@
 import { AddressClass } from '../../addresses/models/address';
 import { ImageClass } from '../../images/models/image';
+import { StateUserTreatment } from '../../user-treatments/models/user-treatments';
 import { BadgeDTO } from './badge.dto';
 import { ListProductsDTO } from './list-products.dto';
 
-interface SeassonsDTO {
+export interface SessionDTO {
   date: Date;
   state: string;
+  appointment_id: string;
 }
 
 export interface RowDetailDTO {
@@ -16,12 +18,16 @@ export interface RowDetailDTO {
       price?: number;
       days?: Date;
       date?: Date;
+      time?: Date;
       address?: AddressClass;
     };
     list?: string[];
     products?: ListProductsDTO[];
     images?: ImageClass[];
     badges?: BadgeDTO[];
-    seassons?: SeassonsDTO[];
+    appointments?: {
+      sessions: SessionDTO[];
+      state: StateUserTreatment;
+    };
   };
 }

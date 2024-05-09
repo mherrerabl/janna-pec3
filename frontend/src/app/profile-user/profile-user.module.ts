@@ -10,6 +10,9 @@ import { ProfileUserFormComponent } from './components/profile-user-form/profile
 import { ProfileUserTableComponent } from './components/profile-user-table/profile-user-table.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileUserRoutingModule } from './profile-user-routing.module';
+import { ProfileUserAppointmentsTableComponent } from './components/appointments/profile-user-appointments-table/profile-user-appointments-table.component';
+import { ProfileUserTreatmentsTableComponent } from './components/treatments/profile-user-treatments-table/profile-user-treatments-table.component';
+import { ProfileUserAddressesFormComponent } from './components/addresses/profile-user-addresses-form/profile-user-addresses-form.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { ProfileUserRoutingModule } from './profile-user-routing.module';
     ProfileUserPersonalFormComponent,
     ProfileUserAddressesTableComponent,
     ProfileUserOrdersTableComponent,
+    ProfileUserAppointmentsTableComponent,
+    ProfileUserTreatmentsTableComponent,
+    ProfileUserAddressesFormComponent,
   ],
   imports: [
     CommonModule,

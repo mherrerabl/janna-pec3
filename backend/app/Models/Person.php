@@ -13,6 +13,8 @@ class Person extends Model
     protected $fillable = [
         'name',
         'surname',
+        'email',
+        'phone',
     ];
 
     protected $casts = [
