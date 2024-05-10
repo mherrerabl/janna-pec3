@@ -100,7 +100,6 @@ export class LoginComponent implements OnInit {
         if (store.user.id !== undefined) {
           if (this.keepLogin) {
             let user: UserDTO = {
-              id: store.user.id,
               email: store.user.email,
               password: store.user.password,
             };
@@ -158,7 +157,6 @@ export class LoginComponent implements OnInit {
 
     this.isValidForm = true;
     let user: UserDTO = {
-      id: '',
       email: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value,
     };

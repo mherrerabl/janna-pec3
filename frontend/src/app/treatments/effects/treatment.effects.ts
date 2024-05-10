@@ -25,18 +25,18 @@ export class TreatmentEffects {
 
   getTreatments$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TreatmentActions.getAllTreatments),
+      ofType(TreatmentActions.getTreatments),
       exhaustMap(() =>
         this.treatmentService.getTreatments().pipe(
           map((treatments) => {
             this.store.dispatch(isLoading({ status: false }));
-            return TreatmentActions.getAllTreatmentsSuccess({
+            return TreatmentActions.getTreatmentsSuccess({
               treatments: treatments,
             });
           }),
           catchError((error) => {
             return of(
-              TreatmentActions.getAllTreatmentsFailure({ payload: error })
+              TreatmentActions.getTreatmentsFailure({ payload: error })
             );
           })
         )
@@ -47,7 +47,44 @@ export class TreatmentEffects {
   getTreatmentsFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(TreatmentActions.getAllTreatmentsFailure),
+        ofType(TreatmentActions.getTreatmentsFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  getTreatmentsByCategoryId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TreatmentActions.getTreatmentsByCategoryId),
+      exhaustMap(({ categoryId }) =>
+        this.treatmentService.getTreatmentsByCategoryId(categoryId).pipe(
+          map((treatments) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return TreatmentActions.getTreatmentsByCategoryIdSuccess({
+              treatments: treatments,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              TreatmentActions.getTreatmentsByCategoryIdFailure({
+                payload: error,
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  getTreatmentsByCategoryIdFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TreatmentActions.getTreatmentsByCategoryIdFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;

@@ -23,19 +23,17 @@ export class CategoryEffects {
 
   getCategories$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CategoryActions.getAllCategories),
+      ofType(CategoryActions.getCategories),
       exhaustMap(() =>
         this.categoryService.getCategories().pipe(
           map((categories) => {
             this.store.dispatch(isLoading({ status: false }));
-            return CategoryActions.getAllCategoriesSuccess({
+            return CategoryActions.getCategoriesSuccess({
               categories: categories,
             });
           }),
           catchError((error) => {
-            return of(
-              CategoryActions.getAllCategoriesFailure({ payload: error })
-            );
+            return of(CategoryActions.getCategoriesFailure({ payload: error }));
           })
         )
       )
@@ -44,7 +42,7 @@ export class CategoryEffects {
   getCategoriesFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CategoryActions.getAllCategoriesFailure),
+        ofType(CategoryActions.getCategoriesFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;

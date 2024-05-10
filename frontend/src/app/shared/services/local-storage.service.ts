@@ -12,7 +12,6 @@ export class LocalStorageService {
 
   getUser(): UserDTO {
     let user: UserDTO = {
-      id: '',
       email: '',
       password: '',
     };

@@ -6,15 +6,18 @@ import {
   deleteTreatment,
   deleteTreatmentFailure,
   deleteTreatmentSuccess,
-  getAllTreatments,
-  getAllTreatmentsFailure,
-  getAllTreatmentsSuccess,
   getTreatmentById,
   getTreatmentByIdFailure,
   getTreatmentByIdSuccess,
   getTreatmentByUrl,
   getTreatmentByUrlFailure,
   getTreatmentByUrlSuccess,
+  getTreatments,
+  getTreatmentsByCategoryId,
+  getTreatmentsByCategoryIdFailure,
+  getTreatmentsByCategoryIdSuccess,
+  getTreatmentsFailure,
+  getTreatmentsSuccess,
   updateTreatment,
   updateTreatmentFailure,
   updateTreatmentSuccess,
@@ -39,20 +42,40 @@ export const initialState: TreatmentsState = {
 
 const _treatmentsReducer = createReducer(
   initialState,
-  on(getAllTreatments, (state) => ({
+  on(getTreatments, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     error: null,
   })),
-  on(getAllTreatmentsSuccess, (state, action) => ({
+  on(getTreatmentsSuccess, (state, action) => ({
     ...state,
     treatments: action.treatments,
     loading: false,
     loaded: true,
     error: null,
   })),
-  on(getAllTreatmentsFailure, (state, { payload }) => ({
+  on(getTreatmentsFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(getTreatmentsByCategoryId, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getTreatmentsByCategoryIdSuccess, (state, action) => ({
+    ...state,
+    treatments: action.treatments,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getTreatmentsByCategoryIdFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

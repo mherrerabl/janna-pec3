@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, Input } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { faCalendar, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronDown,
@@ -46,6 +47,15 @@ export class InputComponent {
   iconArrowUp = faChevronUp;
   iconArrowDown = faChevronDown;
   iconSearch = faMagnifyingGlass;
+
+  myFilter = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    return day !== 0 && day !== 6;
+  };
+
+  constructor(date: DateAdapter<Date>) {
+    date.getFirstDayOfWeek = () => 1;
+  }
 
   toogleIconPassword(): void {
     this.hidePassword = !this.hidePassword;

@@ -2,15 +2,29 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { TreatmentClass } from '../models/treatment';
 
-export const getAllTreatments = createAction(
+export const getTreatments = createAction(
   '[Treatments list] Get treatments list'
 );
-export const getAllTreatmentsSuccess = createAction(
+export const getTreatmentsSuccess = createAction(
   '[Treatments list] Get treatments list success',
   props<{ treatments: TreatmentClass[] }>()
 );
 
-export const getAllTreatmentsFailure = createAction(
+export const getTreatmentsFailure = createAction(
+  '[Treatments list] Get treatments list fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getTreatmentsByCategoryId = createAction(
+  '[Treatments list] Get treatments list',
+  props<{ categoryId: string }>()
+);
+export const getTreatmentsByCategoryIdSuccess = createAction(
+  '[Treatments list] Get treatments list success',
+  props<{ treatments: TreatmentClass[] }>()
+);
+
+export const getTreatmentsByCategoryIdFailure = createAction(
   '[Treatments list] Get treatments list fail',
   props<{ payload: HttpErrorResponse }>()
 );

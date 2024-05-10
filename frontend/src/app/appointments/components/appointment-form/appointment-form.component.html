@@ -15,9 +15,17 @@
     [formGroup]="appointmentForm" 
     (ngSubmit)="sendForm()"
 >
-    @for (input of inputsForm; track $index) {
-        <app-input [dataInput]="input" [checkForm]="checkForm"></app-input>
+    
+    <app-input [dataInput]="inputsForm[0]" [checkForm]="checkForm"></app-input>
+    @if (treatmentOptions.length > 1) {
+        <app-input [dataInput]="inputsForm[1]" [checkForm]="checkForm"></app-input>
+    }    
+    <app-input [dataInput]="inputsForm[2]" [checkForm]="checkForm"></app-input>
+    @if (dateSelected) {
+        <app-input [dataInput]="inputsForm[3]" [checkForm]="checkForm"></app-input>
     }
+   
+       
 
     <div class="flex justify-center">
         <button class="button button-m px-6" type="submit">Reservar cita</button>

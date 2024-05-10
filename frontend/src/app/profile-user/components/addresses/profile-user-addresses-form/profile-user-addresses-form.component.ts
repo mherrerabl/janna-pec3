@@ -10,7 +10,6 @@ import * as AddressAction from '../../../../addresses/actions';
 import { AddressClass } from '../../../../addresses/models/address';
 import { AppState } from '../../../../app.reducers';
 import { InputDTO } from '../../../../shared/models/input.dto';
-import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { RouteService } from '../../../../shared/services/route.service';
 import { isLoading } from '../../../../spinner/actions/spinner.actions';
 
@@ -47,8 +46,7 @@ export class ProfileUserAddressesFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
-    public routeService: RouteService,
-    private localService: LocalStorageService
+    public routeService: RouteService
   ) {
     this.showFeedback = false;
     this.showErrorFeedback = false;
@@ -63,7 +61,7 @@ export class ProfileUserAddressesFormComponent {
     this.title = '';
     this.id = this.routeService.getProfileFormId();
 
-    this.user_id = localService.getUser().id;
+    this.user_id = '';
 
     this.getTypeForm();
 
@@ -112,6 +110,9 @@ export class ProfileUserAddressesFormComponent {
       predeterminate: this.predetermined,
     });
 
+    this.store.select('user').subscribe((store) => {
+      this.user_id = store.user.id;
+    });
     this.store.select('address').subscribe((store) => {
       if (this.id !== null) {
         this.address = store.address;

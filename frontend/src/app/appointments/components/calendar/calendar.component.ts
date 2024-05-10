@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   CalendarEvent,
@@ -15,10 +15,8 @@ import {
 import { es } from 'date-fns/locale';
 import { Subject } from 'rxjs';
 import { AppState } from '../../../app.reducers';
-import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TypeUser, UserClass } from '../../../users/models/user';
 import { AppointmentClass } from '../../models/appointment';
-import * as AppointmentsAction from './../../actions';
 setDefaultOptions({ locale: es });
 
 interface ModalCalendar {
@@ -46,7 +44,7 @@ const colors = {
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent {
   user!: UserClass;
   isLogin: boolean;
   isAdmin: boolean;
@@ -100,17 +98,6 @@ export class CalendarComponent implements OnInit {
       if (this.appointments.length > 0) {
         this.pushEventsToCalendar();
       }
-    });
-  }
-
-  ngOnInit(): void {
-    this.loadAppointments();
-  }
-
-  loadAppointments(): void {
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-      this.store.dispatch(AppointmentsAction.getAppointments());
     });
   }
 

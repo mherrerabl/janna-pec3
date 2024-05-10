@@ -7,15 +7,15 @@ import {
   deleteCategory,
   deleteCategoryFailure,
   deleteCategorySuccess,
-  getAllCategories,
-  getAllCategoriesFailure,
-  getAllCategoriesSuccess,
+  getCategories,
   getCategoriesByDepartment,
   getCategoriesByDepartmentFailure,
   getCategoriesByDepartmentSuccess,
   getCategoriesByUrl,
   getCategoriesByUrlFailure,
   getCategoriesByUrlSuccess,
+  getCategoriesFailure,
+  getCategoriesSuccess,
   getCategoryById,
   getCategoryByIdFailure,
   getCategoryByIdSuccess,
@@ -51,20 +51,20 @@ export const initialState: CategoriesState = {
 
 const _categoriesReducer = createReducer(
   initialState,
-  on(getAllCategories, (state) => ({
+  on(getCategories, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     error: null,
   })),
-  on(getAllCategoriesSuccess, (state, action) => ({
+  on(getCategoriesSuccess, (state, action) => ({
     ...state,
     categories: action.categories,
     loading: false,
     loaded: true,
     error: null,
   })),
-  on(getAllCategoriesFailure, (state, { payload }) => ({
+  on(getCategoriesFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

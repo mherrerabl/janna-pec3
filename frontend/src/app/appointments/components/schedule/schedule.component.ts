@@ -4,7 +4,9 @@ import { setDefaultOptions } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { AppState } from '../../../app.reducers';
 import { ModalService } from '../../../shared/services/modal.service';
+import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TypeUser, UserClass } from '../../../users/models/user';
+import * as AppointmentsAction from './../../actions';
 setDefaultOptions({ locale: es });
 
 @Component({
@@ -27,6 +29,15 @@ export class ScheduleComponent {
 
     this.store.select('user').subscribe((store) => {
       this.user = store.user;
+    });
+
+    this.loadAppointments();
+  }
+
+  loadAppointments(): void {
+    setTimeout(() => {
+      this.store.dispatch(isLoading({ status: true }));
+      this.store.dispatch(AppointmentsAction.getAppointments());
     });
   }
 

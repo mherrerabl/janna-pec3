@@ -33,14 +33,14 @@
    
     <label class="sr-only" [for]="dataInput.id">{{dataInput.label}}</label>
     <span class="icon-right" aria-hidden="true"><fa-icon [icon]="expandSelect ? iconArrowUp : iconArrowDown"></fa-icon></span>
-    <select [id]="dataInput.id" class="select border-0 border-b text-darkGrey" 
+    <select [id]="dataInput.id" class="select border-0 border-b text-darkGrey cursor-pointer" 
     [required]="dataInput.required" 
     [title]="dataInput.label" 
     [formControl]="dataInput.formControl"
     (click)="toogleSelect()">
       <option class="option" value="" selected disabled>{{dataInput.label}}</option>
       @for (option of dataInput.options; track $index) {
-        <option class="option" [value]="option.id">{{ option.name }}</option>
+        <option class="option cursor-pointer" [value]="option.id" [disabled]="option.disabled">{{ option.name }}</option>
       }
     </select>
   }
@@ -56,6 +56,19 @@
       <span [innerHTML]="dataInput.label | sanitizeHtml"></span>
     </label>
     
+  }
+
+  @else if (dataInput.type === 'date') {
+    
+      <input [id]="dataInput.id" class="input" matInput 
+      [matDatepickerFilter]="myFilter" 
+      [matDatepicker]="datepicker" 
+      [placeholder]="dataInput.placeholder" 
+      [required]="dataInput.required" 
+      [formControl]="dataInput.formControl"
+      >
+      <mat-datepicker-toggle class="absolute right-[15px] top-1/2 -translate-y-1/2" matSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker></mat-datepicker>
   }
 
   @else {

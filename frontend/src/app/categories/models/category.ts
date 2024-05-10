@@ -1,9 +1,9 @@
 import { ImageClass } from '../../images/models/image';
 
 export enum Department {
-  init = 'null',
-  shop = 'Tienda',
-  treatments = 'Tratamientos',
+  'init' = 'null',
+  'tienda' = 'tienda',
+  'tratamientos' = 'tratamientos',
 }
 
 export class CategoryClass {
@@ -11,7 +11,7 @@ export class CategoryClass {
   name: string;
   department: Department;
   url: string;
-  category_id?: CategoryClass;
+  category_id?: string;
   isParent?: boolean;
   image?: ImageClass;
 
@@ -20,7 +20,7 @@ export class CategoryClass {
     name: string,
     department: Department,
     url: string,
-    category_id?: CategoryClass
+    category_id?: string
   ) {
     this.id = id;
     this.name = name;

@@ -3,15 +3,15 @@ import { createAction, props } from '@ngrx/store';
 import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import { CategoryClass } from '../models/category';
 
-export const getAllCategories = createAction(
+export const getCategories = createAction(
   '[Categories list] Get categories list'
 );
-export const getAllCategoriesSuccess = createAction(
+export const getCategoriesSuccess = createAction(
   '[Categories list] Get categories list success',
   props<{ categories: CategoryClass[] }>()
 );
 
-export const getAllCategoriesFailure = createAction(
+export const getCategoriesFailure = createAction(
   '[Categories list] Get categories list fail',
   props<{ payload: HttpErrorResponse }>()
 );

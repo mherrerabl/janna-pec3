@@ -15,9 +15,10 @@ import {
   UserTreatmentClass,
 } from '../../../user-treatments/models/user-treatments';
 import { TypeUser, UserClass } from '../../../users/models/user';
-import { UserDTO } from '../../../users/models/user.dto';
 import * as AppointmentAction from '../../actions';
 
+import { addMinutes } from 'date-fns';
+import { CategoryClass, Department } from '../../../categories/models/category';
 import { AppointmentClass, StateAppointment } from '../../models/appointment';
 
 @Component({
@@ -27,11 +28,15 @@ import { AppointmentClass, StateAppointment } from '../../models/appointment';
 })
 export class AppointmentFormComponent {
   appointment: AppointmentClass;
+  appointments: AppointmentClass[];
   userTreatment: UserTreatmentClass;
-  user: UserDTO;
-  categoryTreatment: OptionDTO[];
+  user: UserClass;
+  categories: CategoryClass[];
+  typeTreatmentOptions: OptionDTO[];
+  treatmentOptions: OptionDTO[];
+  dateSelected: boolean;
 
-  categoryForm: FormControl;
+  typeTreatmentForm: FormControl;
   treatmentForm: FormControl;
   dateForm: FormControl;
   timeForm: FormControl;
@@ -50,10 +55,13 @@ export class AppointmentFormComponent {
   showFeedback: boolean;
   showErrorFeedback: boolean;
 
+  treatmentRequired: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>
   ) {
+    //Initialize
     this.showFeedback = false;
     this.showErrorFeedback = false;
 
@@ -64,6 +72,8 @@ export class AppointmentFormComponent {
     this.treatment = '';
     this.date = '';
     this.time = '';
+
+    this.treatmentRequired = true;
 
     this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
     this.userTreatment = new UserTreatmentClass(
@@ -79,12 +89,18 @@ export class AppointmentFormComponent {
       StateAppointment['Próxima sesión'],
       this.userTreatment
     );
+    this.appointments = new Array<AppointmentClass>();
 
-    this.categoryTreatment = [];
-
+    this.categories = new Array<CategoryClass>();
+    this.typeTreatmentOptions = [];
+    this.treatmentOptions = [];
+    this.dateSelected = false;
     //this.getTypeForm();
 
-    this.categoryForm = new FormControl(this.category, [Validators.required]);
+    //Form
+    this.typeTreatmentForm = new FormControl(this.category, [
+      Validators.required,
+    ]);
 
     this.treatmentForm = new FormControl(this.treatment, [Validators.required]);
 
@@ -93,33 +109,32 @@ export class AppointmentFormComponent {
     this.timeForm = new FormControl(this.time, [Validators.maxLength(100)]);
 
     this.appointmentForm = this.formBuilder.group({
-      category: this.categoryForm,
+      typeTreatment: this.typeTreatmentForm,
       treatment: this.treatmentForm,
       date: this.dateForm,
       time: this.timeForm,
     });
 
+    //LoadCategories
     setTimeout(() => {
       this.loadCategories();
     });
+
+    //Subscriptions store
     this.store.select('user').subscribe((store) => {
       this.user = store.user;
     });
 
     this.store.select('categories').subscribe((store) => {
-      store.categories.map((category) => {
-        this.categoryTreatment = [
-          ...this.categoryTreatment,
-          {
-            id: category.id,
-            name: category.name,
-          },
-        ];
-      });
-      this.inputsForm = this.getDataInputs();
+      this.categories = store.categories.filter(
+        ({ department }) => department === Department['tratamientos']
+      );
+
+      this.changeTypeTreatmentOptions();
     });
 
     this.store.select('appointment').subscribe((store) => {
+      this.appointments = store.appointments;
       if (this.isValidForm) {
         if (store.loaded) {
           this.resetErrors();
@@ -135,8 +150,54 @@ export class AppointmentFormComponent {
       }
     });
 
-    this.appointmentForm.get('category')?.valueChanges.subscribe((val) => {
-      console.log(val);
+    this.appointmentForm.get('typeTreatment')?.valueChanges.subscribe((id) => {
+      this.changeTreatmentOptions(id);
+    });
+
+    this.appointmentForm.get('date')?.valueChanges.subscribe((dateForm) => {
+      let appointmentsDay = this.appointments.filter(
+        ({ date }) =>
+          new Date(date).toLocaleDateString() ==
+          new Date(dateForm).toLocaleDateString()
+      );
+
+      hours.forEach((option) => {
+        let arrayInterval = option.name.split('-');
+        let startHour: string = arrayInterval[0];
+        let endHour = arrayInterval[1];
+        console.log(endHour);
+
+        appointmentsDay.forEach((appointment) => {
+          let startAppointment: string = new Date(
+            appointment.date
+          ).toLocaleTimeString();
+          let endAppointment: string = '';
+
+          if (appointment.treatment) {
+            endAppointment = addMinutes(
+              new Date(appointment.date),
+              appointment.treatment?.duration
+            ).toLocaleTimeString();
+          }
+          let check: boolean =
+            (Date.parse('1/1/2000 ' + startAppointment) >
+              Date.parse('1/1/2000 ' + startHour + ':00') &&
+              Date.parse('1/1/2000 ' + startAppointment) <
+                Date.parse('1/1/2000 ' + endHour + ':00')) ||
+            (Date.parse('1/1/2000 ' + startHour) >
+              Date.parse('1/1/2000 ' + startAppointment + ':00') &&
+              Date.parse('1/1/2000 ' + startHour) <
+                Date.parse('1/1/2000 ' + endAppointment + ':00'));
+
+          if (option.disabled !== true) {
+            option.disabled = check;
+          }
+        });
+      });
+      console.log(hours);
+
+      this.dateSelected = true;
+      this.inputsForm = this.getDataInputs();
     });
 
     this.inputsForm = this.getDataInputs();
@@ -146,12 +207,9 @@ export class AppointmentFormComponent {
 
   loadCategories(): void {
     this.store.dispatch(isLoading({ status: true }));
-    this.store.dispatch(
-      CategoriesAction.getCategoriesByDepartment({
-        department: 'tratamientos',
-      })
-    );
+    this.store.dispatch(CategoriesAction.getCategories());
   }
+
   /*
   getTypeForm(): void {
     if (this.id === null) {
@@ -168,6 +226,52 @@ export class AppointmentFormComponent {
     }
   }
   */
+
+  changeTypeTreatmentOptions() {
+    this.typeTreatmentOptions = [];
+    let typeTreatment = this.categories.filter(
+      ({ category_id }) => category_id === null
+    );
+    typeTreatment.map((category) => {
+      this.typeTreatmentOptions = [
+        ...this.typeTreatmentOptions,
+        {
+          id: category.id,
+          name: category.name,
+        },
+      ];
+    });
+    this.inputsForm = this.getDataInputs();
+  }
+
+  changeTreatmentOptions(id: string): void {
+    this.treatmentOptions = [];
+    let treatments = this.categories.filter(
+      ({ category_id }) => category_id == id
+    );
+
+    treatments.map((treatment) => {
+      this.treatmentOptions = [
+        ...this.treatmentOptions,
+        {
+          id: treatment.id,
+          name: treatment.name,
+        },
+      ];
+    });
+    this.checkTreatmentValue();
+    this.inputsForm = this.getDataInputs();
+  }
+
+  checkTreatmentValue(): void {
+    this.treatmentRequired = true;
+    let typeTreatmentsIds = ['4', '5', '6', '7'];
+    typeTreatmentsIds.map((value) => {
+      if (value == this.appointmentForm.controls['typeTreatment'].value) {
+        this.treatmentRequired = false;
+      }
+    });
+  }
 
   resetErrors(): void {
     this.showErrorFeedback = false;
@@ -229,8 +333,8 @@ export class AppointmentFormComponent {
         label: 'Tipo de tratamiento',
         placeholder: '',
         type: 'select',
-        options: this.categoryTreatment,
-        formControl: this.categoryForm,
+        options: this.typeTreatmentOptions,
+        formControl: this.typeTreatmentForm,
         required: true,
         errors: [
           {
@@ -244,8 +348,9 @@ export class AppointmentFormComponent {
         label: 'Tratamiento',
         placeholder: '',
         type: 'select',
+        options: this.treatmentOptions,
         formControl: this.treatmentForm,
-        required: true,
+        required: this.treatmentRequired,
         errors: [
           {
             type: 'required',
@@ -256,7 +361,7 @@ export class AppointmentFormComponent {
       {
         id: 'dateAppointment',
         label: 'Día',
-        placeholder: '',
+        placeholder: 'dd/mm/aaaa',
         type: 'date',
         formControl: this.dateForm,
         required: true,
@@ -272,6 +377,7 @@ export class AppointmentFormComponent {
         label: 'Hora',
         placeholder: '',
         type: 'select',
+        options: hours,
         formControl: this.timeForm,
         required: true,
         errors: [
@@ -284,3 +390,71 @@ export class AppointmentFormComponent {
     ];
   }
 }
+
+const hours: OptionDTO[] = [
+  {
+    id: '09:00',
+    name: '09:00-09:30',
+  },
+  {
+    id: '09:30',
+    name: '09:30-10:00',
+  },
+  {
+    id: '10:00',
+    name: '10:00-10:30',
+  },
+  {
+    id: '10:30',
+    name: '10:30-11:00',
+  },
+  {
+    id: '11:00',
+    name: '11:00-11:30',
+  },
+  {
+    id: '11:30',
+    name: '11:30-12:00',
+  },
+  {
+    id: '12:00',
+    name: '12:00-12:30',
+  },
+  {
+    id: '12:00',
+    name: '12:00-13:00',
+  },
+  {
+    id: '12:00',
+    name: '12:00-15:30',
+  },
+  {
+    id: '12:00',
+    name: '12:00-16:00',
+  },
+  {
+    id: '16:00',
+    name: '16:00-16:30',
+  },
+  {
+    id: '16:30',
+    name: '16:30-17:00',
+  },
+  {
+    id: '16:30',
+    name: '16:30-17:30',
+  },
+  {
+    id: '17:30',
+    name: '17:30-18:00',
+  },
+
+  {
+    id: '18:00',
+    name: '18:00-18:30',
+  },
+  {
+    id: '18:30',
+    name: '18:30-19:00',
+  },
+];

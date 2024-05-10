@@ -1,7 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 
+import localeEs from '@angular/common/locales/es';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BadgeComponent } from './components/badge/badge.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
@@ -26,6 +29,7 @@ import { IconsModule } from './icons/icons.module';
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe';
 import { ShortDescriptionPipe } from './pipes/short-description.pipe';
 import { SharedRoutingModule } from './shared-routing.module';
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -57,6 +61,8 @@ import { SharedRoutingModule } from './shared-routing.module';
     NgxPaginationModule,
     ReactiveFormsModule,
     IconsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     BadgeComponent,
@@ -83,5 +89,9 @@ import { SharedRoutingModule } from './shared-routing.module';
     DropdownComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: LOCALE_ID, useValue: 'es_ES' },
+  ],
 })
 export class SharedModule {}

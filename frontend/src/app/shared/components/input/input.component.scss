@@ -1,5 +1,5 @@
 .label {
-    @apply absolute left-4 translate-y-4 transition text-darkGrey bg-lightGrey 
+    @apply absolute left-4 translate-y-4 transition text-darkGrey bg-lightGrey z-30
     peer-[.icon-left]:left-11
     group-hover:[&:not(&:has(~.input:focus))]:text-secundary-600 
     group-hover:[&:not(&:has(~.input:valid))]:text-secundary-600 

@@ -4,6 +4,7 @@ import { InputErrorDTO } from './input-error.dto';
 export interface OptionDTO {
   id: string;
   name: string;
+  disabled?: boolean;
 }
 export interface InputDTO {
   id: string;
