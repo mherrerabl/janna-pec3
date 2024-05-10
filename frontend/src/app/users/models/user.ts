@@ -1,6 +1,6 @@
 export enum TypeUser {
-  'user',
-  'admin',
+  'user' = 'user',
+  'admin' = 'admin',
 }
 
 export class UserClass {
@@ -10,6 +10,7 @@ export class UserClass {
   password: string;
   email: string;
   phone: number | null;
+  type: TypeUser;
 
   constructor(
     id: string,
@@ -17,7 +18,8 @@ export class UserClass {
     surname: string,
     password: string,
     email: string,
-    phone: number | null
+    phone: number | null,
+    type: TypeUser
   ) {
     this.id = id;
     this.name = name;
@@ -25,5 +27,6 @@ export class UserClass {
     this.password = password;
     this.email = email;
     this.phone = phone;
+    this.type = type;
   }
 }

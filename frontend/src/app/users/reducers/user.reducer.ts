@@ -17,7 +17,7 @@ import {
   updateUserFailure,
   updateUserSuccess,
 } from '../actions';
-import { UserClass } from '../models/user';
+import { TypeUser, UserClass } from '../models/user';
 
 export interface UserState {
   user: UserClass;
@@ -27,7 +27,7 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-  user: new UserClass('', '', '', '', '', 0),
+  user: new UserClass('', '', '', '', '', 0, TypeUser['user']),
   loading: false,
   loaded: false,
   error: null,

@@ -2,15 +2,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { AppointmentClass } from '../models/appointment';
 
-export const getAllAppointments = createAction(
+export const getAppointments = createAction(
   '[Appointments list] Get appointments list'
 );
-export const getAllAppointmentsSuccess = createAction(
+export const getAppointmentsSuccess = createAction(
   '[Appointments list] Get appointments list success',
   props<{ appointments: AppointmentClass[] }>()
 );
 
-export const getAllAppointmentsFailure = createAction(
+export const getAppointmentsFailure = createAction(
   '[Appointments list] Get appointments list fail',
   props<{ payload: HttpErrorResponse }>()
 );

@@ -21,6 +21,13 @@ const routes: Routes = [
       import('./products/products.module').then((mod) => mod.ProductsModule),
   },
   {
+    path: 'agenda',
+    loadChildren: () =>
+      import('./appointments/appointments.module').then(
+        (mod) => mod.AppointmentsModule
+      ),
+  },
+  {
     path: 'perfil',
     loadChildren: () =>
       import('./profile-user/profile-user.module').then(

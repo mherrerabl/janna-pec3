@@ -33,8 +33,6 @@ export class ProfileUserTreatmentsTableComponent {
 
     this.store.select('userTreatment').subscribe((store) => {
       if (store.userTreatments.length > 0) {
-        console.log(store.userTreatments);
-
         this.userTreatments = store.userTreatments;
         this.dataTable = this.getTable();
       }
@@ -79,9 +77,6 @@ export class ProfileUserTreatmentsTableComponent {
             state: StateUserTreatment[userTreatment.state],
             appointment_id: appointment.id,
           };
-
-          console.log(appointment);
-          console.log(session);
 
           sessions.push(session);
         });

@@ -11,7 +11,7 @@ import { InputDTO } from '../../../../shared/models/input.dto';
 import { CustomValidator } from '../../../../shared/validators/custom-validator';
 import { isLoading } from '../../../../spinner/actions/spinner.actions';
 import * as UserAction from '../../../../users/actions';
-import { UserClass } from '../../../../users/models/user';
+import { TypeUser, UserClass } from '../../../../users/models/user';
 @Component({
   selector: 'app-profile-user-personal-form',
   templateUrl: './profile-user-personal-form.component.html',
@@ -47,7 +47,7 @@ export class ProfileUserPersonalFormComponent implements OnInit {
     this.isValidForm = null;
     this.checkForm = false;
 
-    this.user = new UserClass('', '', '', '', '', null);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
     this.passwordConfirmData = '';
 
     this.store.select('user').subscribe((store) => {
@@ -137,6 +137,7 @@ export class ProfileUserPersonalFormComponent implements OnInit {
       email: this.personalForm.controls['email'].value,
       phone: this.personalForm.controls['phone'].value,
       password: this.personalForm.controls['password'].value,
+      type: TypeUser[this.user.type],
     };
 
     this.store.dispatch(isLoading({ status: true }));

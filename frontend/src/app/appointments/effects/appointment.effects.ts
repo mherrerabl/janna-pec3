@@ -23,18 +23,18 @@ export class AppointmentEffects {
 
   getAppointments$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AppointmentActions.getAllAppointments),
+      ofType(AppointmentActions.getAppointments),
       exhaustMap(() =>
         this.appointmentService.getAppointments().pipe(
           map((appointments) => {
             this.store.dispatch(isLoading({ status: false }));
-            return AppointmentActions.getAllAppointmentsSuccess({
+            return AppointmentActions.getAppointmentsSuccess({
               appointments: appointments,
             });
           }),
           catchError((error) => {
             return of(
-              AppointmentActions.getAllAppointmentsFailure({ payload: error })
+              AppointmentActions.getAppointmentsFailure({ payload: error })
             );
           })
         )
@@ -44,7 +44,7 @@ export class AppointmentEffects {
   getAppointmentsFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AppointmentActions.getAllAppointmentsFailure),
+        ofType(AppointmentActions.getAppointmentsFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;

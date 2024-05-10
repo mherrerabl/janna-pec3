@@ -15,7 +15,7 @@ import { ModalService } from '../../../shared/services/modal.service';
 import { CustomValidator } from '../../../shared/validators/custom-validator';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import * as UserAction from '../../actions';
-import { UserClass } from '../../models/user';
+import { TypeUser, UserClass } from '../../models/user';
 import { UserDTO } from '../../models/user.dto';
 
 @Component({
@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
     this.checkForm = false;
     this.keepLogin = false;
 
-    this.user = new UserClass('', '', '', '', '', null);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
     this.passwordConfirmData = '';
 
     this.email = new FormControl(this.user.email, [

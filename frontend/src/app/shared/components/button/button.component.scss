@@ -1,20 +1,18 @@
-.button {
-    @apply w-full max-w-[250px];
-}
 
-.button-l {
-    @apply button h-[56px] font-text text-l font-medium tracking-0.5;
+.button-s {
+    @apply w-full max-w-[250px] h-[40px] font-text text-s font-medium tracking-0.5;
 }
 
 .button-m {
-    @apply button h-[48px] font-text text-m font-medium tracking-0.5;
+    @apply w-full max-w-[250px] h-[48px] font-text text-m font-medium tracking-0.5;
 }
 
-.button-s {
-    @apply button h-[40px] font-text text-s font-medium tracking-0.5;
+.button-l {
+    @apply w-full max-w-[250px] h-[56px] font-text text-l font-medium tracking-0.5;
 }
 
-.button-normal {
+
+.button {
     @apply bg-secundary text-white
     hover:bg-secundary-600 
     active:bg-secundary-700

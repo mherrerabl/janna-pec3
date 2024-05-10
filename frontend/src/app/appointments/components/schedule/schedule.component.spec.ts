@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileUserFormComponent } from './profile-user-form.component';
+import { ScheduleComponent } from './schedule.component';
 
-describe('ProfileUserFormComponent', () => {
-  let component: ProfileUserFormComponent;
-  let fixture: ComponentFixture<ProfileUserFormComponent>;
+describe('ScheduleComponent', () => {
+  let component: ScheduleComponent;
+  let fixture: ComponentFixture<ScheduleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProfileUserFormComponent]
+      declarations: [ScheduleComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ProfileUserFormComponent);
+    fixture = TestBed.createComponent(ScheduleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

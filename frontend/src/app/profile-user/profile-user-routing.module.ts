@@ -42,10 +42,6 @@ const routes: Routes = [
             path: 'nuevo',
             component: ProfileUserOrdersTableComponent,
           },
-          {
-            path: 'editar/:id',
-            component: ProfileUserOrdersTableComponent,
-          },
         ],
       },
       {
@@ -69,10 +65,6 @@ const routes: Routes = [
         children: [
           {
             path: 'nuevo',
-            component: ProfileUserTreatmentsTableComponent,
-          },
-          {
-            path: 'editar/:id',
             component: ProfileUserTreatmentsTableComponent,
           },
         ],

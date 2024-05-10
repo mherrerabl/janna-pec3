@@ -20,6 +20,7 @@ import { MailModule } from './mail/mail.module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './spinner/components/spinner/spinner.component';
 import { UsersModule } from './users/users.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localeEs);
 
@@ -43,6 +44,7 @@ registerLocaleData(localeEs);
       maxAge: 25,
       logOnly: environment.production,
     }),
+    NgbModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

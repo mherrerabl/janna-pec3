@@ -30,41 +30,19 @@
   }
 
   @else if (dataInput.type === 'select') {
-    <div class="sr-only">
-      <label [for]="dataInput.id">{{dataInput.label}}</label>
-      <span class="icon-right" aria-hidden="true"><fa-icon [icon]="expandSelect ? iconArrowUp : iconArrowDown"></fa-icon></span>
-      <select [id]="dataInput.id" class="select border-0 border-b text-darkGrey" 
-      [required]="dataInput.required" 
-      [title]="dataInput.label" 
-      [formControl]="dataInput.formControl"
-      (click)="toogleSelect()">
-        <option class="option" value="" selected disabled>{{dataInput.label}}</option>
-        @for (option of dataInput.options; track $index) {
-          <option class="option" [value]="option.id">{{ option.name }}</option>
-        }
-      </select>
-    </div>
-    
-  
-    <div [id]="dataInput.id" aria-hidden="true" [formControl]="dataInput.formControl">
-      <button type="button" class="select [&>.icon-right]:top-[1.65rem]" 
-        [class.border-0]="expandSelect" 
-        (click)="toogleSelect()">
-        {{  optionSelected === undefined ? dataInput.label : optionSelected.name}}
-        <span class="icon-right" aria-hidden="true">
-          <fa-icon [icon]="expandSelect ? iconArrowUp : iconArrowDown"></fa-icon>
-        </span>
-      </button>
-      
-      <div class="overflow-hidden">
-        <ul [@detailExpand]="expandSelect ? 'expanded' : 'collapsed'">
-          @for (option of dataInput.options; track $index) {
-            <li class="option" (click)="optionMenu(option.id)">{{ option.name }}</li>
-          }
-        </ul>
-      </div>
-      
-    </div>
+   
+    <label class="sr-only" [for]="dataInput.id">{{dataInput.label}}</label>
+    <span class="icon-right" aria-hidden="true"><fa-icon [icon]="expandSelect ? iconArrowUp : iconArrowDown"></fa-icon></span>
+    <select [id]="dataInput.id" class="select border-0 border-b text-darkGrey" 
+    [required]="dataInput.required" 
+    [title]="dataInput.label" 
+    [formControl]="dataInput.formControl"
+    (click)="toogleSelect()">
+      <option class="option" value="" selected disabled>{{dataInput.label}}</option>
+      @for (option of dataInput.options; track $index) {
+        <option class="option" [value]="option.id">{{ option.name }}</option>
+      }
+    </select>
   }
 
   @else if (dataInput.type === 'checkbox') {

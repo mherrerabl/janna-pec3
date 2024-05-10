@@ -1,0 +1,25 @@
+
+@if(showFeedback) {
+    <div class="bg-primary p-4 mb-6">
+        <p id="addressFeedback"></p>
+    </div>
+}
+
+@if(showErrorFeedback) {
+    <div class="text-error-500 p-4 mb-6">
+        <p>Ha surgido un error, intentelo más tarde.</p>
+    </div>
+}
+
+<form class="mb-separator-30" 
+    [formGroup]="appointmentForm" 
+    (ngSubmit)="sendForm()"
+>
+    @for (input of inputsForm; track $index) {
+        <app-input [dataInput]="input" [checkForm]="checkForm"></app-input>
+    }
+
+    <div class="flex justify-center">
+        <button class="button button-m px-6" type="submit">Reservar cita</button>
+    </div>     
+</form>

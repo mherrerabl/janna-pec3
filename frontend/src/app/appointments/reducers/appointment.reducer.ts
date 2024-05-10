@@ -1,17 +1,21 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import {
+  StateUserTreatment,
+  UserTreatmentClass,
+} from '../../user-treatments/models/user-treatments';
+import {
   createAppointment,
   createAppointmentFailure,
   createAppointmentSuccess,
   deleteAppointment,
   deleteAppointmentFailure,
   deleteAppointmentSuccess,
-  getAllAppointments,
-  getAllAppointmentsFailure,
-  getAllAppointmentsSuccess,
   getAppointmentByUserId,
   getAppointmentByUserIdFailure,
   getAppointmentByUserIdSuccess,
+  getAppointments,
+  getAppointmentsFailure,
+  getAppointmentsSuccess,
   updateAppointment,
   updateAppointmentFailure,
   updateAppointmentSuccess,
@@ -25,14 +29,13 @@ export interface AppointmentsState {
   loaded: boolean;
   error: any;
 }
-
 export const initialState: AppointmentsState = {
   appointments: new Array<AppointmentClass>(),
   appointment: new AppointmentClass(
     '',
     new Date(),
     StateAppointment['Pendiente'],
-    ''
+    new UserTreatmentClass('', '', StateUserTreatment['En proceso'], 0, '')
   ),
   loading: false,
   loaded: false,
@@ -41,20 +44,20 @@ export const initialState: AppointmentsState = {
 
 const _appointmentsReducer = createReducer(
   initialState,
-  on(getAllAppointments, (state) => ({
+  on(getAppointments, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     error: null,
   })),
-  on(getAllAppointmentsSuccess, (state, action) => ({
+  on(getAppointmentsSuccess, (state, action) => ({
     ...state,
     appointments: action.appointments,
     loading: false,
     loaded: true,
     error: null,
   })),
-  on(getAllAppointmentsFailure, (state, { payload }) => ({
+  on(getAppointmentsFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

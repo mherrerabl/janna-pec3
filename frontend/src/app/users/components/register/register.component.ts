@@ -15,7 +15,7 @@ import { ModalService } from '../../../shared/services/modal.service';
 import { CustomValidator } from '../../../shared/validators/custom-validator';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import * as UserAction from '../../actions';
-import { UserClass } from '../../models/user';
+import { TypeUser, UserClass } from '../../models/user';
 import { UserDTO } from '../../models/user.dto';
 
 @Component({
@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
     this.checkForm = false;
     this.keepLogin = false;
 
-    this.user = new UserClass('', '', '', '', '', null);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
     this.passwordConfirmData = '';
 
     this.name = new FormControl(this.user.name, [
@@ -105,7 +105,7 @@ export class RegisterComponent implements OnInit {
     });
 
     this.store.select('user').subscribe((store) => {
-      if (store.loaded) {
+      if (this.isValidForm) {
         this.resetErrors();
         if (store.user.id !== undefined) {
           if (this.keepLogin) {
@@ -157,6 +157,7 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.controls['password'].value,
       email: this.registerForm.controls['email'].value,
       phone: null,
+      type: TypeUser['user'],
     };
 
     this.store.dispatch(isLoading({ status: true }));

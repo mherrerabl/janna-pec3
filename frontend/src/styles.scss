@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Aboreto&family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 @font-face {
     font-family: "FontAwesome";
@@ -23,7 +24,6 @@
     *:focus {
         outline: none;
     }
-
     
     body {
         overflow-x: hidden
@@ -133,6 +133,19 @@
         font-size: 3rem;
         margin: auto;
     }
+
+    /**Remove icon dropdown select**/
+    select { 
+        /* for Firefox */ 
+        -moz-appearance: none; 
+        /* for Safari, Chrome, Opera */ 
+        -webkit-appearance: none; 
+    } 
+
+    /* for IE10 */ 
+    select::-ms-expand { 
+        display: none; 
+    } 
 }
 
 @layer components {
@@ -189,9 +202,25 @@
         min-height: 100%;
         display: flex;
         align-items: center;
-    }
+    }  
 }
 
 #map {
     height: 300px;
 }
+
+
+/**Calendar**/
+mwl-calendar-event-title {
+    color: black;
+}
+
+mwl-calendar-open-day-events div {
+    background-color: #FAE9EC !important;
+    box-shadow: none !important;
+}
+mwl-calendar-month-cell.cal-today, .cal-week-view .cal-header.cal-today {
+    background-color: #4D4D4D !important;
+    color: #fff !important;
+}
+

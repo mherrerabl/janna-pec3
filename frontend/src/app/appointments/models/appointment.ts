@@ -12,8 +12,11 @@ export class AppointmentClass {
   id: string;
   date: Date;
   state: StateAppointment;
-  user_treatment_id: string;
-  user_treatment?: UserTreatmentClass;
+  user_treatment: UserTreatmentClass;
+  treatment?: {
+    name: string;
+    duration: number;
+  };
   user?: {
     id: string;
     name: string;
@@ -24,11 +27,11 @@ export class AppointmentClass {
     id: string,
     date: Date,
     state: StateAppointment,
-    user_treatment_id: string
+    user_treatment: UserTreatmentClass
   ) {
     this.id = id;
     this.date = date;
     this.state = state;
-    this.user_treatment_id = user_treatment_id;
+    this.user_treatment = user_treatment;
   }
 }

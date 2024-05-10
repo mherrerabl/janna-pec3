@@ -26,14 +26,7 @@ export class ProfileUserAppointmentsTableComponent implements OnInit {
     });
 
     this.store.select('appointment').subscribe((store) => {
-      console.log('out');
-      console.log(store);
-      console.log(store.appointments);
-      console.log(store.appointments.length > 0);
-
       if (store.appointments.length > 0) {
-        console.log('in');
-
         this.appointments = store.appointments;
         this.dataTable = this.getTable();
       }
@@ -65,10 +58,10 @@ export class ProfileUserAppointmentsTableComponent implements OnInit {
       let newRow: string[] = [];
       newRow.push(new Date(appointment.date).toLocaleDateString('en-GB'));
       if (
-        appointment.user_treatment !== undefined &&
-        appointment.user_treatment.name !== undefined
+        appointment.treatment !== undefined &&
+        appointment.treatment.name !== undefined
       ) {
-        newRow.push(appointment.user_treatment.name);
+        newRow.push(appointment.treatment.name);
       }
 
       let newDetail: RowDetailDTO[] = [
@@ -92,7 +85,7 @@ export class ProfileUserAppointmentsTableComponent implements OnInit {
           title: 'Tratamiento',
           content: {
             info: {
-              text: appointment.user_treatment?.name,
+              text: appointment.treatment?.name,
             },
           },
         },
