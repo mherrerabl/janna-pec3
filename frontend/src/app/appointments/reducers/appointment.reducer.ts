@@ -10,6 +10,9 @@ import {
   deleteAppointment,
   deleteAppointmentFailure,
   deleteAppointmentSuccess,
+  getAppointmentById,
+  getAppointmentByIdFailure,
+  getAppointmentByIdSuccess,
   getAppointmentByUserId,
   getAppointmentByUserIdFailure,
   getAppointmentByUserIdSuccess,
@@ -78,6 +81,26 @@ const _appointmentsReducer = createReducer(
     error: null,
   })),
   on(getAppointmentByUserIdFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(getAppointmentById, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getAppointmentByIdSuccess, (state, action) => ({
+    ...state,
+    appointment: action.appointment,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getAppointmentByIdFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

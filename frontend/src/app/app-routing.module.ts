@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginGuard } from './shared/guards/login.guard';
 
 const routes: Routes = [
   {
@@ -33,6 +34,7 @@ const routes: Routes = [
       import('./profile-user/profile-user.module').then(
         (mod) => mod.ProfileUserModule
       ),
+    canActivate: [LoginGuard],
   },
   {
     path: 'admin',
@@ -40,6 +42,7 @@ const routes: Routes = [
       import('./profile-admin/profile-admin.module').then(
         (mod) => mod.ProfileAdminModule
       ),
+    canActivate: [LoginGuard],
   },
   /*{
     path: 'tratamientos/:category',

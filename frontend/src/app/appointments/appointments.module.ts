@@ -8,16 +8,11 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { SharedModule } from '../shared/shared.module';
 import { AppointmentsRoutingModule } from './appointments-routing.module';
-import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 
 @NgModule({
-  declarations: [
-    ScheduleComponent,
-    AppointmentFormComponent,
-    CalendarComponent,
-  ],
+  declarations: [ScheduleComponent, CalendarComponent],
   imports: [
     CommonModule,
     AppointmentsRoutingModule,
@@ -30,6 +25,5 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
       useFactory: adapterFactory,
     }),
   ],
-  providers: [],
 })
 export class AppointmentsModule {}

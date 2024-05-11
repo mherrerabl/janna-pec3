@@ -15,17 +15,17 @@ export const getTreatmentsFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
-export const getTreatmentsByCategoryId = createAction(
-  '[Treatments list] Get treatments list',
+export const getTreatmentByCategoryId = createAction(
+  '[Treatment detail] Get treatments detail by categoryId',
   props<{ categoryId: string }>()
 );
-export const getTreatmentsByCategoryIdSuccess = createAction(
-  '[Treatments list] Get treatments list success',
-  props<{ treatments: TreatmentClass[] }>()
+export const getTreatmentByCategoryIdSuccess = createAction(
+  '[Treatment detail] Get treatments detail by categoryId success',
+  props<{ treatment: TreatmentClass }>()
 );
 
-export const getTreatmentsByCategoryIdFailure = createAction(
-  '[Treatments list] Get treatments list fail',
+export const getTreatmentByCategoryIdFailure = createAction(
+  '[Treatment detail] Get treatments detail by categoryId fail',
   props<{ payload: HttpErrorResponse }>()
 );
 

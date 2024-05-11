@@ -91,6 +91,42 @@ export class AppointmentEffects {
     { dispatch: false }
   );
 
+  getAppointmentById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AppointmentActions.getAppointmentById),
+      exhaustMap(({ appointmentId }) =>
+        this.appointmentService.getAppointmentById(appointmentId).pipe(
+          map((appointment) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return AppointmentActions.getAppointmentByIdSuccess({
+              appointment: appointment,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              AppointmentActions.getAppointmentByIdFailure({
+                payload: error,
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  getAppointmentByIdFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AppointmentActions.getAppointmentByIdFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
   createAppointment$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AppointmentActions.createAppointment),
@@ -112,7 +148,7 @@ export class AppointmentEffects {
                 'appointmentFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha creado una nueva dirección.'
+                'Se ha creado una nueva cita.'
               );
             }, 100);
           })
@@ -170,7 +206,7 @@ export class AppointmentEffects {
                   'appointmentFeedback',
                   this.responseOK,
                   this.errorResponse,
-                  'Se ha actualizado la dirección.'
+                  'Se ha actualizado la cita.'
                 );
               }, 100);
             })

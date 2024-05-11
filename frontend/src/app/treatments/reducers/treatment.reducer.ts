@@ -6,6 +6,9 @@ import {
   deleteTreatment,
   deleteTreatmentFailure,
   deleteTreatmentSuccess,
+  getTreatmentByCategoryId,
+  getTreatmentByCategoryIdFailure,
+  getTreatmentByCategoryIdSuccess,
   getTreatmentById,
   getTreatmentByIdFailure,
   getTreatmentByIdSuccess,
@@ -13,9 +16,6 @@ import {
   getTreatmentByUrlFailure,
   getTreatmentByUrlSuccess,
   getTreatments,
-  getTreatmentsByCategoryId,
-  getTreatmentsByCategoryIdFailure,
-  getTreatmentsByCategoryIdSuccess,
   getTreatmentsFailure,
   getTreatmentsSuccess,
   updateTreatment,
@@ -62,20 +62,20 @@ const _treatmentsReducer = createReducer(
     error: { payload },
   })),
 
-  on(getTreatmentsByCategoryId, (state) => ({
+  on(getTreatmentByCategoryId, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     error: null,
   })),
-  on(getTreatmentsByCategoryIdSuccess, (state, action) => ({
+  on(getTreatmentByCategoryIdSuccess, (state, action) => ({
     ...state,
-    treatments: action.treatments,
+    treatment: action.treatment,
     loading: false,
     loaded: true,
     error: null,
   })),
-  on(getTreatmentsByCategoryIdFailure, (state, { payload }) => ({
+  on(getTreatmentByCategoryIdFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

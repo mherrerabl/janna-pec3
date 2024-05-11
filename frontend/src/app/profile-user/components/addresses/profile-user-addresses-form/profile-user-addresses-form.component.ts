@@ -12,6 +12,7 @@ import { AppState } from '../../../../app.reducers';
 import { InputDTO } from '../../../../shared/models/input.dto';
 import { RouteService } from '../../../../shared/services/route.service';
 import { isLoading } from '../../../../spinner/actions/spinner.actions';
+import { TypeUser, UserClass } from '../../../../users/models/user';
 
 @Component({
   selector: 'app-profile-user-addresses-form',
@@ -40,8 +41,8 @@ export class ProfileUserAddressesFormComponent {
   showErrorFeedback: boolean;
 
   title: string;
-  id: string | null;
-  user_id: string;
+  urlId: string | null;
+  user: UserClass;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,9 +60,9 @@ export class ProfileUserAddressesFormComponent {
     this.address = new AddressClass('', '', '', '', '', '', '', false, '');
 
     this.title = '';
-    this.id = this.routeService.getProfileFormId();
+    this.urlId = this.routeService.getProfileFormId();
 
-    this.user_id = '';
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
 
     this.getTypeForm();
 
@@ -111,10 +112,10 @@ export class ProfileUserAddressesFormComponent {
     });
 
     this.store.select('user').subscribe((store) => {
-      this.user_id = store.user.id;
+      this.user = store.user;
     });
     this.store.select('address').subscribe((store) => {
-      if (this.id !== null) {
+      if (this.urlId !== null) {
         this.address = store.address;
       }
 
@@ -162,7 +163,7 @@ export class ProfileUserAddressesFormComponent {
   ngOnInit(): void {}
 
   getTypeForm(): void {
-    if (this.id === null) {
+    if (this.urlId === null) {
       this.title = 'Nueva dirección';
     } else {
       this.title = 'Editar dirección';
@@ -170,7 +171,7 @@ export class ProfileUserAddressesFormComponent {
       this.store.dispatch(isLoading({ status: true }));
       this.store.dispatch(
         AddressAction.getAddressById({
-          addressId: this.id,
+          addressId: this.urlId,
         })
       );
     }
@@ -204,7 +205,7 @@ export class ProfileUserAddressesFormComponent {
 
     this.getDateForm();
 
-    if (this.id === null) {
+    if (this.urlId === null) {
       this.createAddress();
     } else {
       this.updateAddress();
@@ -232,7 +233,7 @@ export class ProfileUserAddressesFormComponent {
 
   private getDateForm(): void {
     if (this.address.user_id === undefined) {
-      this.address.user_id = this.user_id;
+      this.address.user_id = this.user.id;
     }
     console.log(this.addressForm.controls['additionalInfo'].value);
 
@@ -245,7 +246,7 @@ export class ProfileUserAddressesFormComponent {
       zip: this.addressForm.controls['zip'].value,
       city: this.addressForm.controls['city'].value,
       predetermined: this.isPredetermined,
-      user_id: this.user_id,
+      user_id: this.user.id,
     };
   }
 

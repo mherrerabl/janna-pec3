@@ -38,7 +38,7 @@
     [title]="dataInput.label" 
     [formControl]="dataInput.formControl"
     (click)="toogleSelect()">
-      <option class="option" value="" selected disabled>{{dataInput.label}}</option>
+      <option class="option" value="null" selected disabled>{{dataInput.label}}</option>
       @for (option of dataInput.options; track $index) {
         <option class="option cursor-pointer" [value]="option.id" [disabled]="option.disabled">{{ option.name }}</option>
       }
@@ -66,6 +66,7 @@
       [placeholder]="dataInput.placeholder" 
       [required]="dataInput.required" 
       [formControl]="dataInput.formControl"
+      [min]="currentDay"
       >
       <mat-datepicker-toggle class="absolute right-[15px] top-1/2 -translate-y-1/2" matSuffix [for]="datepicker"></mat-datepicker-toggle>
       <mat-datepicker #datepicker></mat-datepicker>

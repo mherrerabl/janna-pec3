@@ -16,6 +16,7 @@ export class AppointmentClass {
   treatment?: {
     name: string;
     duration: number;
+    category_id: string;
   };
   user?: {
     id: string;

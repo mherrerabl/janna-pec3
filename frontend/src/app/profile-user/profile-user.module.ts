@@ -11,6 +11,7 @@ import { ProfileUserPersonalFormComponent } from './components/personal/profile-
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileUserTreatmentsTableComponent } from './components/treatments/profile-user-treatments-table/profile-user-treatments-table.component';
 import { ProfileUserRoutingModule } from './profile-user-routing.module';
+import { ProfileUserAppointmentsFormComponent } from './components/appointments/profile-user-appointments-form/profile-user-appointments-form.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProfileUserRoutingModule } from './profile-user-routing.module';
     ProfileUserAppointmentsTableComponent,
     ProfileUserTreatmentsTableComponent,
     ProfileUserAddressesFormComponent,
+    ProfileUserAppointmentsFormComponent,
   ],
   imports: [
     CommonModule,

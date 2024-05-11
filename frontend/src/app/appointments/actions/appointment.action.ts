@@ -16,16 +16,30 @@ export const getAppointmentsFailure = createAction(
 );
 
 export const getAppointmentByUserId = createAction(
-  '[Appointment detail] Get appointment detail by user id',
+  '[Appointments list] Get appointment detail by user id',
   props<{ userId: string }>()
 );
 export const getAppointmentByUserIdSuccess = createAction(
-  '[Appointment detail] Get appointment detail by user id success',
+  '[Appointments list] Get appointment detail by user id success',
   props<{ appointments: AppointmentClass[] }>()
 );
 
 export const getAppointmentByUserIdFailure = createAction(
-  '[Appointment detail] Get appointment detail by user id fail',
+  '[Appointments list] Get appointment detail by user id fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getAppointmentById = createAction(
+  '[Appointment detail] Get appointment detail by id',
+  props<{ appointmentId: string }>()
+);
+export const getAppointmentByIdSuccess = createAction(
+  '[Appointment detail] Get appointment detail by id success',
+  props<{ appointment: AppointmentClass }>()
+);
+
+export const getAppointmentByIdFailure = createAction(
+  '[Appointment detail] Get appointment detail by id fail',
   props<{ payload: HttpErrorResponse }>()
 );
 

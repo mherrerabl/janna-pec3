@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileUserAddressesFormComponent } from './components/addresses/profile-user-addresses-form/profile-user-addresses-form.component';
 import { ProfileUserAddressesTableComponent } from './components/addresses/profile-user-addresses-table/profile-user-addresses-table.component';
+import { ProfileUserAppointmentsFormComponent } from './components/appointments/profile-user-appointments-form/profile-user-appointments-form.component';
 import { ProfileUserAppointmentsTableComponent } from './components/appointments/profile-user-appointments-table/profile-user-appointments-table.component';
 import { ProfileUserOrdersTableComponent } from './components/orders/profile-user-orders-table/profile-user-orders-table.component';
 import { ProfileUserPersonalFormComponent } from './components/personal/profile-user-personal-form/profile-user-personal-form.component';
@@ -37,24 +38,21 @@ const routes: Routes = [
       {
         path: 'pedidos',
         component: ProfileUserOrdersTableComponent,
-        children: [
-          {
-            path: 'nuevo',
-            component: ProfileUserOrdersTableComponent,
-          },
-        ],
       },
       {
         path: 'citas',
-        component: ProfileUserAppointmentsTableComponent,
         children: [
           {
-            path: 'nuevo',
+            path: '',
             component: ProfileUserAppointmentsTableComponent,
           },
           {
+            path: 'nuevo',
+            component: ProfileUserAppointmentsFormComponent,
+          },
+          {
             path: 'editar/:id',
-            component: ProfileUserAppointmentsTableComponent,
+            component: ProfileUserAppointmentsFormComponent,
           },
         ],
       },
@@ -62,12 +60,6 @@ const routes: Routes = [
       {
         path: 'tratamientos',
         component: ProfileUserTreatmentsTableComponent,
-        children: [
-          {
-            path: 'nuevo',
-            component: ProfileUserTreatmentsTableComponent,
-          },
-        ],
       },
     ],
   },

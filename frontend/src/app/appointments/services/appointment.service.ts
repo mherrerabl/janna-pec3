@@ -30,6 +30,12 @@ export class AppointmentService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
+  getAppointmentById(appointmentId: string): Observable<AppointmentClass> {
+    return this.http
+      .get<AppointmentClass>(this.urlApi + '/' + appointmentId)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
   createAppointment(
     appointment: AppointmentClass
   ): Observable<AppointmentClass> {

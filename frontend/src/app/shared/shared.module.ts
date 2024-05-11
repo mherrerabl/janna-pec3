@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
 import { BadgeComponent } from './components/badge/badge.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ButtonComponent } from './components/button/button.component';
@@ -54,6 +55,7 @@ registerLocaleData(localeEs, 'es');
     HeaderComponent,
     SanitizeHtmlPipe,
     DropdownComponent,
+    AppointmentFormComponent,
   ],
   imports: [
     CommonModule,
@@ -87,6 +89,7 @@ registerLocaleData(localeEs, 'es');
     ContactLinksComponent,
     HeaderComponent,
     DropdownComponent,
+    AppointmentFormComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

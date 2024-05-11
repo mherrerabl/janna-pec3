@@ -24,9 +24,9 @@ export class TreatmentService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getTreatmentsByCategoryId(categoryId: string): Observable<TreatmentClass[]> {
+  getTreatmentByCategoryId(categoryId: string): Observable<TreatmentClass> {
     return this.http
-      .get<TreatmentClass[]>(this.urlApi + '/category/' + categoryId)
+      .get<TreatmentClass>(this.urlApi + '/category/' + categoryId)
       .pipe(catchError(this.sharedService.handleError));
   }
 

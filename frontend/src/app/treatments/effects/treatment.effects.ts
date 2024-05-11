@@ -58,20 +58,20 @@ export class TreatmentEffects {
     { dispatch: false }
   );
 
-  getTreatmentsByCategoryId$ = createEffect(() =>
+  getTreatmentByCategoryId$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(TreatmentActions.getTreatmentsByCategoryId),
+      ofType(TreatmentActions.getTreatmentByCategoryId),
       exhaustMap(({ categoryId }) =>
-        this.treatmentService.getTreatmentsByCategoryId(categoryId).pipe(
-          map((treatments) => {
+        this.treatmentService.getTreatmentByCategoryId(categoryId).pipe(
+          map((treatment) => {
             this.store.dispatch(isLoading({ status: false }));
-            return TreatmentActions.getTreatmentsByCategoryIdSuccess({
-              treatments: treatments,
+            return TreatmentActions.getTreatmentByCategoryIdSuccess({
+              treatment: treatment,
             });
           }),
           catchError((error) => {
             return of(
-              TreatmentActions.getTreatmentsByCategoryIdFailure({
+              TreatmentActions.getTreatmentByCategoryIdFailure({
                 payload: error,
               })
             );
@@ -81,10 +81,10 @@ export class TreatmentEffects {
     )
   );
 
-  getTreatmentsByCategoryIdFailure$ = createEffect(
+  getTreatmentByCategoryIdFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(TreatmentActions.getTreatmentsByCategoryIdFailure),
+        ofType(TreatmentActions.getTreatmentByCategoryIdFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
