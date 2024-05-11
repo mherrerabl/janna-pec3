@@ -24,6 +24,9 @@ import * as AppointmentReducer from './appointments/reducers';
 import { UserTreatmentEffects } from './user-treatments/effects';
 import * as UserTreatmentReducer from './user-treatments/reducers';
 
+import { CartEffects } from './carts/effects';
+import * as CartstReducer from './carts/reducers';
+
 export interface AppState {
   mail: MailReducer.MailState;
   images: ImageReducer.ImagesState;
@@ -35,6 +38,7 @@ export interface AppState {
   categories: CategoryReducer.CategoriesState;
   treatments: TreatmentReducer.TreatmentsState;
   products: ProductReducer.ProductsState;
+  carts: CartstReducer.CartsState;
   spinner: SpinnerReducer.SpinnerState;
 }
 
@@ -49,6 +53,7 @@ export const appReducers: ActionReducerMap<AppState> = {
   categories: CategoryReducer.categoriesReducer,
   treatments: TreatmentReducer.treatmentsReducer,
   products: ProductReducer.productsReducer,
+  carts: CartstReducer.cartsReducer,
   spinner: SpinnerReducer.spinnerReducer,
 };
 
@@ -64,4 +69,5 @@ export const EffectsArray: any[] = [
   CategoryEffects,
   TreatmentEffects,
   ProductEffects,
+  CartEffects,
 ];

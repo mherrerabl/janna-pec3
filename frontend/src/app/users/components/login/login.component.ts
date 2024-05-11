@@ -98,12 +98,12 @@ export class LoginComponent implements OnInit {
       if (this.isValidForm) {
         this.resetErrors();
         if (store.user.id !== undefined) {
+          this.user = store.user;
           if (this.keepLogin) {
             let user: UserDTO = {
               email: store.user.email,
               password: store.user.password,
             };
-            console.log(user);
 
             this.localService.saveUser(user);
           }
