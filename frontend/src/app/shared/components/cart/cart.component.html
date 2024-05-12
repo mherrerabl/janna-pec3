@@ -22,18 +22,22 @@
                             @if (dataProducts != null && dataProducts.length > 0) {
                                 @for (product of dataProducts; track $index) {
                                     <li class="flex flex-col h-fit">
+                                       
                                         <div class="flex justify-between gap-2">
                                             <picture class="relative block overflow-hidden w-1/3 h-full min-h-[150px]">                 
-                                                <source [srcset]="'data:image/jpg;base64,'+product.image.picture_webp" type="image/webp">
+                                                <source [srcset]="'data:image/webp;base64,'+product.image.picture_webp" type="image/webp">
                                                 <img class="absolute object-cover object-center w-full h-full" 
                                                     [src]="'data:image/jpg;base64,'+product.image.picture_jpg" 
                                                     [alt]="product.image.title">
                                             </picture>
             
                                             <div class="flex flex-col">
-                                                <p class="subtitle-m flex-1">{{ product.name }}</p>
+                                                <button class="icon-m button-icon mb-2 mr-2 text-end" (click)="removeProduct(product.id)">
+                                                    <fa-icon [icon]="iconClose"></fa-icon>
+                                                </button>
+                                                <p class="subtitle-m flex-1 text-end">{{ product.name }}</p>
                                                 <div class="flex gap-2 items-center">
-                                                    <p class="my-2">{{ product.price | number: '1.2-2':'es' }} €/u.</p>
+                                                    <p class="my-2">{{ product.price.price| number: '1.2-2':'es' }} €/u.</p>
                                                     <app-counter [counter]="product.quantity" [stock]="product.stock" (newCounterValue)="changeQuantity($event, $index)"></app-counter>  
                                                 </div>
                                                 
@@ -41,7 +45,7 @@
                                         </div>
                                         
                                         
-                                        <p class="flex justify-between text-l mb-6 px-2 py-1 bg-primary">Precio <span>{{ product.quantity * product.price | number: '1.2-2':'es' }} €</span></p>
+                                        <p class="flex justify-between text-l mb-6 px-2 py-1 bg-primary">Precio <span>{{ product.quantity * product.price.price | number: '1.2-2':'es' }} €</span></p>
                                     </li>
                                 }
                             }

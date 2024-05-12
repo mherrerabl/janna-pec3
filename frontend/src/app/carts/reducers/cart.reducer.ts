@@ -1,5 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import {
+  addProduct,
+  addProductFailure,
+  addProductSuccess,
   createCart,
   createCartFailure,
   createCartSuccess,
@@ -15,6 +18,9 @@ import {
   getCarts,
   getCartsFailure,
   getCartsSuccess,
+  removeProduct,
+  removeProductFailure,
+  removeProductSuccess,
   updateCart,
   updateCartFailure,
   updateCartSuccess,
@@ -94,6 +100,45 @@ const _cartsReducer = createReducer(
     error: null,
   })),
   on(getCartByUserIdFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+  on(addProduct, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(addProductSuccess, (state, action) => ({
+    ...state,
+    cart: action.cart,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(addProductFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(removeProduct, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(removeProductSuccess, (state, action) => ({
+    ...state,
+    cart: action.cart,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(removeProductFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

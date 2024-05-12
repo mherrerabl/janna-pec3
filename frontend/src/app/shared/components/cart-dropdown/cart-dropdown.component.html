@@ -12,17 +12,19 @@
                     <li class="mb-2">
                         <div class="flex flex-row items-center justify-between">
                             <div class="flex flex-row items-center gap-2">
-                                <figure class="max-w-20">
-                                    <source [srcset]="product.image.picture_webp">
-                                    <img [src]="product.image.picture_jpg" [alt]="product.image.title">
-                                </figure>
+                                <picture class="relative block overflow-hidden w-1/3 h-full min-h-[150px]">                 
+                                    <source [srcset]="'data:image/jpg;base64,'+product.image.picture_webp" type="image/webp">
+                                    <img class="absolute object-cover object-center w-full h-full" 
+                                        [src]="'data:image/jpg;base64,'+product.image.picture_jpg" 
+                                        [alt]="product.image.title">
+                                </picture>
                                 <p>{{ product.name }}</p>
                             </div>
                             
                             <div class="flex flex-row items-center gap-4">
-                                <p>{{ product.price | number: '1.2-2':'es' }} €/u.</p>
+                                <p>{{ product.price.price | number: '1.2-2':'es' }} €/u.</p>
                                 <p>x{{ product.quantity }}</p>
-                                <p class="font-medium">{{ product.quantity * product.price | number: '1.2-2':'es' }} €</p>
+                                <p class="font-medium">{{ product.quantity * product.price.price | number: '1.2-2':'es' }} €</p>
                             </div>
                         
                         </div>

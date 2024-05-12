@@ -117,6 +117,114 @@ export class CartEffects {
     { dispatch: false }
   );
 
+  addProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.addProduct),
+      exhaustMap(({ userId, product }) =>
+        this.cartService.addProduct(userId, product).pipe(
+          map((cart) => {
+            return CartActions.addProductSuccess({
+              cart: cart,
+            });
+          }),
+          catchError((error) => {
+            return of(CartActions.addProductFailure({ payload: error }));
+          }),
+          finalize(async () => {
+            setTimeout(() => {
+              this.sharedService.notification(
+                'cartFeedback',
+                this.responseOK,
+                this.errorResponse,
+                'Se ha actualizado el carrito.'
+              );
+            }, 100);
+          })
+        )
+      )
+    )
+  );
+
+  addProductSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.addProductSuccess),
+        map(() => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = true;
+        })
+      ),
+    { dispatch: false }
+  );
+
+  addProductFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.addProductFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  removeProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.removeProduct),
+      exhaustMap(({ userId, productId }) =>
+        this.cartService.removeProduct(userId, productId).pipe(
+          map((cart) => {
+            return CartActions.removeProductSuccess({
+              cart: cart,
+            });
+          }),
+          catchError((error) => {
+            return of(CartActions.removeProductFailure({ payload: error }));
+          }),
+          finalize(async () => {
+            setTimeout(() => {
+              this.sharedService.notification(
+                'cartFeedback',
+                this.responseOK,
+                this.errorResponse,
+                'Se ha actualizado el carrito.'
+              );
+            }, 100);
+          })
+        )
+      )
+    )
+  );
+
+  removeProductSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.removeProductSuccess),
+        map(() => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = true;
+        })
+      ),
+    { dispatch: false }
+  );
+
+  removeProductFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.removeProductFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
   createCart$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CartActions.createCart),
@@ -136,7 +244,7 @@ export class CartEffects {
                 'cartFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha creado una nueva dirección.'
+                'Se ha actualizado el carrito.'
               );
             }, 100);
           })
@@ -190,7 +298,7 @@ export class CartEffects {
                 'cartFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha actualizado la dirección.'
+                'Se ha actualizado el carrito.'
               );
             }, 100);
           })

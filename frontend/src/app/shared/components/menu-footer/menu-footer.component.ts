@@ -15,6 +15,8 @@ export class MenuFooterComponent {
   showLogin$!: Observable<'open' | 'close'>;
   showCart$!: Observable<'open' | 'close'>;
 
+  countProducts: number;
+
   constructor(
     private modalService: ModalService,
     private store: Store<AppState>
@@ -23,12 +25,18 @@ export class MenuFooterComponent {
     this.showLogin$ = this.modalService.watchRegister();
     this.showCart$ = this.modalService.watchCart();
 
+    this.countProducts = 0;
+
     this.store.select('user').subscribe((store) => {
       if (store.user.id !== '' && store.user.id !== undefined) {
         this.isLogin = true;
       } else {
         this.isLogin = false;
       }
+    });
+
+    this.store.select('carts').subscribe((store) => {
+      this.countProducts = store.cart.products_cart.length;
     });
   }
 

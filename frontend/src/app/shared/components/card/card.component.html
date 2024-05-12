@@ -65,14 +65,14 @@
     <div>
         <div class="flex justify-end gap-[10px] mb-4">
             @if (price.discount !== null) {
-                <p class="body-s line-through text-darkGrey self-end">{{ price.price| number: '1.2-2':'es'}}€</p>
+                <p class="body-s line-through text-darkGrey self-end">{{ price.price| number: '1.2-2':'es'}} €</p>
             }
-            <h4>{{ getPrice() | number: '1.2-2':'es' }}€</h4>
+            <h4>{{ getPrice() | number: '1.2-2':'es' }} €</h4>
         </div>
 
         <div class="flex flex-wrap gap-[10px] sm:flex-nowrap sm:fustify-between">
-            <button class="button button-s w-full max-w-full sm:max-w-[250px]" [disabled]="dataCard.stock <=0" (click)="addProductToCart()">Añadir a la cesta</button>
-            <button class="button-action button-s w-full max-w-full sm:max-w-[250px]" [disabled]="dataCard.stock<=0">Comprar ya</button>
+            <button class="button button-s w-full max-w-full sm:max-w-[250px]" [disabled]="dataCard.stock <=0 || user.id === ''" (click)="addProduct()">Añadir a la cesta</button>
+            <button class="button-action button-s w-full max-w-full sm:max-w-[250px]" [disabled]="dataCard.stock<=0 || user.id === ''">Comprar ya</button>
         </div>
     </div>
 </div>

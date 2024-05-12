@@ -64,7 +64,8 @@ module.exports = {
 
     lineHeight: {
       '110': '110%',
-      '140': '140%'
+      '140': '140%',
+      '100': '100%'
     },
 
     letterSpacing: {

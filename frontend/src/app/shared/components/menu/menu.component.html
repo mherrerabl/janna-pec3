@@ -37,7 +37,7 @@
                             <li class="py-2">
                                 <button class="button-icon inline-flex items-center" (click)="openCart()">
                                     <app-icon-cart class="w-9"></app-icon-cart>
-                                    Carrito
+                                    Carrito<span *ngIf="countProducts > 0" class="absolute right-[15%] bottom-[25%] leading-100 p-2 border rounded-full bg-secundary-700 text-s text-white">{{ countProducts }}</span>
                                 </button>
                             </li>
                 

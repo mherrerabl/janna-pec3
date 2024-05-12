@@ -1,11 +1,11 @@
-import { ProductClass } from '../../products/models/product';
+import { ProductDTO } from '../../shared/models/product.dto';
 
 export class ProductCartClass {
   id: string;
   product_id: string;
   quantity: number;
   cart_id: string;
-  products?: ProductClass;
+  product?: ProductDTO;
 
   constructor(
     id: string,

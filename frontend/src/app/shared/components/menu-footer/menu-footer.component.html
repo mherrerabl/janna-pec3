@@ -27,10 +27,10 @@
                 </a>
             </li>
             <li>
-                <button class="button-icon flex flex-col justify-between w-full min-w-8 sm:w-16 h-full items-center text-xxs"
+                <button class="button-icon relative flex flex-col justify-between w-full min-w-8 sm:w-16 h-full items-center text-xxs"
                 (click)="openCart()">
                     <app-icon-cart class="mt-1"></app-icon-cart>
-                    Carrito
+                    Carrito <span *ngIf="countProducts > 0" class="absolute right-[15%] bottom-[25%] leading-100 p-1 border rounded-full bg-secundary-700 text-s text-white">{{ countProducts }}</span>
                 </button>
             </li>
         }

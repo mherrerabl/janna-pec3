@@ -20,17 +20,24 @@ export class MenuComponent implements OnInit {
   showLogin$!: Observable<'open' | 'close'>;
   showCart$!: Observable<'open' | 'close'>;
 
+  countProducts = 0;
+
   constructor(
     private modalService: ModalService,
     private store: Store<AppState>,
     private localService: LocalStorageService
   ) {
+    this.countProducts = 0;
     this.store.select('user').subscribe((store) => {
       if (store.user.id !== '' && store.user.id !== undefined) {
         this.isLogin = true;
       } else {
         this.isLogin = false;
       }
+    });
+
+    this.store.select('carts').subscribe((store) => {
+      this.countProducts = store.cart.products_cart.length;
     });
   }
 

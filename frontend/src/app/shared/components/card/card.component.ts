@@ -1,12 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.reducers';
+import * as CartAction from '../../../carts/actions';
+import { CartClass } from '../../../carts/models/cart';
+import { ProductCartClass } from '../../../carts/models/product-cart';
 import { ImageClass } from '../../../images/models/image';
 import { ProductClass } from '../../../products/models/product';
 import { ProductVariationClass } from '../../../products/models/product-variation';
+import { isLoading } from '../../../spinner/actions/spinner.actions';
+import { TypeUser, UserClass } from '../../../users/models/user';
 import { BadgeDTO } from '../../models/badge.dto';
 import { PriceClass } from '../../models/price';
 import { ProductDTO } from '../../models/product.dto';
-import { LocalStorageService } from '../../services/local-storage.service';
-
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -14,6 +19,9 @@ import { LocalStorageService } from '../../services/local-storage.service';
 export class CardComponent implements OnInit {
   @Input() dataCard!: ProductClass;
   @Output() emitProduct = new EventEmitter<ProductDTO>();
+
+  cart: CartClass;
+  user: UserClass;
 
   price: PriceClass = new PriceClass('', 0, null, null);
   priceVariationText: number = 0;
@@ -57,7 +65,18 @@ export class CardComponent implements OnInit {
     isButtonColor: false,
   };
 
-  constructor(private localStorage: LocalStorageService) {}
+  constructor(private store: Store<AppState>) {
+    this.cart = new CartClass('', '', 0, new Array<ProductCartClass>());
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+
+    this.store.select('user').subscribe((store) => {
+      this.user = store.user;
+    });
+
+    this.store.select('carts').subscribe((store) => {
+      this.cart = store.cart;
+    });
+  }
   ngOnInit(): void {
     if (this.dataCard.price !== undefined) {
       this.price = this.dataCard.price;
@@ -142,22 +161,25 @@ export class CardComponent implements OnInit {
     return false;
   }
 
-  addProductToCart(): void {
+  addProduct(): void {
     let image!: ImageClass;
 
     if (this.dataCard.images !== undefined) {
       image = this.dataCard.images[0];
     }
-    let product: ProductDTO = {
+    let product: ProductCartClass = {
+      id: '',
       product_id: this.dataCard.id,
-      product_variation_id: null,
-      name: this.dataCard.name,
-      price: this.price.price,
-      image: image,
       quantity: 1,
-      stock: this.dataCard.stock,
+      cart_id: this.cart.id,
     };
 
-    this.localStorage.addProductToCart(product);
+    setTimeout(() => {
+      this.store.dispatch(isLoading({ status: true }));
+    });
+
+    this.store.dispatch(
+      CartAction.addProduct({ userId: this.user.id, product: product })
+    );
   }
 }

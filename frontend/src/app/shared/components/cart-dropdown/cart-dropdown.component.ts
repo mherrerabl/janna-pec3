@@ -36,7 +36,7 @@ export class CartDropdownComponent {
 
     if (this.dataProducts !== undefined && this.dataProducts.length > 0) {
       for (const product of this.dataProducts) {
-        subtotal += product.price;
+        subtotal += product.price.price;
       }
     }
 

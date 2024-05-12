@@ -3,7 +3,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './app.reducers';
 import * as CartAction from './carts/actions';
+import { CartClass } from './carts/models/cart';
+import { ProductCartClass } from './carts/models/product-cart';
 import { LocalStorageService } from './shared/services/local-storage.service';
+import { ModalService } from './shared/services/modal.service';
 import { isLoading } from './spinner/actions/spinner.actions';
 import { getLoading } from './spinner/selector/spinner.selector';
 import * as UserAction from './users/actions';
@@ -24,23 +27,24 @@ export class AppComponent implements OnInit {
 
   user!: UserDTO;
 
+  cart: CartClass;
+
   constructor(
     private store: Store<AppState>,
-    private localService: LocalStorageService
+    private localService: LocalStorageService,
+    private modalService: ModalService
   ) {
     this.showMenu = false;
     this.showCart = true;
     this.showLogin = false;
     this.showRegister = false;
 
+    this.cart = new CartClass('', '', 0, new Array<ProductCartClass>());
     this.user = this.localService.getUser();
 
     if (this.user !== undefined && this.user !== null) {
       this.loadUser();
     }
-    this.store.select('carts').subscribe((store) => {
-      console.log(store.cart);
-    });
 
     this.store.select('user').subscribe((store) => {
       if (
@@ -52,6 +56,19 @@ export class AppComponent implements OnInit {
           this.loadCart(store.user.id);
         });
       }
+    });
+
+    this.store.select('carts').subscribe((store) => {
+      /*if (store.cart.id !== '' && store.cart !== this.cart) {
+        setTimeout(() => {
+          this.openCart();
+        });
+
+        setTimeout(() => {
+          this.closeCart();
+          this.cart = store.cart;
+        }, 1000);
+      }*/
     });
   }
 
@@ -69,5 +86,13 @@ export class AppComponent implements OnInit {
     this.store.dispatch(isLoading({ status: true }));
 
     this.store.dispatch(CartAction.getCartByUserId({ userId: userId }));
+  }
+
+  openCart(): void {
+    this.modalService.openCart();
+  }
+
+  closeCart(): void {
+    this.modalService.closeCart();
   }
 }

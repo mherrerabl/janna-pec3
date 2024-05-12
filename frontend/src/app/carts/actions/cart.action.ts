@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { CartClass } from '../models/cart';
+import { ProductCartClass } from '../models/product-cart';
 
 export const getCarts = createAction('[Carts list] Get carts list');
 export const getCartsSuccess = createAction(
@@ -41,6 +42,35 @@ export const getCartByUserIdFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
+export const addProduct = createAction(
+  '[Cart] Add product',
+  props<{ userId: string; product: ProductCartClass }>()
+);
+
+export const addProductSuccess = createAction(
+  '[Cart] Add product success',
+  props<{ cart: CartClass }>()
+);
+
+export const addProductFailure = createAction(
+  '[Cart] Add product fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const removeProduct = createAction(
+  '[Cart] Remove product',
+  props<{ userId: string; productId: string }>()
+);
+
+export const removeProductSuccess = createAction(
+  '[Cart] Remove product success',
+  props<{ cart: CartClass }>()
+);
+
+export const removeProductFailure = createAction(
+  '[Cart] Remove product fail',
+  props<{ payload: HttpErrorResponse }>()
+);
 export const createCart = createAction(
   '[Cart form] Create new cart',
   props<{ cart: CartClass }>()

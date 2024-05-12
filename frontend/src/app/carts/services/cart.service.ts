@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment.development';
 import { deleteResponse } from '../../shared/models/deleteResponse.dto';
 import { SharedService } from '../../shared/services/shared.service';
 import { CartClass } from '../models/cart';
+import { ProductCartClass } from '../models/product-cart';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,18 @@ export class CartService {
   updateCart(cartId: string, cart: CartClass): Observable<CartClass> {
     return this.http
       .put<CartClass>(this.urlApi + '/' + cartId, cart)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  addProduct(userId: string, product: ProductCartClass): Observable<CartClass> {
+    return this.http
+      .post<CartClass>(this.urlApi + '/user/add/' + userId, product)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  removeProduct(userId: string, productId: string): Observable<CartClass> {
+    return this.http
+      .post<CartClass>(this.urlApi + '/user/remove/' + userId, productId)
       .pipe(catchError(this.sharedService.handleError));
   }
 
