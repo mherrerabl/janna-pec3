@@ -6,8 +6,9 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { BreadcrumbDTO } from '../../../shared/models/breadcrumb.dto';
 import { DropdownDTO } from '../../../shared/models/dropdown.dto';
 
 @Component({
@@ -27,36 +28,23 @@ import { DropdownDTO } from '../../../shared/models/dropdown.dto';
 })
 export class ProfileComponent implements OnInit {
   dataDropdown: DropdownDTO;
-  title: string = 'Perfil';
+  title: string;
 
   iconBars = faBars;
   dropdownExpanded: boolean = false;
 
   constructor(private router: Router) {
+    this.title = '';
+
     this.dataDropdown = this.getData();
-    this.getTitle(this.router.url.split('/').pop());
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        let url = event.url.split('/').shift();
-
-        if (url) {
-          this.getTitle(url);
-        }
-      }
-    });
   }
 
   ngOnInit(): void {}
 
-  getTitle(url: any): void {
-    this.title = 'Perfil';
-    this.getData().list.forEach((list) => {
-      if (list.link === url) {
-        this.title = list.name;
-      }
+  receiveBreadcrumb(breadcrumb: BreadcrumbDTO): void {
+    setTimeout(() => {
+      this.title = breadcrumb.name;
     });
-    this.dataDropdown = this.getData();
   }
 
   getData(): DropdownDTO {

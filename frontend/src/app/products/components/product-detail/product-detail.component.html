@@ -1,3 +1,80 @@
-<app-breadcrumbs (emitTitle)="receiveBreadcrumb($event)"></app-breadcrumbs>
-<h1 class="mb-separator-30">{{ title }}</h1>
-<p>product-detail works!</p>
+<app-breadcrumbs></app-breadcrumbs>
+<h1 class="mb-separator-30">{{ product.name }}</h1>
+<h4>{{ product.brand }}</h4>
+<section>
+    <swiper-container navigation="true" scrollbar="true">
+       @for (image of product.images; track $index) {
+        <swiper-slide>
+            <picture class="relative block overflow-hidden w-full h-full min-h-[300px]">                 
+                <source [srcset]="'data:image/jpg;base64,'+image.picture_webp" type="image/webp">
+                <img class="absolute object-cover object-center w-full h-full" 
+                    [src]="'data:image/jpg;base64,'+image.picture_jpg" 
+                    [alt]="image.title">
+            </picture>
+        </swiper-slide>
+       }
+    </swiper-container>
+    <p>{{ product.description }}</p>
+
+    <div>
+        <app-counter></app-counter>
+        <div class="flex justify-end gap-[10px] mb-4">
+            @if (product.price?.discount !== null) {
+                <p class="body-s line-through text-darkGrey self-end">{{ product.price?.price | number: '1.2-2':'es'}} €</p>
+            }
+            <h4>{{ getPrice() | number: '1.2-2':'es' }} €</h4>
+        </div>
+        <div class="flex flex-wrap gap-[10px] sm:flex-nowrap sm:fustify-between">
+            <button class="button button-s w-full max-w-full sm:max-w-[250px]" [disabled]="product.stock <=0 || user.id === ''" (click)="addProduct()">Añadir a la cesta</button>
+            <button class="button-action button-s w-full max-w-full sm:max-w-[250px]" [disabled]="product.stock<=0 || user.id === ''">Comprar ya</button>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <button class="button-expand w-full h4 flex justify-between p-4 " 
+                (click)="dropdownExpanded = !dropdownExpanded">
+                Paso de la rutina
+                <span class="align-middle"><fa-icon [icon]="dropdownExpanded ? iconArrowUp : iconArrowDown"></fa-icon></span>
+            </button>
+            <div class="overflow-hidden">
+                <div class="flex flex-col" [@detailExpand]="dropdownExpanded ? 'expanded' : 'collapsed'">
+                    <div class="bg-primary">
+                        <p>{{ product.routine}}</p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div>
+            <button class="button-expand w-full h4 flex justify-between p-4 " 
+                (click)="dropdownExpanded = !dropdownExpanded">
+                Cómo se utiliza
+                <span class="align-middle"><fa-icon [icon]="dropdownExpanded ? iconArrowUp : iconArrowDown"></fa-icon></span>
+            </button>
+            <div class="overflow-hidden">
+                <div class="flex flex-col" [@detailExpand]="dropdownExpanded ? 'expanded' : 'collapsed'">
+                    <div class="bg-primary">
+                        <p>{{ product.use}}</p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div>
+            <button class="button-expand w-full h4 flex justify-between p-4 " 
+                (click)="dropdownExpanded = !dropdownExpanded">
+                Beneficios
+                <span class="align-middle"><fa-icon [icon]="dropdownExpanded ? iconArrowUp : iconArrowDown"></fa-icon></span>
+            </button>
+            <div class="overflow-hidden">
+                <div class="flex flex-col" [@detailExpand]="dropdownExpanded ? 'expanded' : 'collapsed'">
+                    <div class="bg-primary">
+                        <p>{{ product.benefits}}</p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <h3>Productos relacionados</h3>
+</section>

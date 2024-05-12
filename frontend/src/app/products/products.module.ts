@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { CategoriesModule } from '../categories/categories.module';
 import { SharedModule } from '../shared/shared.module';
@@ -22,9 +22,10 @@ import { ProductsRoutingModule } from './products-routing.module';
     CategoriesModule,
     SharedModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductsModule {
   constructor() {
-    console.log('TreatmentsModule loaded.');
+    console.log('ProductModule loaded.');
   }
 }

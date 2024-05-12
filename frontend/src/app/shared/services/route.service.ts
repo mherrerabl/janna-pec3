@@ -9,7 +9,6 @@ import * as TreatmentsAction from '../../treatments/actions';
 
 import { CategoryClass } from '../../categories/models/category';
 import { ProductClass } from '../../products/models/product';
-import { isLoading } from '../../spinner/actions/spinner.actions';
 import { BreadcrumbDTO } from '../models/breadcrumb.dto';
 
 interface fixedRoute {
@@ -41,6 +40,7 @@ export class RouteService {
     this.loadCategories();
     this.loadTreatments();
     this.loadProducts();
+
     this.urls = this.router.url.split('/');
     if (this.urls[0] === '') {
       this.urls.shift();
@@ -58,7 +58,7 @@ export class RouteService {
     this.store.select('products').subscribe((store) => {
       if (
         this.products !== store.products &&
-        this.products.length == this.allCategories.length
+        this.products.length == this.allProducts.length
       ) {
         this.allProducts = store.products;
       }
@@ -69,28 +69,21 @@ export class RouteService {
         if (this.urls[0] === '') {
           this.urls.shift();
         }
+
+        this.generateBreadcrumbs();
       }
     });
   }
 
   private loadCategories(): void {
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-    });
     this.store.dispatch(CategoriesAction.getCategories());
   }
 
   private loadTreatments(): void {
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-    });
     this.store.dispatch(TreatmentsAction.getTreatments());
   }
 
   private loadProducts(): void {
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-    });
     this.store.dispatch(ProductsAction.getProducts());
   }
 
@@ -137,22 +130,8 @@ export class RouteService {
     return id;
   }
 
-  getProductId(): string | null {
-    let urls: string[] = [];
-    let id: string = '';
-    const isNumeric = (string: string) => /^[+-]?\d+(\.\d+)?$/.test(string);
-
-    urls = this.router.url.split('/');
-    if (urls[0] === '') {
-      urls.shift();
-    }
-
-    id = urls[urls.length - 1];
-
-    if (isNumeric(id)) {
-      return id;
-    }
-    return null;
+  getProductId(): string {
+    return this.urls[this.urls.length - 1];
   }
 
   getProfileFormId(): string | null {
@@ -178,7 +157,7 @@ export class RouteService {
   }
 
   generateBreadcrumbs(): BreadcrumbDTO[] {
-    if (this.urls[0] == 'profile') {
+    if (this.urls[0] == 'perfil') {
       return this.breadcrumbProfile();
     }
     if (this.urls[0] == 'agenda') {
@@ -198,6 +177,8 @@ export class RouteService {
 
   breadcrumbProfile(): BreadcrumbDTO[] {
     let breadcrumbs: BreadcrumbDTO[] = [];
+    console.log(this.urls);
+
     for (const url of this.urls) {
       this.getRoutesFixedProfileUser().map((breadcrumb) => {
         if (breadcrumb.url == decodeURIComponent(url)) {
@@ -229,7 +210,6 @@ export class RouteService {
 
   breadcrumbProducts(): BreadcrumbDTO[] {
     this.urls = this.urls.filter((url) => url !== 'producto');
-    console.log(this.urls);
 
     let breadcrumbs: BreadcrumbDTO[] = [
       {
@@ -239,14 +219,11 @@ export class RouteService {
     ];
     for (const url of this.urls) {
       this.getProductBreadcrumb().map((breadcrumb) => {
-        console.log(breadcrumb);
-
         if (breadcrumb.url == url) {
           breadcrumbs.push(breadcrumb);
         }
       });
     }
-    console.log(breadcrumbs);
 
     return breadcrumbs;
   }
@@ -266,12 +243,8 @@ export class RouteService {
   getRoutesFixedProfileUser(): BreadcrumbDTO[] {
     return [
       {
-        url: 'personal',
-        name: 'Datos personales',
-      },
-      {
-        url: 'personal/nuevo',
-        name: 'Datos personales',
+        url: 'perfil',
+        name: 'Perfil',
       },
       {
         url: 'personal',
