@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import { BreadcrumbDTO } from '../../../shared/models/breadcrumb.dto';
+import { RouteService } from '../../../shared/services/route.service';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import * as ProductsAction from '../../actions';
 import { ProductClass } from '../../models/product';
@@ -15,10 +16,14 @@ export class ProductsListComponent implements OnInit {
   title!: string;
   products: ProductClass[];
   preProducts: ProductClass[];
-
-  constructor(private store: Store<AppState>) {
+  url: string;
+  constructor(
+    private store: Store<AppState>,
+    private routeService: RouteService
+  ) {
     this.products = new Array<ProductClass>();
     this.preProducts = new Array<ProductClass>();
+    this.url = this.routeService.getProductCategory() as string;
 
     this.store.select('products').subscribe((store) => {
       this.products = store.products;

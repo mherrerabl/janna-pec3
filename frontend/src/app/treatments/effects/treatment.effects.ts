@@ -148,8 +148,6 @@ export class TreatmentEffects {
       exhaustMap(({ paramUrl }) =>
         this.treatmentService.getTreatmentByUrl(paramUrl).pipe(
           map((treatment) => {
-            console.log(paramUrl);
-
             this.store.dispatch(isLoading({ status: false }));
             return TreatmentActions.getTreatmentByUrlSuccess({
               treatment: treatment,

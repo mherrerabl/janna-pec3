@@ -57,7 +57,31 @@ export class CartService {
 
   removeProduct(userId: string, productId: string): Observable<CartClass> {
     return this.http
-      .post<CartClass>(this.urlApi + '/user/remove/' + userId, productId)
+      .put<CartClass>(this.urlApi + '/user/remove/' + userId, productId)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  addQuantity(
+    userId: string,
+    productCartId: string
+  ): Observable<deleteResponse> {
+    return this.http
+      .put<deleteResponse>(
+        this.urlApi + '/user/product/add/' + userId,
+        productCartId
+      )
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  removeQuantity(
+    userId: string,
+    productCartId: string
+  ): Observable<deleteResponse> {
+    return this.http
+      .put<deleteResponse>(
+        this.urlApi + '/user/product/remove/' + userId,
+        productCartId
+      )
       .pipe(catchError(this.sharedService.handleError));
   }
 

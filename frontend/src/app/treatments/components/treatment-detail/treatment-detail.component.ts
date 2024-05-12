@@ -56,7 +56,6 @@ export class TreatmentDetailComponent {
       this.store.dispatch(isLoading({ status: true }));
     });
     this.urlTreatment = this.route.snapshot.paramMap.get('treatment');
-    console.log(this.urlTreatment);
 
     if (this.urlTreatment !== null && this.urlTreatment !== undefined) {
       this.loadTreatments(this.urlTreatment);

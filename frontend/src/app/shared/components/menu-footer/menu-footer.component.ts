@@ -36,7 +36,9 @@ export class MenuFooterComponent {
     });
 
     this.store.select('carts').subscribe((store) => {
-      this.countProducts = store.cart.products_cart.length;
+      if (store.cart.products_cart) {
+        this.countProducts = store.cart.products_cart.length;
+      }
     });
   }
 

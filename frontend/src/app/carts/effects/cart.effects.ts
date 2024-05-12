@@ -199,10 +199,38 @@ export class CartEffects {
     )
   );
 
-  removeProductSuccess$ = createEffect(
+  addQuantity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.addQuantity),
+      exhaustMap(({ userId, productId }) =>
+        this.cartService.addQuantity(userId, productId).pipe(
+          map((resp) => {
+            return CartActions.addQuantitySuccess({
+              resp: resp,
+            });
+          }),
+          catchError((error) => {
+            return of(CartActions.addQuantityFailure({ payload: error }));
+          }),
+          finalize(async () => {
+            setTimeout(() => {
+              this.sharedService.notification(
+                'cartFeedback',
+                this.responseOK,
+                this.errorResponse,
+                'Se ha actualizado el producto.'
+              );
+            }, 100);
+          })
+        )
+      )
+    )
+  );
+
+  addQuantitySuccess$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CartActions.removeProductSuccess),
+        ofType(CartActions.addQuantitySuccess),
         map(() => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = true;
@@ -211,10 +239,64 @@ export class CartEffects {
     { dispatch: false }
   );
 
-  removeProductFailure$ = createEffect(
+  addQuantityFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(CartActions.removeProductFailure),
+        ofType(CartActions.addQuantityFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  removeQuantity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.removeQuantity),
+      exhaustMap(({ userId, productId }) =>
+        this.cartService.removeQuantity(userId, productId).pipe(
+          map((resp) => {
+            return CartActions.removeQuantitySuccess({
+              resp: resp,
+            });
+          }),
+          catchError((error) => {
+            return of(CartActions.removeQuantityFailure({ payload: error }));
+          }),
+          finalize(async () => {
+            setTimeout(() => {
+              this.sharedService.notification(
+                'cartFeedback',
+                this.responseOK,
+                this.errorResponse,
+                'Se ha actualizado el product.'
+              );
+            }, 100);
+          })
+        )
+      )
+    )
+  );
+
+  removeQuantitySuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.removeQuantitySuccess),
+        map(() => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = true;
+        })
+      ),
+    { dispatch: false }
+  );
+
+  removeQuantityFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.removeQuantityFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;

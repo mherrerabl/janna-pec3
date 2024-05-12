@@ -37,7 +37,7 @@
                                                 </button>
                                                 <p class="subtitle-m flex-1 text-end">{{ product.name }}</p>
                                                 <div class="flex gap-2 items-center">
-                                                    <p class="my-2">{{ product.price.price| number: '1.2-2':'es' }} €/u.</p>
+                                                    <p class="my-2">{{ product.price.price| number: '1.2-2':'es' }} €/u.</p>                                                    
                                                     <app-counter [counter]="product.quantity" [stock]="product.stock" (newCounterValue)="changeQuantity($event, $index)"></app-counter>  
                                                 </div>
                                                 

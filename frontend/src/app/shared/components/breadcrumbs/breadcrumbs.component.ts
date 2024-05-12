@@ -1,9 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../app.reducers';
-import * as CategoriesAction from '../../../categories/actions';
 import { BreadcrumbDTO } from '../../models/breadcrumb.dto';
+import { RouteService } from '../../services/route.service';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -13,7 +10,17 @@ export class BreadcrumbsComponent implements OnInit {
   @Output() emitTitle = new EventEmitter<BreadcrumbDTO>();
   dataBreadcrumbs!: BreadcrumbDTO[];
 
-  prevBreadcrumb: BreadcrumbDTO;
+  constructor(private routeService: RouteService) {
+    this.dataBreadcrumbs = this.routeService.generateBreadcrumbs();
+    this.sendBreadcrumb(this.dataBreadcrumbs[this.dataBreadcrumbs.length - 1]);
+  }
+  ngOnInit(): void {}
+
+  sendBreadcrumb(value: BreadcrumbDTO): void {
+    this.emitTitle.emit(value);
+  }
+
+  /* prevBreadcrumb: BreadcrumbDTO;
   fixedRoutes: BreadcrumbDTO[] = FIXEDROUTES;
   index: number;
 
@@ -61,9 +68,7 @@ export class BreadcrumbsComponent implements OnInit {
     }
   }
 
-  sendBreadcrumb(value: BreadcrumbDTO): void {
-    this.emitTitle.emit(value);
-  }
+  
 
   private loadBreadcrumbsCategory(paramUrl: string): void {
     this.store.dispatch(
@@ -85,7 +90,7 @@ export class BreadcrumbsComponent implements OnInit {
         console.log('not found');
       }
     }
-  }
+  }*/
 }
 
 const FIXEDROUTES: BreadcrumbDTO[] = [
