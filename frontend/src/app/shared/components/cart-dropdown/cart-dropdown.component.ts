@@ -5,10 +5,16 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app.reducers';
+import { ImageClass } from '../../../images/models/image';
+import { PriceClass } from '../../models/price';
 import { ProductDTO } from '../../models/product.dto';
+import { ShipmentDTO } from '../../models/shipment.dto';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-cart-dropdown',
@@ -25,18 +31,45 @@ import { ProductDTO } from '../../models/product.dto';
   ],
 })
 export class CartDropdownComponent {
-  @Input() dataProducts!: ProductDTO[];
+  methodShop: ShipmentDTO;
+  dataProducts: ProductDTO[];
   dropdownExpanded: boolean = false;
   shippingCostsFree: boolean = false;
   iconArrowUp = faChevronUp;
   iconArrowDown = faChevronDown;
+
+  constructor(
+    private store: Store<AppState>,
+    private localService: LocalStorageService
+  ) {
+    this.dataProducts = [];
+
+    this.methodShop = this.localService.getMethodShipment();
+
+    this.store.select('carts').subscribe((store) => {
+      store.cart.products_cart.map((product) => {
+        this.dataProducts = [
+          ...this.dataProducts,
+          {
+            id: product.id,
+            variation_id: null,
+            name: product.product?.name as string,
+            price: product.product?.price as PriceClass,
+            image: product.product?.image as ImageClass,
+            quantity: product.quantity,
+            stock: product.product?.stock as number,
+          },
+        ];
+      });
+    });
+  }
 
   getSubtotal(): number {
     let subtotal: number = 0;
 
     if (this.dataProducts !== undefined && this.dataProducts.length > 0) {
       for (const product of this.dataProducts) {
-        subtotal += product.price.price;
+        subtotal += product.price.price * product.quantity;
       }
     }
 
@@ -54,31 +87,12 @@ export class CartDropdownComponent {
 
     return subtotal + shippingCosts;
   }
-}
 
-const products: ProductDTO[] | any[] = [
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 2,
-    stock: 3,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-  {
-    id: '1',
-    name: 'product1',
-    price: 7.5,
-    quantity: 2,
-    stock: 3,
-    image: {
-      jpg: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      webp: 'https://ethic.es/wp-content/uploads/2023/03/imagen.jpg',
-      title: 'imagen',
-    },
-  },
-];
+  getTaxShipment(): string {
+    if (this.getSubtotal() > 50 || this.methodShop.method == 'shop') {
+      return 'Gratis';
+    }
+
+    return '4,95 €';
+  }
+}

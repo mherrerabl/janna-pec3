@@ -22,14 +22,15 @@ export class ShopComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadNewProducts(5);
-  }
-
-  loadNewProducts(quantity: number): void {
     setTimeout(() => {
       this.store.dispatch(isLoading({ status: true }));
     });
+    setTimeout(() => {
+      this.loadNewProducts(5);
+    });
+  }
 
+  loadNewProducts(quantity: number): void {
     this.store.dispatch(ProductsAction.getNewProducts({ quantity: quantity }));
   }
 }

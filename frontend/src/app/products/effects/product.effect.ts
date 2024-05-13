@@ -156,30 +156,100 @@ export class ProductEffects {
     { dispatch: false }
   );
 
-  getProductsByCategory$ = createEffect(() =>
+  getProductsByTreatmentId$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.getProductsByCategory),
-      exhaustMap(({ categoryUrl }) =>
-        this.productService.getProductsByCategory(categoryUrl).pipe(
+      ofType(ProductActions.getProductsByTreatmentId),
+      exhaustMap(({ treatmentId }) =>
+        this.productService.getProductsByTreatmentId(treatmentId).pipe(
           map((products) => {
             this.store.dispatch(isLoading({ status: false }));
-            return ProductActions.getProductsByCategorySuccess({
+            return ProductActions.getProductsByTreatmentIdSuccess({
               products: products,
             });
           }),
           catchError((error) => {
             return of(
-              ProductActions.getProductsByCategoryFailure({ payload: error })
+              ProductActions.getProductsByTreatmentIdFailure({
+                payload: error,
+              })
             );
           })
         )
       )
     )
   );
-  getProductsByCategoryFailure$ = createEffect(
+  getProductsByTreatmentIdFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProductActions.getProductsByCategoryFailure),
+        ofType(ProductActions.getProductsByTreatmentIdFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  getProductsByCategoryUrl$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.getProductsByCategoryUrl),
+      exhaustMap(({ categoryUrl }) =>
+        this.productService.getProductsByCategoryUrl(categoryUrl).pipe(
+          map((products) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return ProductActions.getProductsByCategoryUrlSuccess({
+              products: products,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              ProductActions.getProductsByCategoryUrlFailure({ payload: error })
+            );
+          })
+        )
+      )
+    )
+  );
+  getProductsByCategoryUrlFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ProductActions.getProductsByCategoryUrlFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  getProductsByCategoryId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.getProductsByCategoryId),
+      exhaustMap(({ categoryId }) =>
+        this.productService.getProductsByCategoryId(categoryId).pipe(
+          map((products) => {
+            this.store.dispatch(isLoading({ status: false }));
+            return ProductActions.getProductsByCategoryIdSuccess({
+              products: products,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              ProductActions.getProductsByCategoryIdFailure({ payload: error })
+            );
+          })
+        )
+      )
+    )
+  );
+  getProductsByCategoryIdFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ProductActions.getProductsByCategoryIdFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;

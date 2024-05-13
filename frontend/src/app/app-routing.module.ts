@@ -44,74 +44,12 @@ const routes: Routes = [
       ),
     canActivate: [LoginGuard],
   },
-  /*{
-    path: 'tratamientos/:category',
-    loadChildren: () =>
-      import('./categories/categories.module').then(
-        (mod) => mod.CategoriesModule
-      ),
-  },
   {
-    path: 'tratamientos/info/:treatment',
+    path: 'pedido',
     loadChildren: () =>
-      import('./treatments/treatments.module').then(
-        (mod) => mod.TreatmentsModule
-      ),
+      import('./checkout/checkout.module').then((mod) => mod.CheckoutModule),
+    //canActivate: [LoginGuard],
   },
-  {
-    path: 'tratamientos/:category/info/:treatment',
-    loadChildren: () =>
-      import('./treatments/treatments.module').then(
-        (mod) => mod.TreatmentsModule
-      ),
-  },
-  {
-    path: 'tienda',
-    loadChildren: () =>
-      import('./categories/categories.module').then(
-        (mod) => mod.CategoriesModule
-      ),
-  },
-  {
-    path: 'tienda/ofertas',
-    loadChildren: () =>
-      import('./products/products.module').then((mod) => mod.ProductsModule),
-  },
-  {
-    path: 'tienda/tendencias',
-    loadChildren: () =>
-      import('./products/products.module').then((mod) => mod.ProductsModule),
-  },
-  {
-    path: 'tienda/:category/producto/:id',
-    loadChildren: () =>
-      import('./products/products.module').then((mod) => mod.ProductsModule),
-  },
- 
-  {
-    path: 'tienda/:category',
-    loadChildren: () =>
-      import('./categories/categories.module').then(
-        (mod) => mod.CategoriesModule
-      ),
-  },
-  /*{
-    /*path: ':department/:category/:tratamiento',
-    loadChildren: () =>
-      import('./treatments/treatments.module').then(
-        (mod) => mod.TreatmentsModule
-      ),
-  },
-  {
-    path: 'tienda/:productos',
-    loadChildren: () =>
-      import('./home/home.module').then((mod) => mod.HomeModule),
-  },
-  {
-    path: 'tienda/:category/:productos',
-    loadChildren: () =>
-      import('./home/home.module').then((mod) => mod.HomeModule),
-  },*/
 ];
 
 @NgModule({

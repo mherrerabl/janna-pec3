@@ -39,7 +39,7 @@
         <a class="button-icon text-black block my-4" [routerLink]="['producto',dataCard.id]"><h3>{{ dataCard.name }}</h3></a>
         <p class="mb-4">{{ dataCard.description | shortDescription: 10 }}</p>
     
-        <div class="flex flex-wrap gap-[10px] mb-4">
+        <!--<div class="flex flex-wrap gap-[10px] mb-4">
             @for (variation of dataCard.variations; track $index; let first = $first) { 
                 <app-badge  
                     [dataBadge]="createBadge(variation)" 
@@ -59,13 +59,13 @@
                     </app-badge>
                 }
             }
-        </div>        
+        </div>-->        
     </div>
 
     <div>
         <div class="flex justify-end gap-[10px] mb-4">
-            @if (price.discount !== null) {
-                <p class="body-s line-through text-darkGrey self-end">{{ price.price| number: '1.2-2':'es'}} €</p>
+            @if (dataCard.price?.offer) {
+                <p class="body-s line-through text-darkGrey self-end">{{ dataCard.price?.price| number: '1.2-2':'es'}} €</p>
             }
             <h4>{{ getPrice() | number: '1.2-2':'es' }} €</h4>
         </div>

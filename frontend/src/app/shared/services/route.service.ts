@@ -117,19 +117,6 @@ export class RouteService {
     return breadcrumbProducts;
   }
 
-  getProductCategory(): string | null {
-    let urls: string[] = [];
-    let id: string = '';
-
-    urls = this.router.url.split('/');
-    if (urls[0] === '') {
-      urls.shift();
-    }
-
-    id = urls[urls.length - 1];
-    return id;
-  }
-
   getProductId(): string {
     return this.urls[this.urls.length - 1];
   }
@@ -211,13 +198,18 @@ export class RouteService {
   breadcrumbProducts(): BreadcrumbDTO[] {
     this.urls = this.urls.filter((url) => url !== 'producto');
 
-    let breadcrumbs: BreadcrumbDTO[] = [
-      {
-        url: 'tienda',
-        name: 'Tienda',
-      },
-    ];
+    let breadcrumbs: BreadcrumbDTO[] = [];
     for (const url of this.urls) {
+      this.getRoutesFixed().map((breadcrumb) => {
+        if (breadcrumb.url == decodeURIComponent(url)) {
+          breadcrumbs.push(breadcrumb);
+        }
+      });
+      this.getCategoriesBreadcrumb().map((breadcrumb) => {
+        if (breadcrumb.url == decodeURIComponent(url)) {
+          breadcrumbs.push(breadcrumb);
+        }
+      });
       this.getProductBreadcrumb().map((breadcrumb) => {
         if (breadcrumb.url == url) {
           breadcrumbs.push(breadcrumb);
@@ -289,6 +281,14 @@ export class RouteService {
       {
         name: 'Administrador',
         url: 'admin',
+      },
+      {
+        name: 'Ofertas',
+        url: 'ofertas',
+      },
+      {
+        name: 'Tendencias',
+        url: 'tendencias',
       },
     ];
   }

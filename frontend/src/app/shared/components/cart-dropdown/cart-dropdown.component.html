@@ -11,16 +11,17 @@
                 @for (product of dataProducts; track $index) {
                     <li class="mb-2">
                         <div class="flex flex-row items-center justify-between">
-                            <div class="flex flex-row items-center gap-2">
-                                <picture class="relative block overflow-hidden w-1/3 h-full min-h-[150px]">                 
+                            <div class="w-full max-w-[75px]">
+                                <picture class="relative block overflow-hidden w-full h-full min-h-[75px]">                 
                                     <source [srcset]="'data:image/jpg;base64,'+product.image.picture_webp" type="image/webp">
                                     <img class="absolute object-cover object-center w-full h-full" 
                                         [src]="'data:image/jpg;base64,'+product.image.picture_jpg" 
                                         [alt]="product.image.title">
                                 </picture>
-                                <p>{{ product.name }}</p>
                             </div>
                             
+                            <p>{{ product.name }}</p>
+
                             <div class="flex flex-row items-center gap-4">
                                 <p>{{ product.price.price | number: '1.2-2':'es' }} €/u.</p>
                                 <p>x{{ product.quantity }}</p>
@@ -33,7 +34,7 @@
             </ul>
             
             <p class="h5 flex justify-between items-baseline p-4 border-b border-black">Subtotal <span class="h5">{{ getSubtotal() | number: '1.2-2':'es' }} €</span></p>
-            <p class="flex justify-between items-baseline p-4 border-b border-black">Gastos de envío <span>{{ shippingCostsFree ? '' : '4,95 €' }}</span></p>
+            <p class="flex justify-between items-baseline p-4 border-b border-black">Gastos de envío <span>{{ getTaxShipment() }}</span></p>
             <p class="h4 flex justify-between items-baseline p-4 border-b border-black">Total <span class="h6">{{ getTotal() | number: '1.2-2':'es' }} €</span></p>
         </div>
         </div>

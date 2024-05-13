@@ -160,6 +160,26 @@
         @apply absolute top-0 right-0 z-1000 w-full max-w-72 bg-white;
     }
 
+    /**SVG routine**/
+    .routine {
+        @apply flex justify-center w-1/2 sm:w-1/4 xl:w-auto mb-4;
+        .secondary {
+            @apply fill-secundary-500;
+        }
+
+        .third {
+            @apply fill-third-500;
+        }
+        &.active {
+            .secondary {
+                @apply fill-secundary-700;
+            }
+    
+            .third {
+                @apply fill-third-700;
+            }
+        }
+    }
 
     @import "./app/shared/components/button/button.component.scss"; 
     @import "./app/shared/components/counter/counter.component.scss"; 

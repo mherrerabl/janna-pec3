@@ -40,9 +40,21 @@ export class ProductService {
       .get<ProductClass[]>(this.urlApi + '/trend')
       .pipe(catchError(this.sharedService.handleError));
   }
-  getProductsByCategory(categoryUrl: string): Observable<ProductClass[]> {
+  getProductsByTreatmentId(treatmentId: string): Observable<ProductClass[]> {
     return this.http
-      .get<ProductClass[]>(this.urlApi + '/category/' + categoryUrl)
+      .get<ProductClass[]>(this.urlApi + '/treatment/' + treatmentId)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  getProductsByCategoryId(categoryId: string): Observable<ProductClass[]> {
+    return this.http
+      .get<ProductClass[]>(this.urlApi + '/category/id/' + categoryId)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
+  getProductsByCategoryUrl(categoryUrl: string): Observable<ProductClass[]> {
+    return this.http
+      .get<ProductClass[]>(this.urlApi + '/category/url/' + categoryUrl)
       .pipe(catchError(this.sharedService.handleError));
   }
 

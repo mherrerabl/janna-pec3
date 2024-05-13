@@ -77,11 +77,8 @@ export class CardComponent implements OnInit {
       this.cart = store.cart;
     });
   }
-  ngOnInit(): void {
-    if (this.dataCard.price !== undefined) {
-      this.price = this.dataCard.price;
-    }
-  }
+
+  ngOnInit(): void {}
 
   createBadge(variation: ProductVariationClass): BadgeDTO {
     return {
@@ -104,7 +101,7 @@ export class CardComponent implements OnInit {
     if (type === 'colorBadge') {
       this.dataVariationColor = variation;
     }
-  }*/
+  }
 
   selectedVariationText(
     i: number,
@@ -135,12 +132,12 @@ export class CardComponent implements OnInit {
       this.indexVariationColor = i;
     }
   }
-
+*/
   getPrice(): number {
-    let priceProduct: number = this.price.price;
+    let priceProduct: number = this.dataCard.price?.price as number;
 
-    if (this.price.discount !== null) {
-      priceProduct *= this.price.discount / 100;
+    if (this.dataCard.price && this.dataCard.price.discount !== null) {
+      priceProduct *= (100 - this.dataCard.price.discount) / 100;
     }
 
     return priceProduct;

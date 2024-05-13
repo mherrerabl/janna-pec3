@@ -5,6 +5,8 @@ import { faClock, faHourglass } from '@fortawesome/free-regular-svg-icons';
 import { faEuro } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
+import * as ProductAction from '../../../products/actions';
+import { ProductClass } from '../../../products/models/product';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TreatmentClass } from '../../models/treatment';
 import * as TreatmentsAction from './../../actions';
@@ -22,7 +24,22 @@ export class TreatmentDetailComponent {
   iconHourglass = faHourglass;
   iconClock = faClock;
   iconEuro = faEuro;
+  productsRelated: ProductClass[];
 
+  breakpoints = {
+    0: {
+      slidesPerView: 2,
+    },
+    640: {
+      slidesPerView: 3,
+    },
+    1024: {
+      slidesPerView: 4,
+    },
+    1200: {
+      slidesPerView: 6,
+    },
+  };
   constructor(
     private route: ActivatedRoute,
     private store: Store<AppState>,
@@ -30,33 +47,24 @@ export class TreatmentDetailComponent {
   ) {
     this.treatment = new TreatmentClass('', '', '', 0, 0, '');
     this.prevTreatment = new TreatmentClass('', '', '', 0, 0, '');
+    this.productsRelated = new Array<ProductClass>();
 
     this.store.select('treatments').subscribe((store) => {
-      this.treatment = new TreatmentClass('', '', '', 0, 0, '');
-
       this.treatment = store.treatment;
-
-      if (
-        this.treatment.name.length > 0 &&
-        this.treatment !== this.prevTreatment
-      ) {
-        setTimeout(() => {
-          this.store.dispatch(isLoading({ status: false }));
-        });
-
-        this.prevTreatment = this.treatment;
+      if (this.treatment.id != '') {
+        this.loadProductsByTreatment(this.treatment.id);
       }
+    });
+
+    this.store.select('products').subscribe((store) => {
+      this.productsRelated = store.products;
     });
   }
 
   ngOnInit(): void {
     this.treatment = new TreatmentClass('', '', '', 0, 0, '');
 
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-    });
     this.urlTreatment = this.route.snapshot.paramMap.get('treatment');
-
     if (this.urlTreatment !== null && this.urlTreatment !== undefined) {
       this.loadTreatments(this.urlTreatment);
     }
@@ -68,6 +76,13 @@ export class TreatmentDetailComponent {
     });
     this.store.dispatch(
       TreatmentsAction.getTreatmentByUrl({ paramUrl: paramUrl })
+    );
+  }
+
+  private loadProductsByTreatment(treatmentId: string): void {
+    this.store.dispatch(isLoading({ status: true }));
+    this.store.dispatch(
+      ProductAction.getProductsByTreatmentId({ treatmentId: treatmentId })
     );
   }
 

@@ -40,17 +40,45 @@ export const getProductByIdFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
-export const getProductsByCategory = createAction(
-  '[Products list] Get products by url category',
-  props<{ categoryUrl: string }>()
+export const getProductsByTreatmentId = createAction(
+  '[Products list] Get products by treatment id',
+  props<{ treatmentId: string }>()
 );
-export const getProductsByCategorySuccess = createAction(
-  '[Products list] Get products by url category success',
+export const getProductsByTreatmentIdSuccess = createAction(
+  '[Products list] Get products by treatment id success',
   props<{ products: ProductClass[] }>()
 );
 
-export const getProductsByCategoryFailure = createAction(
-  '[Products list] Get products by url category fail',
+export const getProductsByTreatmentIdFailure = createAction(
+  '[Products list] Get products by treatment id fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getProductsByCategoryId = createAction(
+  '[Products list] Get products by category id',
+  props<{ categoryId: string }>()
+);
+export const getProductsByCategoryIdSuccess = createAction(
+  '[Products list] Get products by category id success',
+  props<{ products: ProductClass[] }>()
+);
+
+export const getProductsByCategoryIdFailure = createAction(
+  '[Products list] Get products by category id fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getProductsByCategoryUrl = createAction(
+  '[Products list] Get products by category url',
+  props<{ categoryUrl: string }>()
+);
+export const getProductsByCategoryUrlSuccess = createAction(
+  '[Products list] Get products by category url success',
+  props<{ products: ProductClass[] }>()
+);
+
+export const getProductsByCategoryUrlFailure = createAction(
+  '[Products list] Get products by category id fail',
   props<{ payload: HttpErrorResponse }>()
 );
 

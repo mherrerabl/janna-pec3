@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import { BreadcrumbDTO } from '../../../shared/models/breadcrumb.dto';
-import { RouteService } from '../../../shared/services/route.service';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import * as ProductsAction from '../../actions';
 import { ProductClass } from '../../models/product';
@@ -17,13 +16,10 @@ export class ProductsListComponent implements OnInit {
   products: ProductClass[];
   preProducts: ProductClass[];
   url: string;
-  constructor(
-    private store: Store<AppState>,
-    private routeService: RouteService
-  ) {
+  constructor(private store: Store<AppState>) {
     this.products = new Array<ProductClass>();
     this.preProducts = new Array<ProductClass>();
-    this.url = this.routeService.getProductCategory() as string;
+    this.url = '';
 
     this.store.select('products').subscribe((store) => {
       this.products = store.products;
@@ -39,17 +35,21 @@ export class ProductsListComponent implements OnInit {
   receiveBreadcrumb(breadcrumb: BreadcrumbDTO): void {
     setTimeout(() => {
       this.title = breadcrumb.name;
+      this.url = breadcrumb.url;
+
+      this.loadProducts();
     });
-    this.loadProducts(breadcrumb.url);
   }
 
-  private loadProducts(categoryUrl: string): void {
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-    });
-
-    this.store.dispatch(
-      ProductsAction.getProductsByCategory({ categoryUrl: categoryUrl })
-    );
+  private loadProducts(): void {
+    if (this.url === 'ofertas') {
+      this.store.dispatch(ProductsAction.getProductsByOffer());
+    } else if (this.url === 'tendencias') {
+      this.store.dispatch(ProductsAction.getProductsByTrend());
+    } else {
+      this.store.dispatch(
+        ProductsAction.getProductsByCategoryUrl({ categoryUrl: this.url })
+      );
+    }
   }
 }
