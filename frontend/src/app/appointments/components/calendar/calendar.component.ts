@@ -86,7 +86,7 @@ export class CalendarComponent {
     this.isAdmin = false;
     this.showCalendar = false;
     this.events = [];
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
 
     this.store.select('user').subscribe((store) => {
       this.checkLogin(store.user);

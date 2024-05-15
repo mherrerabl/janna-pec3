@@ -92,7 +92,7 @@ export class ProductDetailComponent implements OnInit {
     this.productCart = new ProductCartClass('', '', 1, '');
     this.productsRelated = new Array<ProductClass>();
 
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
     this.cart = new CartClass('', '', 0, new Array<ProductCartClass>());
 
     this.store.select('user').subscribe((store) => {

@@ -12,7 +12,7 @@ export class LoginGuard implements CanActivate {
   private user!: UserClass;
   constructor(private router: Router, private store: Store<AppState>) {
     this.store.select('user').subscribe((store) => {
-      this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+      this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
       if (store.user) {
         this.user = store.user;
       }

@@ -45,7 +45,7 @@ const routes: Routes = [
     canActivate: [LoginGuard],
   },
   {
-    path: 'pedido',
+    path: 'checkout',
     loadChildren: () =>
       import('./checkout/checkout.module').then((mod) => mod.CheckoutModule),
     //canActivate: [LoginGuard],

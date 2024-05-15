@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import {
   BrowserModule,
   provideClientHydration,
@@ -11,16 +11,20 @@ import { AppComponent } from './app.component';
 
 import localeEs from '@angular/common/locales/es';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {
+  ServiceWorkerModule,
+  provideServiceWorker,
+} from '@angular/service-worker';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment.prod';
-import { appReducers, EffectsArray } from './app.reducers';
+import { EffectsArray, appReducers } from './app.reducers';
 import { MailModule } from './mail/mail.module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './spinner/components/spinner/spinner.component';
 import { UsersModule } from './users/users.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localeEs);
 
@@ -44,9 +48,19 @@ registerLocaleData(localeEs);
       maxAge: 25,
       logOnly: environment.production,
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
     NgbModule,
   ],
-  providers: [provideClientHydration(), provideAnimationsAsync()],
+  providers: [
+    provideClientHydration(),
+    provideAnimationsAsync(),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

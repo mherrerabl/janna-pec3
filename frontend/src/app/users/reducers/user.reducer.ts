@@ -27,7 +27,7 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-  user: new UserClass('', '', '', '', '', 0, TypeUser['user']),
+  user: new UserClass('', '', '', '', '', 0, TypeUser['user'], ''),
   loading: false,
   loaded: false,
   error: null,

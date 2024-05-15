@@ -99,7 +99,7 @@ export class AppointmentFormComponent {
 
     this.treatmentRequired = true;
 
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
     this.treatmentSelect = new TreatmentClass('', '', '', 0, 0, '');
     this.userTreatment = new UserTreatmentClass(
       '',

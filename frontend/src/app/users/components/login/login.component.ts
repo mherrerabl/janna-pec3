@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
     this.checkForm = false;
     this.keepLogin = false;
 
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
     this.passwordConfirmData = '';
 
     this.email = new FormControl(this.user.email, [
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
           if (this.keepLogin) {
             let user: UserDTO = {
               email: store.user.email,
-              password: store.user.password,
+              token: store.user.token,
             };
 
             this.localService.saveUser(user);

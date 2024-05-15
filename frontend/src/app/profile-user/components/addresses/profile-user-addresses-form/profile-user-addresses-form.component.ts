@@ -62,7 +62,7 @@ export class ProfileUserAddressesFormComponent {
     this.title = '';
     this.urlId = this.routeService.getProfileFormId();
 
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
 
     this.getTypeForm();
 

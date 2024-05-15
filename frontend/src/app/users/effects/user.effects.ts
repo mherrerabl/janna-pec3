@@ -92,6 +92,8 @@ export class UserEffects {
       exhaustMap(({ user }) =>
         this.userService.getUserLogin(user).pipe(
           map((user) => {
+            this.store.dispatch(isLoading({ status: false }));
+
             return UserActions.getUserLoginSuccess({
               user: user,
             });
@@ -118,10 +120,7 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(UserActions.getUserLoginSuccess),
-        map(() => {
-          this.store.dispatch(isLoading({ status: false }));
-          this.responseOK = true;
-        })
+        map(() => {})
       ),
     { dispatch: false }
   );

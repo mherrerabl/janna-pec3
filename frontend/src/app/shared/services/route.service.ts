@@ -164,7 +164,6 @@ export class RouteService {
 
   breadcrumbProfile(): BreadcrumbDTO[] {
     let breadcrumbs: BreadcrumbDTO[] = [];
-    console.log(this.urls);
 
     for (const url of this.urls) {
       this.getRoutesFixedProfileUser().map((breadcrumb) => {

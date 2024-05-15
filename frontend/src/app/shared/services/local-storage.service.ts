@@ -11,7 +11,7 @@ export class LocalStorageService {
   getUser(): UserDTO {
     let user: UserDTO = {
       email: '',
-      password: '',
+      token: '',
     };
     if (typeof window !== 'undefined') {
       user = JSON.parse(localStorage.getItem('user') as any);

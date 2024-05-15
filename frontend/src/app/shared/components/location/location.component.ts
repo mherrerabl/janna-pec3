@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
-
+import * as L from 'leaflet';
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',

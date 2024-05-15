@@ -47,7 +47,7 @@ export class ProfileUserPersonalFormComponent implements OnInit {
     this.isValidForm = null;
     this.checkForm = false;
 
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
     this.passwordConfirmData = '';
 
     this.store.select('user').subscribe((store) => {
@@ -138,6 +138,7 @@ export class ProfileUserPersonalFormComponent implements OnInit {
       phone: this.personalForm.controls['phone'].value,
       password: this.personalForm.controls['password'].value,
       type: TypeUser[this.user.type],
+      token: this.user.token,
     };
 
     this.store.dispatch(isLoading({ status: true }));

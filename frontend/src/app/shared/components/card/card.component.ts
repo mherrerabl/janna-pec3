@@ -67,7 +67,7 @@ export class CardComponent implements OnInit {
 
   constructor(private store: Store<AppState>) {
     this.cart = new CartClass('', '', 0, new Array<ProductCartClass>());
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
 
     this.store.select('user').subscribe((store) => {
       this.user = store.user;

@@ -28,7 +28,7 @@ export class CartComponent implements OnInit {
   ) {
     this.dataProducts = [];
 
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
 
     this.store.select('user').subscribe((store) => {
       this.user = store.user;

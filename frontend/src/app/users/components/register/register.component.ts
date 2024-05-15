@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit {
     this.checkForm = false;
     this.keepLogin = false;
 
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
     this.passwordConfirmData = '';
 
     this.name = new FormControl(this.user.name, [
@@ -111,7 +111,7 @@ export class RegisterComponent implements OnInit {
           if (this.keepLogin) {
             let user: UserDTO = {
               email: store.user.email,
-              password: store.user.password,
+              token: store.user.token,
             };
             this.localService.saveUser(user);
           }
@@ -157,6 +157,7 @@ export class RegisterComponent implements OnInit {
       email: this.registerForm.controls['email'].value,
       phone: null,
       type: TypeUser['user'],
+      token: '',
     };
 
     this.store.dispatch(isLoading({ status: true }));

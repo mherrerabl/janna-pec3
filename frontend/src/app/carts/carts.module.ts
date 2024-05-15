@@ -1,14 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import { CartsRoutingModule } from './carts-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    CartsRoutingModule
-  ]
+  imports: [CommonModule, CartsRoutingModule],
 })
-export class CartsModule { }
+export class CartsModule {}

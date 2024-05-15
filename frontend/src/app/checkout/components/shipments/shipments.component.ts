@@ -9,11 +9,17 @@ import { Store } from '@ngrx/store';
 import * as AddressAction from '../../../addresses/actions';
 import { AddressClass } from '../../../addresses/models/address';
 import { AppState } from '../../../app.reducers';
+import { CartClass } from '../../../carts/models/cart';
+import { ProductCartClass } from '../../../carts/models/product-cart';
 import { InputDTO } from '../../../shared/models/input.dto';
+import { PriceClass } from '../../../shared/models/price';
+import { PriceDTO } from '../../../shared/models/price.dto';
 import { ShipmentDTO } from '../../../shared/models/shipment.dto';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TypeUser, UserClass } from '../../../users/models/user';
+import { productToPay } from '../../models/productPayment.dto';
+import { CheckoutService } from '../../services/checkout.service';
 
 @Component({
   selector: 'app-shipments',
@@ -49,13 +55,14 @@ export class ShipmentsComponent {
   showErrorFeedback: boolean;
 
   user: UserClass;
-
+  cart: CartClass;
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>,
-    private localService: LocalStorageService
+    private localService: LocalStorageService,
+    private checkoutService: CheckoutService
   ) {
-    this.user = new UserClass('', '', '', '', '', null, TypeUser['user']);
+    this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
     this.addresses = new Array<AddressClass>();
     this.address = new AddressClass(
       '',
@@ -158,6 +165,12 @@ export class ShipmentsComponent {
       city: this.city,
       predeterminate: this.predetermined,
     });
+
+    this.cart = new CartClass('', '', 0, new Array<ProductCartClass>());
+
+    this.store.select('carts').subscribe((store) => {
+      this.cart = store.cart;
+    });
   }
 
   private loadAddresesByUser(userId: string): void {
@@ -217,6 +230,32 @@ export class ShipmentsComponent {
     }, 500);
   }
 
+  onProceedToPay(): void {
+    let products: productToPay[] = [];
+    if (this.cart.products_cart.length > 0) {
+      this.cart.products_cart.map((product) => {
+        products = [
+          ...products,
+          {
+            name: product.product?.name as string,
+            price: this.calculatePrice(product.product?.price as PriceClass),
+            quantity: product.quantity,
+          },
+        ];
+      });
+    }
+
+    this.checkoutService.onProceedToPay(products);
+  }
+
+  calculatePrice(price: PriceDTO): number {
+    let discount = 0;
+    if (price.discount !== null) {
+      discount = price.discount / 100;
+    }
+    return price.price * discount;
+  }
+
   saveMethodShipmentLocalStorage(value: string): void {
     let shipment: ShipmentDTO = {
       method: value,
@@ -237,8 +276,6 @@ export class ShipmentsComponent {
     if (this.address.user_id === undefined) {
       this.address.user_id = this.user.id;
     }
-
-    console.log(this.isPredetermined);
 
     this.address = {
       id: this.address.id,

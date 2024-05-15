@@ -11,6 +11,7 @@ export class UserClass {
   email: string;
   phone: number | null;
   type: TypeUser;
+  token: string;
 
   constructor(
     id: string,
@@ -19,7 +20,8 @@ export class UserClass {
     password: string,
     email: string,
     phone: number | null,
-    type: TypeUser
+    type: TypeUser,
+    token: string
   ) {
     this.id = id;
     this.name = name;
@@ -28,5 +30,6 @@ export class UserClass {
     this.email = email;
     this.phone = phone;
     this.type = type;
+    this.token = token;
   }
 }
