@@ -215,6 +215,7 @@ export class AppointmentFormComponent {
     this.store.select('appointment').subscribe((store) => {
       this.appointments = store.appointments;
 
+      this.loadTreatment(store.appointment.user_treatment.treatment_id);
       this.checkEdit(store.appointment);
 
       if (this.isValidForm) {
@@ -438,6 +439,7 @@ export class AppointmentFormComponent {
         let category: CategoryClass = this.categories.filter(
           (category) => category.id == this.appointment.treatment?.category_id
         )[0];
+
         typeTreatment =
           category.category_id !== undefined ? category.category_id : null;
       }
@@ -511,6 +513,8 @@ export class AppointmentFormComponent {
       sessions: 1,
       treatment_id: this.treatmentSelect.id,
     };
+    console.log(this.userTreatment);
+
     this.appointment = {
       id: '',
       date: dateFormat,

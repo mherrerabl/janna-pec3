@@ -25,25 +25,18 @@ export class ProfileUserOrdersTableComponent implements OnInit {
     this.store.select('user').subscribe((store) => {
       if (store.user.id !== undefined && store.user.id !== '') {
         this.userId = store.user.id;
+        this.loadOrders(this.userId);
       }
     });
 
     this.store.select('order').subscribe((store) => {
-      if (store.orders.length > 0) {
-        this.orders = store.orders;
-        this.dataTable = this.getTable();
-      }
-    });
-  }
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.store.dispatch(isLoading({ status: true }));
-    });
+      this.orders = store.orders;
+      console.log(this.orders);
 
-    if (this.userId !== undefined || this.userId !== '') {
-      this.loadOrders(this.userId);
-    }
+      this.dataTable = this.getTable();
+    });
   }
+  ngOnInit(): void {}
 
   loadOrders(userId: string): void {
     setTimeout(() => {
@@ -59,7 +52,7 @@ export class ProfileUserOrdersTableComponent implements OnInit {
       let newRow: string[] = [];
       newRow.push(order.id);
       newRow.push(
-        new Date(order.modification_date).toLocaleDateString('en-GB')
+        new Date(order.modification_date).toLocaleDateString('es-ES')
       );
       newRow.push(StateOrder[order.state]);
 

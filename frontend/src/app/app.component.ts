@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './app.reducers';
@@ -16,7 +16,7 @@ import { UserDTO } from './users/models/user.dto';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Janna';
   showMenu: boolean;
   showCart: boolean;
@@ -42,10 +42,16 @@ export class AppComponent implements OnInit {
     this.cart = new CartClass('', '', 0, new Array<ProductCartClass>());
     this.user = this.localService.getUser();
 
-    if (this.user !== undefined && this.user !== null) {
-      this.loadUser();
+    if (this.user && this.user.token !== undefined && this.user.token !== '') {
+      this.loadUser(this.user);
     }
 
+    this.storeUser();
+
+    this.storeCarts();
+  }
+
+  storeUser(): void {
     this.store.select('user').subscribe((store) => {
       if (
         store.user.id !== '' &&
@@ -55,37 +61,45 @@ export class AppComponent implements OnInit {
         setTimeout(() => {
           this.loadCart(store.user.id);
         });
+      } else {
+        this.resetCart();
       }
     });
-
+  }
+  storeCarts(): void {
     this.store.select('carts').subscribe((store) => {
-      /*if (store.cart.id !== '' && store.cart !== this.cart) {
-        setTimeout(() => {
-          this.openCart();
-        });
+      if (store.cart.id !== '') {
+        if (store.cart.id !== this.cart.id) {
+          setTimeout(() => {
+            this.openCart();
+          });
 
-        setTimeout(() => {
-          this.closeCart();
-          this.cart = store.cart;
-        }, 1000);
-      }*/
+          setTimeout(() => {
+            this.closeCart();
+            this.cart = store.cart;
+          }, 1000);
+        }
+      }
     });
   }
 
-  ngOnInit(): void {}
-
-  loadUser(): void {
+  loadUser(user: UserDTO): void {
     setTimeout(() => {
       this.showLoading = this.store.select(getLoading);
     });
 
-    this.store.dispatch(UserAction.getUserLogin({ user: this.user }));
+    this.store.dispatch(UserAction.getUserLogin({ user: user }));
   }
 
   loadCart(userId: string): void {
     this.store.dispatch(isLoading({ status: true }));
 
     this.store.dispatch(CartAction.getCartByUserId({ userId: userId }));
+  }
+
+  resetCart(): void {
+    this.store.dispatch(isLoading({ status: true }));
+    this.store.dispatch(CartAction.resetState());
   }
 
   openCart(): void {

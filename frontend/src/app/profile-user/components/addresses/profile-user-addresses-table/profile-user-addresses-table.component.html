@@ -2,4 +2,7 @@
     @if (dataTable !== undefined) {
         <app-table [dataTable]="dataTable"></app-table>
     }
+    @else {
+        <p class="text-center">No tiene ninguna dirección asociada.</p>
+    }
 </div>

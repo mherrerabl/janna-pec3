@@ -27,6 +27,7 @@ import {
   removeQuantity,
   removeQuantityFailure,
   removeQuantitySuccess,
+  resetState,
   updateCart,
   updateCartFailure,
   updateCartSuccess,
@@ -247,6 +248,13 @@ const _cartsReducer = createReducer(
     loading: false,
     loaded: false,
     error: { payload },
+  })),
+  on(resetState, (state) => ({
+    ...state,
+    cart: initialState.cart,
+    loading: false,
+    loaded: true,
+    error: null,
   }))
 );
 

@@ -145,3 +145,5 @@ export const deleteCartFailure = createAction(
   '[Cart form] Delete cart fail',
   props<{ payload: HttpErrorResponse }>()
 );
+
+export const resetState = createAction('[Cart] Reset Cart');

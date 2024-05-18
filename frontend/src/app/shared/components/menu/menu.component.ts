@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit {
   ) {
     this.countProducts = 0;
     this.store.select('user').subscribe((store) => {
-      if (store.user.id !== '' && store.user.id !== undefined) {
+      if (store.user.token !== '' && store.user.token !== undefined) {
         this.isLogin = true;
       } else {
         this.isLogin = false;

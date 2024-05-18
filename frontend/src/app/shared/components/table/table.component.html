@@ -5,7 +5,7 @@
         <input id="searcherProfile" class="input" type="searcher" placeholder="Busca..." [formControl]="searcherControl" (keyup)="filter()">
       </div>
 </form>
-
+@if (dataTable) {
 <table class="w-full border-collapse table-fixed">
     <thead class="h-14 bg-primary">
         <tr>
@@ -75,9 +75,9 @@
         }
     </tbody>
 </table>
-
+}
 <div class="flex justify-center mt-8">
-    <pagination-controls 
+<pagination-controls 
     (pageChange)="currentPage = $event" 
     previousLabel=""
     nextLabel=""

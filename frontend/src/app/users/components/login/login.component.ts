@@ -95,10 +95,12 @@ export class LoginComponent implements OnInit {
     });
 
     this.store.select('user').subscribe((store) => {
-      if (this.isValidForm) {
+      if (store.loaded) {
         this.resetErrors();
-        if (store.user.id !== undefined) {
+
+        if (store.user.token !== undefined && store.user.token !== '') {
           this.user = store.user;
+
           if (this.keepLogin) {
             let user: UserDTO = {
               email: store.user.email,
