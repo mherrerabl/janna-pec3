@@ -104,6 +104,7 @@ export class ProductDetailComponent implements OnInit {
     });
 
     this.loadProduct(this.routeService.getProductId());
+
     this.store.select('products').subscribe((store) => {
       this.product = store.product;
       if (this.product.id !== '') {
@@ -137,8 +138,10 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.loadProduct(this.routeService.getProductId());
-        this.loadProductsByCategory(this.product.category_id);
+        if (Number(this.routeService.getProductId())) {
+          this.loadProduct(this.routeService.getProductId());
+          this.loadProductsByCategory(this.product.category_id);
+        }
       }
     });
   }

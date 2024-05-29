@@ -6,14 +6,17 @@ import { SharedModule } from '../shared/shared.module';
 import { CheckoutRoutingModule } from './checkout-routing.module';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ShipmentsComponent } from './components/shipments/shipments.component';
+import { SuccessComponent } from './components/success/success.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
-  declarations: [ShipmentsComponent, PaymentComponent],
+  declarations: [ShipmentsComponent, PaymentComponent, SuccessComponent, ErrorComponent],
   imports: [
     CommonModule,
     CheckoutRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    //NgxStripeModule.forRoot(environment.stripe_public),
   ],
 })
 export class CheckoutModule {

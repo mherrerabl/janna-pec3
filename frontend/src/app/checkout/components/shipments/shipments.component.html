@@ -144,14 +144,6 @@
 
     <div class="flex justify-end">
         <button role="link" class="button button-m px-6" 
-            (click)="onProceedToPay()"
-            [disabled]="!shippmentMethodForm.valid || (!addressShipmentFrom.valid && addressShipmentFrom.controls['address'].value == 'new')">
-            Siguiente
-        </button>
-    </div> 
-
-    <div class="flex justify-end">
-        <button role="link" class="button button-m px-6" 
             [routerLink]="['../','pago']"
             [disabled]="!shippmentMethodForm.valid || (!addressShipmentFrom.valid && addressShipmentFrom.controls['address'].value == 'new')">
             Siguiente
