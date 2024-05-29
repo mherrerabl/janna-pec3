@@ -5,45 +5,13 @@
 <app-cart-dropdown class="mb-separator-30"></app-cart-dropdown>
 
 <section class="my-separator-30">
-    <div class="credit-card">
-        <div>
-            <div #cardInfo></div>
-            @if (cardError) {
-                <div class="error">
-                    {{cardError}}
-                </div>
-            }
-            
-        </div>
-    </div>
+    
     <div id="checkout"></div>
 
-        <!--<form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
-            <div class="form-group">
-              <label for="card-element">Credit or Debit Card</label>
-              <div id="card-element"></div>
-              <div id="card-errors" role="alert"></div>
-            </div>
-            <button type="submit" [disabled]="paymentForm.invalid">Pay</button>
-          </form>
-        <!-- Checkout will insert the payment form here -->
-        <!--<ngx-stripe-card
-            [options]="cardOptions"
-            [elementsOptions]="elementsOptions"
-            #cardComponent>
-        </ngx-stripe-card>
-
-        <button (click)="handlePayment()">Pay</button>-->
-
-    <div class="flex justify-between gap-4">
+    <div class="flex justify-between gap-4 mt-4">
         <button role="link" class="button button-m px-6" 
             [routerLink]="['../','envio']">
             Atrás
-        </button>
-        <button class="button-action button-m px-6"
-        (click)="onClick()"
-        >
-            Pagar
         </button>
     </div>  
  

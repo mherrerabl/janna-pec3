@@ -14,6 +14,9 @@ import {
   getOrderByUserIdSuccess,
   updateOrder,
   updateOrderFailure,
+  updateOrderState,
+  updateOrderStateFailure,
+  updateOrderStateSuccess,
   updateOrderSuccess,
 } from '../actions';
 import { OrderClass, StateOrder } from '../models/order';
@@ -118,6 +121,26 @@ const _ordersReducer = createReducer(
     error: null,
   })),
   on(updateOrderFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(updateOrderState, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(updateOrderStateSuccess, (state, action) => ({
+    ...state,
+    order: action.order,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(updateOrderStateFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

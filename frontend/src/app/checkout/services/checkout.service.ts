@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { loadStripe } from '@stripe/stripe-js';
-import { Observable, catchError, map } from 'rxjs';
+import { catchError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { CartClass } from '../../carts/models/cart';
 import { ImageClass } from '../../images/models/image';
 import { PriceClass } from '../../shared/models/price';
 import { ProductDTO } from '../../shared/models/product.dto';
 import { SharedService } from '../../shared/services/shared.service';
-import { productToPay } from '../models/productPayment.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -57,30 +55,6 @@ export class CheckoutService {
         });
 
         checkout.mount('#checkout');
-      });
-  }
-
-  charge(quantity: any, tokenId: string): Observable<any> {
-    const data: any = {
-      quantity: quantity,
-      tokenId: tokenId,
-    };
-    return this.http
-      .post<any>(this.urlApi, data)
-      .pipe(catchError(this.sharedService.handleError));
-  }
-
-  onProceedToPay(products: productToPay[]) {
-    return this.http
-      .post<any[]>(this.urlApi, products)
-      .pipe(
-        map(async (res: any) => {
-          const stripe = await loadStripe(environment.stripe_public);
-          stripe?.redirectToCheckout({ sessionId: res.id });
-        })
-      )
-      .subscribe({
-        error: (err) => console.error('Error', err),
       });
   }
 }

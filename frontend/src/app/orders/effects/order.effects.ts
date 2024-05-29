@@ -104,7 +104,7 @@ export class OrderEffects {
                 'orderFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha creado una nueva dirección.'
+                'Se ha creado un nuevo pedido.'
               );
             }, 100);
           })
@@ -158,7 +158,7 @@ export class OrderEffects {
                 'orderFeedback',
                 this.responseOK,
                 this.errorResponse,
-                'Se ha actualizado la dirección.'
+                'Se ha actualizado el pedido.'
               );
             }, 100);
           })
@@ -193,6 +193,59 @@ export class OrderEffects {
     { dispatch: false }
   );
 
+  updateOrderState$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(OrderActions.updateOrderState),
+      exhaustMap(({ sessionId, state }) =>
+        this.orderService.updateOrderState(sessionId, state).pipe(
+          map((order) => {
+            return OrderActions.updateOrderStateSuccess({
+              order: order,
+            });
+          }),
+          catchError((error) => {
+            return of(OrderActions.updateOrderStateFailure({ payload: error }));
+          }),
+          finalize(async () => {
+            setTimeout(() => {
+              this.sharedService.notification(
+                'orderFeedback',
+                this.responseOK,
+                this.errorResponse,
+                'Se ha actualizado el pedido.'
+              );
+            }, 100);
+          })
+        )
+      )
+    )
+  );
+
+  updateOrderStateSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(OrderActions.updateOrderStateSuccess),
+        map(() => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = true;
+        })
+      ),
+    { dispatch: false }
+  );
+
+  updateOrderStateFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(OrderActions.updateOrderStateFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
   deleteOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(OrderActions.deleteOrder),

@@ -19,7 +19,7 @@ const routes: Routes = [
     component: PaymentComponent,
   },
   {
-    path: 'success',
+    path: 'success/:sessionId',
     component: SuccessComponent,
   },
 ];

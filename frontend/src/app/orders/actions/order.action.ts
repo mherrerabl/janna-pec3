@@ -57,6 +57,21 @@ export const updateOrderFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
+export const updateOrderState = createAction(
+  '[Order form] Update order state',
+  props<{ sessionId: string; state: string }>()
+);
+
+export const updateOrderStateSuccess = createAction(
+  '[Order form] Update order state success',
+  props<{ order: OrderClass }>()
+);
+
+export const updateOrderStateFailure = createAction(
+  '[Order form] Update order state fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
 export const deleteOrder = createAction(
   '[Order form] Delete order',
   props<{ orderId: string }>()

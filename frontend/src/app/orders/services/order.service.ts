@@ -42,6 +42,15 @@ export class OrderService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
+  updateOrderState(session_id: string, state: string): Observable<OrderClass> {
+    const order = {
+      state: state,
+    };
+    return this.http
+      .put<OrderClass>(this.urlApi + '/session/' + session_id, order)
+      .pipe(catchError(this.sharedService.handleError));
+  }
+
   deleteOrder(orderId: string): Observable<deleteResponse> {
     return this.http
       .delete<deleteResponse>(this.urlApi + '/' + orderId)

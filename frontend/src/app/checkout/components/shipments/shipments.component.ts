@@ -244,8 +244,6 @@ export class ShipmentsComponent {
         ];
       });
     }
-
-    this.checkoutService.onProceedToPay(products);
   }
 
   calculatePrice(price: PriceDTO): number {
