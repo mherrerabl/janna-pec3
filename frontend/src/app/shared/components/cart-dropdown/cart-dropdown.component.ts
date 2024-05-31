@@ -14,7 +14,6 @@ import { ImageClass } from '../../../images/models/image';
 import { PriceClass } from '../../models/price';
 import { ProductDTO } from '../../models/product.dto';
 import { ShipmentDTO } from '../../models/shipment.dto';
-import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-cart-dropdown',
@@ -31,22 +30,22 @@ import { LocalStorageService } from '../../services/local-storage.service';
   ],
 })
 export class CartDropdownComponent {
-  methodShop: ShipmentDTO;
+  shipment: ShipmentDTO;
   dataProducts: ProductDTO[];
   dropdownExpanded: boolean = false;
   shippingCostsFree: boolean = false;
   iconArrowUp = faChevronUp;
   iconArrowDown = faChevronDown;
 
-  constructor(
-    private store: Store<AppState>,
-    private localService: LocalStorageService
-  ) {
+  constructor(private store: Store<AppState>) {
     this.dataProducts = [];
 
-    this.methodShop = this.localService.getMethodShipment();
-
+    this.shipment = {
+      method: '',
+      address: null,
+    };
     this.store.select('carts').subscribe((store) => {
+      this.dataProducts = [];
       store.cart.products_cart.map((product) => {
         this.dataProducts = [
           ...this.dataProducts,
@@ -61,6 +60,7 @@ export class CartDropdownComponent {
           },
         ];
       });
+      this.shipment = store.shipment;
     });
   }
 
@@ -89,7 +89,7 @@ export class CartDropdownComponent {
   }
 
   getTaxShipment(): string {
-    if (this.getSubtotal() > 50 || this.methodShop.method == 'shop') {
+    if (this.getSubtotal() > 50 || this.shipment.method == 'shop') {
       return 'Gratis';
     }
 

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { deleteResponse } from '../../shared/models/deleteResponse.dto';
+import { Offer } from '../../shared/models/price';
+import { PriceDTO } from '../../shared/models/price.dto';
 import { SharedService } from '../../shared/services/shared.service';
 import { ProductClass } from '../models/product';
 
@@ -95,5 +97,46 @@ export class ProductService {
     return this.http
       .delete<deleteResponse>(this.urlApi + productId)
       .pipe(catchError(this.sharedService.handleError));
+  }
+
+  calculatePrice(productPrice: PriceDTO, quantity: number): number {
+    let price: number = 0;
+
+    let basePrice: number = productPrice.price as number;
+    let discount: number | null = productPrice.discount;
+    let offer: Offer | null = productPrice.offer;
+
+    price = basePrice;
+
+    if (discount !== null) {
+      price = price * (discount / 100);
+    }
+
+    price = this.calculatePriceOffer(price, offer, quantity);
+
+    return price;
+  }
+
+  calculatePriceOffer(
+    price: number,
+    offer: Offer | null,
+    quantity: number
+  ): number {
+    if (offer == '2n 50%' && quantity > 2) {
+      if (quantity % 2 == 0) {
+        price = price * 0.75;
+      } else {
+        price = price * 0.83333;
+      }
+    } else if (offer == '3x2' && quantity > 3) {
+      if (quantity % 3 == 0) {
+        price = price * 0.66666;
+      } else if (quantity % 3 == 1) {
+        price = price * 0.75;
+      } else if (quantity % 3 == 2) {
+        price = price * 0.8;
+      }
+    }
+    return price;
   }
 }

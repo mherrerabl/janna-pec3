@@ -13,6 +13,9 @@ import {
   deleteCart,
   deleteCartFailure,
   deleteCartSuccess,
+  deleteProductsCart,
+  deleteProductsCartFailure,
+  deleteProductsCartSuccess,
   getCartById,
   getCartByIdFailure,
   getCartByIdSuccess,
@@ -167,6 +170,7 @@ const _cartsReducer = createReducer(
   })),
   on(addQuantitySuccess, (state, action) => ({
     ...state,
+    cart: action.cart,
     loading: false,
     loaded: true,
     error: null,
@@ -186,6 +190,7 @@ const _cartsReducer = createReducer(
   })),
   on(removeQuantitySuccess, (state, action) => ({
     ...state,
+    cart: action.cart,
     loading: false,
     loaded: true,
     error: null,
@@ -251,6 +256,26 @@ const _cartsReducer = createReducer(
     error: null,
   })),
   on(deleteCartFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
+
+  on(deleteProductsCart, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(deleteProductsCartSuccess, (state, action) => ({
+    ...state,
+    cart: action.cart,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(deleteProductsCartFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

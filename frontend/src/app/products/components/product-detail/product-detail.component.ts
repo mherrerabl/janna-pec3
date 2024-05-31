@@ -18,6 +18,7 @@ import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TypeUser, UserClass } from '../../../users/models/user';
 import * as ProductAction from '../../actions';
 import { ProductClass, Routine } from '../../models/product';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -67,7 +68,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private routeService: RouteService,
-    private router: Router
+    private router: Router,
+    private productService: ProductService
   ) {
     this.counter = 1;
     this.product = new ProductClass(
@@ -163,16 +165,19 @@ export class ProductDetailComponent implements OnInit {
   getPrice(): number {
     let priceProduct: number = this.product.price?.price as number;
 
-    if (this.product.price?.discount !== null) {
-      priceProduct *=
-        ((100 - (this.product.price?.discount as number)) / 100) * this.counter;
+    if (this.product.price !== undefined) {
+      priceProduct = this.productService.calculatePrice(
+        this.product.price,
+        this.counter
+      );
     }
 
-    return priceProduct;
+    return priceProduct * this.counter;
   }
 
   changeQuantity(counter: number): void {
     this.counter = counter;
+    this.getPrice();
   }
 
   addProduct(): void {

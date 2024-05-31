@@ -204,9 +204,9 @@ export class CartEffects {
       ofType(CartActions.addQuantity),
       exhaustMap(({ userId, productId }) =>
         this.cartService.addQuantity(userId, productId).pipe(
-          map((resp) => {
+          map((cart) => {
             return CartActions.addQuantitySuccess({
-              resp: resp,
+              cart: cart,
             });
           }),
           catchError((error) => {
@@ -258,9 +258,9 @@ export class CartEffects {
       ofType(CartActions.removeQuantity),
       exhaustMap(({ userId, productId }) =>
         this.cartService.removeQuantity(userId, productId).pipe(
-          map((resp) => {
+          map((cart) => {
             return CartActions.removeQuantitySuccess({
-              resp: resp,
+              cart: cart,
             });
           }),
           catchError((error) => {
@@ -440,6 +440,62 @@ export class CartEffects {
         ofType(CartActions.deleteCartFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteProductsCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.deleteProductsCart),
+      exhaustMap(({ cartId }) =>
+        this.cartService.removeProductsCart(cartId).pipe(
+          map((cart) => {
+            return CartActions.deleteProductsCartSuccess({
+              cart: cart,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              CartActions.deleteProductsCartFailure({ payload: error })
+            );
+          }),
+          finalize(async () => {
+            setTimeout(() => {
+              this.sharedService.notification(
+                'cartFeedback',
+                this.responseOK,
+                this.errorResponse,
+                'Se ha actualizado el carrito.'
+              );
+            }, 100);
+          })
+        )
+      )
+    )
+  );
+
+  deleteProductsCartSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.deleteProductsCartSuccess),
+        map(() => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = true;
+        })
+      ),
+    { dispatch: false }
+  );
+
+  deleteProductsCartFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CartActions.deleteProductsCartFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.responseOK = false;
           this.errorResponse = error.payload.error;
           this.sharedService.errorLog(error.payload.error);
         })

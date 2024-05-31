@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { deleteResponse } from '../../shared/models/deleteResponse.dto';
 import { ShipmentDTO } from '../../shared/models/shipment.dto';
 import { CartClass } from '../models/cart';
 import { ProductCartClass } from '../models/product-cart';
@@ -80,7 +79,7 @@ export const addQuantity = createAction(
 
 export const addQuantitySuccess = createAction(
   '[Cart] Add quantity success',
-  props<{ resp: deleteResponse }>()
+  props<{ cart: CartClass }>()
 );
 
 export const addQuantityFailure = createAction(
@@ -95,7 +94,7 @@ export const removeQuantity = createAction(
 
 export const removeQuantitySuccess = createAction(
   '[Cart] Remove quantity success',
-  props<{ resp: deleteResponse }>()
+  props<{ cart: CartClass }>()
 );
 
 export const removeQuantityFailure = createAction(
@@ -144,6 +143,21 @@ export const deleteCartSuccess = createAction(
 
 export const deleteCartFailure = createAction(
   '[Cart form] Delete cart fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const deleteProductsCart = createAction(
+  '[Cart form] Delete products cart',
+  props<{ cartId: string }>()
+);
+
+export const deleteProductsCartSuccess = createAction(
+  '[Cart form] Delete products cart success',
+  props<{ cart: CartClass }>()
+);
+
+export const deleteProductsCartFailure = createAction(
+  '[Cart form] Delete products cart fail',
   props<{ payload: HttpErrorResponse }>()
 );
 

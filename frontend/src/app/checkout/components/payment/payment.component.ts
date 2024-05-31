@@ -41,7 +41,7 @@ export class PaymentComponent implements OnInit {
 
       this.addressId = store.shipment.address;
 
-      if (this.cart.id !== '') {
+      if (this.cart.id !== '' && this.stripeCheckout !== null) {
         this.loadStripe(this.cart, this.addressId);
       }
     });

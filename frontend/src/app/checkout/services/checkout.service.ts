@@ -20,9 +20,8 @@ export class CheckoutService {
   private controller: string;
   private checkout: any;
   stripeCheckout: any;
-  private clientSecret: string = '';
-  private sessionId: string = '';
-  private isMount: boolean = false;
+  clientSecret: string = '';
+  sessionId: string = '';
 
   constructor(
     private http: HttpClient,
@@ -61,18 +60,9 @@ export class CheckoutService {
       session_stripe: this.sessionId,
     };
 
+    console.log(data);
+
     if (this.stripeCheckout !== null) {
-      /* if (this.checkout) {
-        this.checkout.unmount('#checkout');
-        this.mountStripe();
-      } else {*/
-      if (this.isMount == true) {
-        this.checkout.unmount();
-
-        this.checkout.destroy();
-        this.isMount = false;
-      }
-
       this.http
         .post<any>(this.urlApi, data)
         .pipe(catchError(this.sharedService.handleError))
@@ -80,13 +70,19 @@ export class CheckoutService {
           this.clientSecret = clientSecret;
           this.sessionId = session_id;
 
+          if (this.checkout != undefined) {
+            this.checkout.destroy();
+          }
           this.checkout = await stripe.initEmbeddedCheckout({
             clientSecret,
           });
 
-          this.mountStripe();
+          this.stripeCheckout = this.document.getElementById('checkout');
+
+          if (this.stripeCheckout !== null) {
+            this.mountStripe();
+          }
         });
-      //}
     }
   }
 
@@ -96,7 +92,7 @@ export class CheckoutService {
     }, 0);
 
     this.checkout.mount('#checkout');
-    this.isMount = true;
+
     setTimeout(() => {
       this.store.dispatch(isLoading({ status: false }));
     }, 2000);

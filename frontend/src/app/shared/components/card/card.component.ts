@@ -7,6 +7,7 @@ import { ProductCartClass } from '../../../carts/models/product-cart';
 import { ImageClass } from '../../../images/models/image';
 import { ProductClass } from '../../../products/models/product';
 import { ProductVariationClass } from '../../../products/models/product-variation';
+import { ProductService } from '../../../products/services/product.service';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TypeUser, UserClass } from '../../../users/models/user';
 import { BadgeDTO } from '../../models/badge.dto';
@@ -65,7 +66,10 @@ export class CardComponent implements OnInit {
     isButtonColor: false,
   };
 
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private productService: ProductService
+  ) {
     this.cart = new CartClass('', '', 0, new Array<ProductCartClass>());
     this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
 
@@ -136,8 +140,11 @@ export class CardComponent implements OnInit {
   getPrice(): number {
     let priceProduct: number = this.dataCard.price?.price as number;
 
-    if (this.dataCard.price && this.dataCard.price.discount !== null) {
-      priceProduct *= (100 - this.dataCard.price.discount) / 100;
+    if (this.dataCard.price !== undefined) {
+      return this.productService.calculatePrice(
+        this.dataCard.price as PriceClass,
+        1
+      );
     }
 
     return priceProduct;

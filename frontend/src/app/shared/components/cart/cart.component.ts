@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../app.reducers';
 import * as CartAction from '../../../carts/actions';
+import { ProductService } from '../../../products/services/product.service';
 import { TypeUser, UserClass } from '../../../users/models/user';
 import { ProductDTO } from '../../models/product.dto';
 import { ModalService } from '../../services/modal.service';
@@ -24,7 +25,8 @@ export class CartComponent implements OnInit {
 
   constructor(
     private modalService: ModalService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private productService: ProductService
   ) {
     this.dataProducts = [];
 
@@ -36,8 +38,6 @@ export class CartComponent implements OnInit {
 
     this.store.select('carts').subscribe((store) => {
       this.dataProducts = [];
-      console.log('CART');
-      console.log(store.cart.products_cart);
 
       for (const product of store.cart.products_cart) {
         if (product.product !== undefined) {
@@ -68,7 +68,9 @@ export class CartComponent implements OnInit {
     let total: number = 0;
     if (this.dataProducts !== null && this.dataProducts.length > 0) {
       for (const product of this.dataProducts) {
-        total += product.price.price * product.quantity;
+        total +=
+          this.productService.calculatePrice(product.price, product.quantity) *
+          product.quantity;
       }
     }
 

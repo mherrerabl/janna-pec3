@@ -27,6 +27,8 @@
             <div class="flex justify-end gap-[10px] mb-4">
                 @if (product.price?.discount !== null) {
                     <p class="body-s line-through text-darkGrey self-end">{{ product.price?.price | number: '1.2-2':'es'}} €/u</p>
+                } @else {
+                    <p class="body-s text-darkGrey self-end">{{ product.price?.price | number: '1.2-2':'es'}} €/u</p>
                 }
                 <h4>{{ getPrice() | number: '1.2-2':'es' }} €</h4>
             </div>
