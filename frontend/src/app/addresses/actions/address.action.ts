@@ -87,3 +87,5 @@ export const deleteAddressFailure = createAction(
   '[Address form] Delete address fail',
   props<{ payload: HttpErrorResponse }>()
 );
+
+export const resetState = createAction('[Addresses] Reset Addresses');

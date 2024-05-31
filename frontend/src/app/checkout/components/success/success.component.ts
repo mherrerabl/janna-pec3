@@ -23,8 +23,6 @@ export class SuccessComponent implements OnInit {
       'sessionId'
     ) as string;
 
-    console.log(this.sessionId);
-
     this.store.select('order').subscribe((store) => {
       this.orderId = store.order.id;
     });

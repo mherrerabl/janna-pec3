@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AddressClass } from '../../../addresses/models/address';
 import { RowDetailDTO } from '../../models/row-detail.dto';
 
 @Component({
@@ -7,6 +8,22 @@ import { RowDetailDTO } from '../../models/row-detail.dto';
 })
 export class RowDetailComponent {
   @Input() dataDetails!: RowDetailDTO[];
+
+  addressShop: AddressClass;
+
+  constructor() {
+    this.addressShop = {
+      id: '',
+      name: 'Janna',
+      address: 'C/Sant Llorenç de Brindisi',
+      number: 22,
+      additionalInfo: '',
+      zip: '08241',
+      city: 'Manresa',
+      user_id: '',
+      predetermined: true,
+    };
+  }
 
   getDays(date: Date): string {
     let days: number;

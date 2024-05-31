@@ -31,9 +31,10 @@ export class ProfileUserOrdersTableComponent implements OnInit {
 
     this.store.select('order').subscribe((store) => {
       this.orders = store.orders;
-      console.log(this.orders);
 
-      this.dataTable = this.getTable();
+      if (this.orders.length > 0) {
+        this.dataTable = this.getTable();
+      }
     });
   }
   ngOnInit(): void {}

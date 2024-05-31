@@ -28,7 +28,9 @@ export class ProfileUserAppointmentsTableComponent implements OnInit {
     this.store.select('appointment').subscribe((store) => {
       if (store.appointments.length > 0) {
         this.appointments = store.appointments;
-        this.dataTable = this.getTable();
+        if (this.appointments.length > 0) {
+          this.dataTable = this.getTable();
+        }
       }
     });
   }

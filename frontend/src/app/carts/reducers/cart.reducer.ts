@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { ShipmentDTO } from '../../shared/models/shipment.dto';
 import {
   addProduct,
   addProductFailure,
@@ -28,6 +29,7 @@ import {
   removeQuantityFailure,
   removeQuantitySuccess,
   resetState,
+  saveShipment,
   updateCart,
   updateCartFailure,
   updateCartSuccess,
@@ -38,6 +40,7 @@ import { ProductCartClass } from '../models/product-cart';
 export interface CartsState {
   carts: CartClass[];
   cart: CartClass;
+  shipment: ShipmentDTO;
   loading: boolean;
   loaded: boolean;
   error: any;
@@ -46,6 +49,10 @@ export interface CartsState {
 export const initialState: CartsState = {
   carts: new Array<CartClass>(),
   cart: new CartClass('', '', 0, new Array<ProductCartClass>()),
+  shipment: {
+    method: '',
+    address: null,
+  },
   loading: false,
   loaded: false,
   error: null,
@@ -248,6 +255,13 @@ const _cartsReducer = createReducer(
     loading: false,
     loaded: false,
     error: { payload },
+  })),
+  on(saveShipment, (state, action) => ({
+    ...state,
+    shipment: action.shipment,
+    loading: false,
+    loaded: true,
+    error: null,
   })),
   on(resetState, (state) => ({
     ...state,

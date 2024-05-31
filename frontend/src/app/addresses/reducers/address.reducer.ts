@@ -15,6 +15,7 @@ import {
   getAllAddresses,
   getAllAddressesFailure,
   getAllAddressesSuccess,
+  resetState,
   updateAddress,
   updateAddressFailure,
   updateAddressSuccess,
@@ -157,6 +158,14 @@ const _addressesReducer = createReducer(
     loading: false,
     loaded: false,
     error: { payload },
+  })),
+  on(resetState, (state) => ({
+    ...state,
+    addresses: initialState.addresses,
+    address: initialState.address,
+    loading: false,
+    loaded: true,
+    error: null,
   }))
 );
 

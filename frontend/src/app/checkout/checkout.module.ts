@@ -4,19 +4,23 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { CheckoutRoutingModule } from './checkout-routing.module';
+import { ErrorComponent } from './components/error/error.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ShipmentsComponent } from './components/shipments/shipments.component';
 import { SuccessComponent } from './components/success/success.component';
-import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
-  declarations: [ShipmentsComponent, PaymentComponent, SuccessComponent, ErrorComponent],
+  declarations: [
+    ShipmentsComponent,
+    PaymentComponent,
+    SuccessComponent,
+    ErrorComponent,
+  ],
   imports: [
     CommonModule,
     CheckoutRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    //NgxStripeModule.forRoot(environment.stripe_public),
   ],
 })
 export class CheckoutModule {

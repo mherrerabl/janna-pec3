@@ -34,7 +34,9 @@ export class ProfileUserTreatmentsTableComponent {
     this.store.select('userTreatment').subscribe((store) => {
       if (store.userTreatments.length > 0) {
         this.userTreatments = store.userTreatments;
-        this.dataTable = this.getTable();
+        if (this.userTreatments.length > 0) {
+          this.dataTable = this.getTable();
+        }
       }
     });
   }

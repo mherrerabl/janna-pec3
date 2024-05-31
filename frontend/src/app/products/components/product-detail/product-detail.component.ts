@@ -139,6 +139,8 @@ export class ProductDetailComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         if (Number(this.routeService.getProductId())) {
+          console.log(this.routeService.getProductId());
+
           this.loadProduct(this.routeService.getProductId());
           this.loadProductsByCategory(this.product.category_id);
         }
@@ -177,9 +179,8 @@ export class ProductDetailComponent implements OnInit {
     let product: ProductCartClass = {
       id: '',
       product_id: this.product.id,
-      quantity: 1,
+      quantity: this.counter,
       cart_id: this.cart.id,
-      //product: this.productCart
     };
 
     setTimeout(() => {

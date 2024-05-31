@@ -14,7 +14,7 @@
             value="shop"
             required="true"
             [formControl]="methodShipment"
-            (click)="saveMethodShipmentLocalStorage('shop')">
+            (click)="saveAddres('shop')">
         
           <span>Recoger en tienda</span>
         </label>
@@ -23,7 +23,7 @@
             type="radio" 
             value="shipment"
             [formControl]="methodShipment"
-            (click)="saveMethodShipmentLocalStorage('shipment')">
+            (click)="saveAddres('shipment')">
         
           <span>Envío a domicilio</span>
         </label>  
@@ -81,7 +81,7 @@
                                 type="radio" 
                                 [value]="'address'+address.id"
                                 [formControl]="addressShipment"
-                                (click)="saveMethodShipmentLocalStorage(address.id)">
+                                (click)="saveAddres('shipment', address.id)">
                                 <span>{{ address.name }}</span>
                                 <span *ngIf="address.predetermined == true"> (Predeterminada)</span>
                             </label>

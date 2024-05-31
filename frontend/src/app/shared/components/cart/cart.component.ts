@@ -36,6 +36,8 @@ export class CartComponent implements OnInit {
 
     this.store.select('carts').subscribe((store) => {
       this.dataProducts = [];
+      console.log('CART');
+      console.log(store.cart.products_cart);
 
       for (const product of store.cart.products_cart) {
         if (product.product !== undefined) {
@@ -53,6 +55,8 @@ export class CartComponent implements OnInit {
           ];
         }
       }
+
+      this.getTotalCart();
     });
   }
 
@@ -86,7 +90,6 @@ export class CartComponent implements OnInit {
     } else {
       this.removeQuantity(this.dataProducts[index].id);
     }
-    //this.dataProducts[index].quantity = counter;
   }
 
   removeQuantity(productId: string): void {

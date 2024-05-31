@@ -19,7 +19,13 @@
                 <p class="px-1 py-3">{{ detail.content.info.time | date: 'HH:mm' }}h.</p>
             }
             
+            @if (detail.content.info.address !== undefined && detail.content.info.address == null) {
+                <p>{{addressShop.name}}:</p>
+                <p class="px-1 py-3">{{ addressShop.address }}, {{ addressShop.number }}, <span *ngIf="addressShop.additionalInfo !== undefined">{{ addressShop.additionalInfo }}, </span>{{ addressShop.zip }}, {{ addressShop.city }}</p>
+            }
+
             @else if (detail.content.info.address !== undefined) {
+                <p>{{detail.content.info.address.name}}:</p>
                 <p class="px-1 py-3">{{ detail.content.info.address.address }}, {{ detail.content.info.address.number }}, <span *ngIf="detail.content.info.address.additionalInfo !== undefined">{{ detail.content.info.address.additionalInfo }}, </span>{{ detail.content.info.address.zip }}, {{ detail.content.info.address.city }}</p>
             }
         }

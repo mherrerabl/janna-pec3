@@ -51,26 +51,6 @@ export class ProfileUserAddressesTableComponent implements OnInit {
 
   getTable(): TableDTO {
     let rows: RowDTO[] = [];
-    /*this.addresses.forEach((address) => {
-      let newRow: string[] = [];
-      newRow.push(address.name);
-
-      let newDetail: RowDetailDTO = {
-        title: address.name,
-        content: {
-          info: {
-            text: `${address.address}, ${address.number}, ${address.additonalInfo}, ${address.zip}, ${address.city}`,
-          },
-        },
-      };
-
-      let row: RowDTO = {
-        id: address.id,
-        rowInfo: newRow,
-        detail: [newDetail],
-      };
-      rows.push(row);
-    });*/
 
     for (const address of this.addresses) {
       let newRow: string[] = [];

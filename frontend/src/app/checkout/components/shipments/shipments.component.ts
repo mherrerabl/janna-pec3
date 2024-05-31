@@ -7,19 +7,16 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as AddressAction from '../../../addresses/actions';
+import * as CartAction from '../../../carts/actions';
+
 import { AddressClass } from '../../../addresses/models/address';
 import { AppState } from '../../../app.reducers';
 import { CartClass } from '../../../carts/models/cart';
 import { ProductCartClass } from '../../../carts/models/product-cart';
 import { InputDTO } from '../../../shared/models/input.dto';
-import { PriceClass } from '../../../shared/models/price';
-import { PriceDTO } from '../../../shared/models/price.dto';
 import { ShipmentDTO } from '../../../shared/models/shipment.dto';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TypeUser, UserClass } from '../../../users/models/user';
-import { productToPay } from '../../models/productPayment.dto';
-import { CheckoutService } from '../../services/checkout.service';
 
 @Component({
   selector: 'app-shipments',
@@ -28,9 +25,11 @@ import { CheckoutService } from '../../services/checkout.service';
 })
 export class ShipmentsComponent {
   methodShipment: FormControl;
+  methodShipmentValue: string = '';
   shippmentMethodForm: FormGroup;
 
   addressShipment: FormControl;
+  addressShipmentValue: string = '';
   addressShipmentFrom: FormGroup;
 
   addresses: AddressClass[];
@@ -56,11 +55,10 @@ export class ShipmentsComponent {
 
   user: UserClass;
   cart: CartClass;
+  addressPredetermined: string | null = null;
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<AppState>,
-    private localService: LocalStorageService,
-    private checkoutService: CheckoutService
+    private store: Store<AppState>
   ) {
     this.user = new UserClass('', '', '', '', '', null, TypeUser['user'], '');
     this.addresses = new Array<AddressClass>();
@@ -87,8 +85,11 @@ export class ShipmentsComponent {
       this.loadAddresesByUser(this.user.id);
     });
 
+    this.resetStoreAddresses();
+
     this.store.select('address').subscribe((store) => {
       this.addresses = store.addresses;
+
       if (this.addresses.length > 0) {
         this.setAddressPredetemined();
 
@@ -109,13 +110,17 @@ export class ShipmentsComponent {
     });
 
     //Form radio type shippment
-    this.methodShipment = new FormControl('', [Validators.required]);
+    this.methodShipment = new FormControl(this.methodShipmentValue, [
+      Validators.required,
+    ]);
     this.shippmentMethodForm = this.formBuilder.group({
       method: this.methodShipment,
     });
 
     //Form radio addresses
-    this.addressShipment = new FormControl('', [Validators.required]);
+    this.addressShipment = new FormControl(this.addressShipmentValue, [
+      Validators.required,
+    ]);
     this.addressShipmentFrom = this.formBuilder.group({
       address: this.addressShipment,
     });
@@ -186,6 +191,8 @@ export class ShipmentsComponent {
         this.addressShipmentFrom = this.formBuilder.group({
           address: this.addressShipment,
         });
+        this.addressPredetermined = id;
+        this.saveAddres('shipment', id);
       }
     });
   }
@@ -217,6 +224,11 @@ export class ShipmentsComponent {
     this.createAddress();
   }
 
+  private resetStoreAddresses(): void {
+    this.store.dispatch(isLoading({ status: true }));
+    this.store.dispatch(AddressAction.resetState());
+  }
+
   private createAddress(): void {
     this.store.dispatch(isLoading({ status: true }));
     this.store.dispatch(
@@ -230,44 +242,18 @@ export class ShipmentsComponent {
     }, 500);
   }
 
-  onProceedToPay(): void {
-    let products: productToPay[] = [];
-    if (this.cart.products_cart.length > 0) {
-      this.cart.products_cart.map((product) => {
-        products = [
-          ...products,
-          {
-            name: product.product?.name as string,
-            price: this.calculatePrice(product.product?.price as PriceClass),
-            quantity: product.quantity,
-          },
-        ];
-      });
-    }
-  }
-
-  calculatePrice(price: PriceDTO): number {
-    let discount = 0;
-    if (price.discount !== null) {
-      discount = price.discount / 100;
-    }
-    return price.price * discount;
-  }
-
-  saveMethodShipmentLocalStorage(value: string): void {
+  saveAddres(method: string, value?: string): void {
     let shipment: ShipmentDTO = {
-      method: value,
-      address: null,
+      method: method,
+      address:
+        value === undefined
+          ? method == 'shop'
+            ? null
+            : this.addressPredetermined
+          : value,
     };
-    this.localService.saveMethodShipment(shipment);
-  }
 
-  saveAddresLocalStorage(value: string): void {
-    let shipment: ShipmentDTO = {
-      method: 'shipment',
-      address: value,
-    };
-    this.localService.saveMethodShipment(shipment);
+    this.store.dispatch(CartAction.saveShipment({ shipment: shipment }));
   }
 
   private getDateForm(): void {

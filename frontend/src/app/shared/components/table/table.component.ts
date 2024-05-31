@@ -111,6 +111,8 @@ export class TableComponent implements OnInit {
 
   filter(): void {
     let rowsFiltered: RowDTO[] = [];
+    console.log(this.rows);
+
     rowsFiltered = this.rows.filter((row) =>
       row.rowInfo.find((val) =>
         val
