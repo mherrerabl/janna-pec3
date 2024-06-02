@@ -49,9 +49,9 @@ export class CategoryService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getCategoryNamebyUrl(paramUrl: string): Observable<BreadcrumbDTO> {
+  getCategoryNamebyUrl(paramUrl: string): Observable<BreadcrumbDTO[]> {
     return this.http
-      .get<BreadcrumbDTO>(this.urlApi + '/name/' + paramUrl)
+      .get<BreadcrumbDTO[]>(this.urlApi + '/name/' + paramUrl)
       .pipe(catchError(this.sharedService.handleError));
   }
 

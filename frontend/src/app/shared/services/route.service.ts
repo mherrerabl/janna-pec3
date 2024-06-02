@@ -7,8 +7,6 @@ import * as CategoriesAction from '../../categories/actions';
 import * as ProductsAction from '../../products/actions';
 import * as TreatmentsAction from '../../treatments/actions';
 
-import { CategoryClass } from '../../categories/models/category';
-import { ProductClass } from '../../products/models/product';
 import { BreadcrumbDTO } from '../models/breadcrumb.dto';
 
 interface fixedRoute {
@@ -20,25 +18,22 @@ interface fixedRoute {
 })
 export class RouteService {
   urls: string[] = [];
-  allCategories: CategoryClass[];
-  categories: CategoryClass[];
 
-  allProducts: ProductClass[];
-  products: ProductClass[];
+  categories: BreadcrumbDTO[];
+
+  products: BreadcrumbDTO[];
 
   constructor(
     private router: Router,
     private location: Location,
     private store: Store<AppState>
   ) {
-    this.categories = new Array<CategoryClass>();
-    this.allCategories = new Array<CategoryClass>();
+    this.categories = new Array<BreadcrumbDTO>();
 
-    this.allProducts = new Array<ProductClass>();
-    this.products = new Array<ProductClass>();
+    this.products = new Array<BreadcrumbDTO>();
 
     this.loadCategories();
-    this.loadTreatments();
+    //this.loadTreatments();
     this.loadProducts();
 
     this.urls = this.router.url.split('/');
@@ -47,22 +42,13 @@ export class RouteService {
     }
 
     this.store.select('categories').subscribe((store) => {
-      if (
-        this.categories !== store.categories &&
-        this.categories.length == this.allCategories.length
-      ) {
-        this.allCategories = store.categories;
-      }
+      this.categories = store.breadcrumbs;
     });
 
     this.store.select('products').subscribe((store) => {
-      if (
-        this.products !== store.products &&
-        this.products.length == this.allProducts.length
-      ) {
-        this.allProducts = store.products;
-      }
+      this.products = store.breadcrumbs;
     });
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.urls = event.url.split('/');
@@ -76,7 +62,7 @@ export class RouteService {
   }
 
   private loadCategories(): void {
-    this.store.dispatch(CategoriesAction.getCategories());
+    this.store.dispatch(CategoriesAction.getCategoriesBreadcrumbs());
   }
 
   private loadTreatments(): void {
@@ -84,37 +70,7 @@ export class RouteService {
   }
 
   private loadProducts(): void {
-    this.store.dispatch(ProductsAction.getProducts());
-  }
-
-  getCategoriesBreadcrumb(): BreadcrumbDTO[] {
-    let breadcrumbCategories: BreadcrumbDTO[] = [];
-    this.allCategories.map((category) => {
-      breadcrumbCategories = [
-        ...breadcrumbCategories,
-        {
-          url: category.url,
-          name: category.name,
-        },
-      ];
-    });
-
-    return breadcrumbCategories;
-  }
-
-  getProductBreadcrumb(): BreadcrumbDTO[] {
-    let breadcrumbProducts: BreadcrumbDTO[] = [];
-    this.allProducts.map((product) => {
-      breadcrumbProducts = [
-        ...breadcrumbProducts,
-        {
-          url: product.id,
-          name: product.name,
-        },
-      ];
-    });
-
-    return breadcrumbProducts;
+    this.store.dispatch(ProductsAction.getProductsBreadcrumbs());
   }
 
   getProductId(): string {
@@ -144,19 +100,27 @@ export class RouteService {
   }
 
   generateBreadcrumbs(): BreadcrumbDTO[] {
-    if (this.urls[0] == 'perfil') {
-      return this.breadcrumbProfile();
-    }
-    if (this.urls[0] == 'agenda') {
-      return this.breadcrumbSchedule();
-    }
+    switch (this.urls[0]) {
+      case 'perfil':
+        return this.breadcrumbProfile();
 
-    if (this.urls[0] == 'tratamientos') {
-      return this.breadcrumbTreatments();
-    }
+      case 'agenda':
+        return this.breadcrumbsFixed();
 
-    if (this.urls[0] == 'tienda') {
-      return this.breadcrumbProducts();
+      case 'checkout':
+        return this.breadcrumbsFixed();
+
+      case 'area-legal':
+        return this.breadcrumbsFixed();
+
+      case 'tratamientos':
+        return this.breadcrumbTreatments();
+
+      case 'tienda':
+        return this.breadcrumbProducts();
+
+      default:
+        break;
     }
 
     return [];
@@ -184,7 +148,7 @@ export class RouteService {
       },
     ];
     for (const url of this.urls) {
-      this.getCategoriesBreadcrumb().map((breadcrumb) => {
+      this.categories.map((breadcrumb) => {
         if (breadcrumb.url == decodeURIComponent(url)) {
           breadcrumbs.push(breadcrumb);
         }
@@ -204,12 +168,12 @@ export class RouteService {
           breadcrumbs.push(breadcrumb);
         }
       });
-      this.getCategoriesBreadcrumb().map((breadcrumb) => {
+      this.categories.map((breadcrumb) => {
         if (breadcrumb.url == decodeURIComponent(url)) {
           breadcrumbs.push(breadcrumb);
         }
       });
-      this.getProductBreadcrumb().map((breadcrumb) => {
+      this.products.map((breadcrumb) => {
         if (breadcrumb.url == url) {
           breadcrumbs.push(breadcrumb);
         }
@@ -219,7 +183,7 @@ export class RouteService {
     return breadcrumbs;
   }
 
-  breadcrumbSchedule(): BreadcrumbDTO[] {
+  breadcrumbsFixed(): BreadcrumbDTO[] {
     let breadcrumbs: BreadcrumbDTO[] = [];
     for (const url of this.urls) {
       this.getRoutesFixed().map((breadcrumb) => {
@@ -288,6 +252,38 @@ export class RouteService {
       {
         name: 'Tendencias',
         url: 'tendencias',
+      },
+      {
+        name: 'Realizar pedido',
+        url: 'checkout',
+      },
+      {
+        name: 'Método de envío',
+        url: 'envio',
+      },
+      {
+        name: 'Pago',
+        url: 'pago',
+      },
+      {
+        name: 'Área legal',
+        url: 'area-legal',
+      },
+      {
+        name: 'Política de privacidad',
+        url: 'privacidad',
+      },
+      {
+        name: 'Aviso legal',
+        url: 'aviso-legal',
+      },
+      {
+        name: 'Política de cookies',
+        url: 'cookies',
+      },
+      {
+        name: 'Créditos',
+        url: 'creditos',
       },
     ];
   }

@@ -60,8 +60,6 @@ export class CheckoutService {
       session_stripe: this.sessionId,
     };
 
-    console.log(data);
-
     if (this.stripeCheckout !== null) {
       this.http
         .post<any>(this.urlApi, data)

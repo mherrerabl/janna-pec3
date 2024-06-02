@@ -6,7 +6,6 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { BreadcrumbDTO } from '../../../shared/models/breadcrumb.dto';
 import { DropdownDTO } from '../../../shared/models/dropdown.dto';
@@ -30,10 +29,12 @@ export class ProfileComponent implements OnInit {
   dataDropdown: DropdownDTO;
   title: string;
 
+  isProfileHome: boolean = false;
+
   iconBars = faBars;
   dropdownExpanded: boolean = false;
 
-  constructor(private router: Router) {
+  constructor() {
     this.title = '';
 
     this.dataDropdown = this.getData();
@@ -44,6 +45,12 @@ export class ProfileComponent implements OnInit {
   receiveBreadcrumb(breadcrumb: BreadcrumbDTO): void {
     setTimeout(() => {
       this.title = breadcrumb.name;
+
+      this.dropdownExpanded = false;
+
+      if (this.title == 'Perfil') {
+        this.dropdownExpanded = true;
+      }
     });
   }
 

@@ -29,6 +29,9 @@ export class ProfileUserAppointmentsTableComponent implements OnInit {
       if (store.appointments.length > 0) {
         this.appointments = store.appointments;
         if (this.appointments.length > 0) {
+          this.appointments.sort((a, b) => {
+            return Number(b.id) - Number(a.id);
+          });
           this.dataTable = this.getTable();
         }
       }

@@ -78,11 +78,24 @@ export const getCategoryNamebyUrl = createAction(
 );
 export const getCategoryNamebyUrlSuccess = createAction(
   '[Category] Get category by subcategory success',
-  props<{ breadcrumb: BreadcrumbDTO }>()
+  props<{ breadcrumbs: BreadcrumbDTO[] }>()
 );
 
 export const getCategoryNamebyUrlFailure = createAction(
   '[Category] Get category by subcategory fail',
+  props<{ payload: HttpErrorResponse }>()
+);
+
+export const getCategoriesBreadcrumbs = createAction(
+  '[Categories] Get categories for breadcrumbs'
+);
+export const getCategoriesBreadcrumbsSuccess = createAction(
+  '[Categories] Get categories for breadcrumbs success',
+  props<{ breadcrumbs: BreadcrumbDTO[] }>()
+);
+
+export const getCategoriesBreadcrumbsFailure = createAction(
+  '[Categories] Get categories for breadcrumbs fail',
   props<{ payload: HttpErrorResponse }>()
 );
 

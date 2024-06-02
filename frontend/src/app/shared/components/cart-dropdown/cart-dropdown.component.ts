@@ -11,6 +11,7 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import { ImageClass } from '../../../images/models/image';
+import { ProductService } from '../../../products/services/product.service';
 import { PriceClass } from '../../models/price';
 import { ProductDTO } from '../../models/product.dto';
 import { ShipmentDTO } from '../../models/shipment.dto';
@@ -33,11 +34,13 @@ export class CartDropdownComponent {
   shipment: ShipmentDTO;
   dataProducts: ProductDTO[];
   dropdownExpanded: boolean = false;
-  shippingCostsFree: boolean = false;
   iconArrowUp = faChevronUp;
   iconArrowDown = faChevronDown;
 
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private productService: ProductService
+  ) {
     this.dataProducts = [];
 
     this.shipment = {
@@ -69,7 +72,9 @@ export class CartDropdownComponent {
 
     if (this.dataProducts !== undefined && this.dataProducts.length > 0) {
       for (const product of this.dataProducts) {
-        subtotal += product.price.price * product.quantity;
+        subtotal +=
+          this.productService.calculatePrice(product.price, product.quantity) *
+          product.quantity;
       }
     }
 
@@ -80,8 +85,10 @@ export class CartDropdownComponent {
     let shippingCosts: number = 4.95;
     let subtotal: number = this.getSubtotal();
 
-    if (subtotal > 50) {
-      this.shippingCostsFree = true;
+    if (
+      (subtotal > 50 && this.shipment.method == 'shipment') ||
+      this.shipment.method == 'shop'
+    ) {
       return subtotal;
     }
 
@@ -89,7 +96,10 @@ export class CartDropdownComponent {
   }
 
   getTaxShipment(): string {
-    if (this.getSubtotal() > 50 || this.shipment.method == 'shop') {
+    if (
+      (this.getSubtotal() > 50 && this.shipment.method == 'shipment') ||
+      this.shipment.method == 'shop'
+    ) {
       return 'Gratis';
     }
 

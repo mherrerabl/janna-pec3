@@ -33,6 +33,9 @@ export class ProfileUserOrdersTableComponent implements OnInit {
       this.orders = store.orders;
 
       if (this.orders.length > 0) {
+        this.orders.sort((a, b) => {
+          return Number(b.id) - Number(a.id);
+        });
         this.dataTable = this.getTable();
       }
     });

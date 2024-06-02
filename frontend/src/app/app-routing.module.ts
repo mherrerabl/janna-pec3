@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Error404Component } from './error-pages/components/error404/error404.component';
 import { LoginGuard } from './shared/guards/login.guard';
 
 const routes: Routes = [
@@ -48,12 +49,25 @@ const routes: Routes = [
     path: 'checkout',
     loadChildren: () =>
       import('./checkout/checkout.module').then((mod) => mod.CheckoutModule),
-    //canActivate: [LoginGuard],
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'area-legal',
+    loadChildren: () =>
+      import('./legal-pages/legal-pages.module').then(
+        (mod) => mod.LegalPagesModule
+      ),
+  },
+  {
+    path: '**',
+    component: Error404Component,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

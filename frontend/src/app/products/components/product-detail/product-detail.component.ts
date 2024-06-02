@@ -105,17 +105,26 @@ export class ProductDetailComponent implements OnInit {
       this.cart = store.cart;
     });
 
-    this.loadProduct(this.routeService.getProductId());
+    this.storeProduct();
 
+    this.loadProduct(this.routeService.getProductId());
+  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (Number(this.routeService.getProductId())) {
+          this.loadProduct(this.routeService.getProductId());
+        }
+      }
+    });
+  }
+
+  private storeProduct(): void {
     this.store.select('products').subscribe((store) => {
       this.product = store.product;
-      if (this.product.id !== '') {
-        this.productsRelated = store.products.filter(
-          (product) => product.id !== this.product.id
-        );
-      }
 
-      if (this.product.id !== '' && this.product.price && this.product.images) {
+      if (this.product.price && this.product.images) {
         this.productCart = {
           id: '',
           product_id: this.product.id,
@@ -131,21 +140,10 @@ export class ProductDetailComponent implements OnInit {
             stock: this.product.stock,
           },
         };
-      }
-    });
 
-    this.loadProductsByCategory(this.product.category_id);
-  }
-
-  ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        if (Number(this.routeService.getProductId())) {
-          console.log(this.routeService.getProductId());
-
-          this.loadProduct(this.routeService.getProductId());
-          this.loadProductsByCategory(this.product.category_id);
-        }
+        this.productsRelated = store.productsRelated.filter(
+          (product) => product.id !== this.product.id
+        );
       }
     });
   }
@@ -153,12 +151,14 @@ export class ProductDetailComponent implements OnInit {
   private loadProduct(productId: string): void {
     this.store.dispatch(isLoading({ status: true }));
     this.store.dispatch(ProductAction.getProductById({ productId: productId }));
+    this.getProductsRelated(productId);
   }
 
-  private loadProductsByCategory(categoryId: string): void {
+  private getProductsRelated(productId: string): void {
     this.store.dispatch(isLoading({ status: true }));
+
     this.store.dispatch(
-      ProductAction.getProductsByCategoryId({ categoryId: categoryId })
+      ProductAction.getProductsRelated({ productId: productId })
     );
   }
 

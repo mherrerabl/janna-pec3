@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, finalize, map, of } from 'rxjs';
+import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import { SharedService } from '../../shared/services/shared.service';
 import { isLoading } from '../../spinner/actions/spinner.actions';
 import { ProductService } from '../services/product.service';
@@ -226,30 +227,30 @@ export class ProductEffects {
     { dispatch: false }
   );
 
-  getProductsByCategoryId$ = createEffect(() =>
+  getProductsRelated$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.getProductsByCategoryId),
-      exhaustMap(({ categoryId }) =>
-        this.productService.getProductsByCategoryId(categoryId).pipe(
+      ofType(ProductActions.getProductsRelated),
+      exhaustMap(({ productId }) =>
+        this.productService.getProductsRelated(productId).pipe(
           map((products) => {
             this.store.dispatch(isLoading({ status: false }));
-            return ProductActions.getProductsByCategoryIdSuccess({
-              products: products,
+            return ProductActions.getProductsRelatedSuccess({
+              productsRelated: products,
             });
           }),
           catchError((error) => {
             return of(
-              ProductActions.getProductsByCategoryIdFailure({ payload: error })
+              ProductActions.getProductsRelatedFailure({ payload: error })
             );
           })
         )
       )
     )
   );
-  getProductsByCategoryIdFailure$ = createEffect(
+  getProductsRelatedFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ProductActions.getProductsByCategoryIdFailure),
+        ofType(ProductActions.getProductsRelatedFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.responseOK = false;
@@ -357,7 +358,52 @@ export class ProductEffects {
       ),
     { dispatch: false }
   );
+  getProductsBreadcrumbs$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.getProductsBreadcrumbs),
+      exhaustMap(() =>
+        this.productService.getProducts().pipe(
+          map((products) => {
+            this.store.dispatch(isLoading({ status: false }));
+            let breadcrumbs: BreadcrumbDTO[] = [];
+            products.map((product) => {
+              breadcrumbs = [
+                ...breadcrumbs,
+                {
+                  name: product.name,
+                  url: product.id,
+                },
+              ];
+            });
 
+            return ProductActions.getProductsBreadcrumbsSuccess({
+              breadcrumbs: breadcrumbs,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              ProductActions.getProductsBreadcrumbsFailure({
+                payload: error,
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  getProductsBreadcrumbsFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ProductActions.getProductsBreadcrumbsFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
   createProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.createProduct),

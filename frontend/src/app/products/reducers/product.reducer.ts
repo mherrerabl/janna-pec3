@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import {
   createProduct,
   createProductFailure,
@@ -16,9 +17,9 @@ import {
   getProductByIdForSaleSuccess,
   getProductByIdSuccess,
   getProducts,
-  getProductsByCategoryId,
-  getProductsByCategoryIdFailure,
-  getProductsByCategoryIdSuccess,
+  getProductsBreadcrumbs,
+  getProductsBreadcrumbsFailure,
+  getProductsBreadcrumbsSuccess,
   getProductsByCategoryUrl,
   getProductsByCategoryUrlFailure,
   getProductsByCategoryUrlSuccess,
@@ -35,6 +36,9 @@ import {
   getProductsForSale,
   getProductsForSaleFailure,
   getProductsForSaleSuccess,
+  getProductsRelated,
+  getProductsRelatedFailure,
+  getProductsRelatedSuccess,
   getProductsSuccess,
   updateProduct,
   updateProductFailure,
@@ -45,6 +49,8 @@ import { ProductClass, Routine } from '../models/product';
 export interface ProductsState {
   products: ProductClass[];
   product: ProductClass;
+  productsRelated: ProductClass[];
+  breadcrumbs: BreadcrumbDTO[];
   loading: boolean;
   loaded: boolean;
   error: any;
@@ -70,6 +76,8 @@ export const initialState: ProductsState = {
     '',
     new Date()
   ),
+  productsRelated: new Array<ProductClass>(),
+  breadcrumbs: new Array<BreadcrumbDTO>(),
   loading: false,
   loaded: false,
   error: null,
@@ -136,20 +144,20 @@ const _productsReducer = createReducer(
     loaded: false,
     error: { payload },
   })),
-  on(getProductsByCategoryId, (state) => ({
+  on(getProductsRelated, (state) => ({
     ...state,
     loading: true,
     loaded: false,
     error: null,
   })),
-  on(getProductsByCategoryIdSuccess, (state, action) => ({
+  on(getProductsRelatedSuccess, (state, action) => ({
     ...state,
-    products: action.products,
+    productsRelated: action.productsRelated,
     loading: false,
     loaded: true,
     error: null,
   })),
-  on(getProductsByCategoryIdFailure, (state, { payload }) => ({
+  on(getProductsRelatedFailure, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,
@@ -292,7 +300,25 @@ const _productsReducer = createReducer(
     loaded: false,
     error: { payload },
   })),
-
+  on(getProductsBreadcrumbs, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getProductsBreadcrumbsSuccess, (state, action) => ({
+    ...state,
+    breadcrumbs: action.breadcrumbs,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getProductsBreadcrumbsFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
   on(updateProduct, (state) => ({
     ...state,
     loading: true,

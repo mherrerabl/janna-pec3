@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.reducers';
 import * as ProductAction from '../../../products/actions';
 import { ProductClass } from '../../../products/models/product';
+import { RouteService } from '../../../shared/services/route.service';
 import { isLoading } from '../../../spinner/actions/spinner.actions';
 import { TreatmentClass } from '../../models/treatment';
 import * as TreatmentsAction from './../../actions';
@@ -43,11 +44,15 @@ export class TreatmentDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private scroller: ViewportScroller
+    private scroller: ViewportScroller,
+    private routeService: RouteService
   ) {
     this.treatment = new TreatmentClass('', '', '', 0, 0, '');
     this.prevTreatment = new TreatmentClass('', '', '', 0, 0, '');
     this.productsRelated = new Array<ProductClass>();
+    this.treatment = new TreatmentClass('', '', '', 0, 0, '');
+
+    this.loadTreatments(this.getUrlTreatment());
 
     this.store.select('treatments').subscribe((store) => {
       this.treatment = store.treatment;
@@ -61,13 +66,10 @@ export class TreatmentDetailComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.treatment = new TreatmentClass('', '', '', 0, 0, '');
-
-    this.urlTreatment = this.route.snapshot.paramMap.get('treatment');
-    if (this.urlTreatment !== null && this.urlTreatment !== undefined) {
-      this.loadTreatments(this.urlTreatment);
-    }
+  private getUrlTreatment(): string {
+    let breadcrumbs = this.routeService.breadcrumbTreatments();
+    let breadcrumb = breadcrumbs[breadcrumbs.length - 1];
+    return breadcrumb.url;
   }
 
   private loadTreatments(paramUrl: string): void {

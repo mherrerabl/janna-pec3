@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, exhaustMap, finalize, map, of } from 'rxjs';
+import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import { SharedService } from '../../shared/services/shared.service';
 import { isLoading } from '../../spinner/actions/spinner.actions';
 import { CategoryService } from '../services/category.service';
@@ -200,10 +201,10 @@ export class CategoryEffects {
       ofType(CategoryActions.getCategoryNamebyUrl),
       exhaustMap(({ paramUrl }) =>
         this.categoryService.getCategoryNamebyUrl(paramUrl).pipe(
-          map((breadcrumb) => {
+          map((breadcrumbs) => {
             this.store.dispatch(isLoading({ status: false }));
             return CategoryActions.getCategoryNamebyUrlSuccess({
-              breadcrumb: breadcrumb,
+              breadcrumbs: breadcrumbs,
             });
           }),
           catchError((error) => {
@@ -222,6 +223,53 @@ export class CategoryEffects {
     () =>
       this.actions$.pipe(
         ofType(CategoryActions.getCategoryNamebyUrlFailure),
+        map((error) => {
+          this.store.dispatch(isLoading({ status: false }));
+          this.errorResponse = error.payload.error;
+          this.sharedService.errorLog(error.payload.error);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  getCategoriesBreadcrumbs$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CategoryActions.getCategoriesBreadcrumbs),
+      exhaustMap(() =>
+        this.categoryService.getCategories().pipe(
+          map((categories) => {
+            this.store.dispatch(isLoading({ status: false }));
+            let breadcrumbs: BreadcrumbDTO[] = [];
+            categories.map((category) => {
+              breadcrumbs = [
+                ...breadcrumbs,
+                {
+                  name: category.name,
+                  url: category.url,
+                },
+              ];
+            });
+
+            return CategoryActions.getCategoriesBreadcrumbsSuccess({
+              breadcrumbs: breadcrumbs,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              CategoryActions.getCategoriesBreadcrumbsFailure({
+                payload: error,
+              })
+            );
+          })
+        )
+      )
+    )
+  );
+
+  getCategoriesBreadcrumbsFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CategoryActions.getCategoriesBreadcrumbsFailure),
         map((error) => {
           this.store.dispatch(isLoading({ status: false }));
           this.errorResponse = error.payload.error;

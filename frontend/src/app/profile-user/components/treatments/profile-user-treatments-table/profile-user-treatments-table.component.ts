@@ -35,6 +35,9 @@ export class ProfileUserTreatmentsTableComponent {
       if (store.userTreatments.length > 0) {
         this.userTreatments = store.userTreatments;
         if (this.userTreatments.length > 0) {
+          this.userTreatments.sort((a, b) => {
+            return Number(b.id) - Number(a.id);
+          });
           this.dataTable = this.getTable();
         }
       }

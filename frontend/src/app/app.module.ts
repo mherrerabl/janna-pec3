@@ -21,6 +21,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment.prod';
 import { EffectsArray, appReducers } from './app.reducers';
+import { Error404Component } from './error-pages/components/error404/error404.component';
 import { MailModule } from './mail/mail.module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './spinner/components/spinner/spinner.component';
@@ -29,7 +30,7 @@ import { UsersModule } from './users/users.module';
 registerLocaleData(localeEs);
 
 @NgModule({
-  declarations: [AppComponent, SpinnerComponent],
+  declarations: [AppComponent, SpinnerComponent, Error404Component],
   imports: [
     BrowserModule,
     AppRoutingModule,

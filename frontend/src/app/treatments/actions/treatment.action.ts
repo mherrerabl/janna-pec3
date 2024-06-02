@@ -44,17 +44,17 @@ export const getTreatmentByIdFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 export const getTreatmentByUrl = createAction(
-  '[Treatment detail] Get treatment detail',
+  '[Treatment detail] Get treatment by url detail',
   props<{ paramUrl: string }>()
 );
 
 export const getTreatmentByUrlSuccess = createAction(
-  '[Treatment detail] Get treatment detail success',
+  '[Treatment detail] Get treatment detail by url success',
   props<{ treatment: TreatmentClass }>()
 );
 
 export const getTreatmentByUrlFailure = createAction(
-  '[Treatment detail] Get treatment detail fail',
+  '[Treatment detail] Get treatment detail by url fail',
   props<{ payload: HttpErrorResponse }>()
 );
 

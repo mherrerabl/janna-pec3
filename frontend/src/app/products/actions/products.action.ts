@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
+import { BreadcrumbDTO } from '../../shared/models/breadcrumb.dto';
 import { ProductClass } from '../models/product';
 
 export const getProducts = createAction('[Products list] Get products list');
@@ -54,16 +55,16 @@ export const getProductsByTreatmentIdFailure = createAction(
   props<{ payload: HttpErrorResponse }>()
 );
 
-export const getProductsByCategoryId = createAction(
+export const getProductsRelated = createAction(
   '[Products list] Get products by category id',
-  props<{ categoryId: string }>()
+  props<{ productId: string }>()
 );
-export const getProductsByCategoryIdSuccess = createAction(
+export const getProductsRelatedSuccess = createAction(
   '[Products list] Get products by category id success',
-  props<{ products: ProductClass[] }>()
+  props<{ productsRelated: ProductClass[] }>()
 );
 
-export const getProductsByCategoryIdFailure = createAction(
+export const getProductsRelatedFailure = createAction(
   '[Products list] Get products by category id fail',
   props<{ payload: HttpErrorResponse }>()
 );
@@ -135,7 +136,18 @@ export const getProductByIdForSaleFailure = createAction(
   '[Product] Get product by id fail',
   props<{ payload: HttpErrorResponse }>()
 );
+export const getProductsBreadcrumbs = createAction(
+  '[Products] Get products for breadcrumbs'
+);
+export const getProductsBreadcrumbsSuccess = createAction(
+  '[Products] Get products for breadcrumbs success',
+  props<{ breadcrumbs: BreadcrumbDTO[] }>()
+);
 
+export const getProductsBreadcrumbsFailure = createAction(
+  '[Products] Get products for breadcrumbs fail',
+  props<{ payload: HttpErrorResponse }>()
+);
 export const createProduct = createAction(
   '[Product form] Create new product',
   props<{ product: ProductClass }>()

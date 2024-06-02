@@ -14,21 +14,22 @@ import { ProductClass } from '../../models/product';
 export class ProductsListComponent implements OnInit {
   title!: string;
   products: ProductClass[];
-  preProducts: ProductClass[];
+
   url: string;
   constructor(private store: Store<AppState>) {
     this.products = new Array<ProductClass>();
-    this.preProducts = new Array<ProductClass>();
     this.url = '';
-
-    this.store.select('products').subscribe((store) => {
-      this.products = store.products;
-    });
   }
 
   ngOnInit(): void {
+    this.products = new Array<ProductClass>();
+
     setTimeout(() => {
       this.store.dispatch(isLoading({ status: true }));
+    });
+
+    this.store.select('products').subscribe((store) => {
+      this.products = store.products;
     });
   }
 
@@ -37,7 +38,11 @@ export class ProductsListComponent implements OnInit {
       this.title = breadcrumb.name;
       this.url = breadcrumb.url;
 
-      this.loadProducts();
+      const isNumeric = (string: string) => /^[+-]?\d+(\.\d+)?$/.test(string);
+
+      if (this.url !== 'tienda' && !isNumeric(this.url)) {
+        this.loadProducts();
+      }
     });
   }
 

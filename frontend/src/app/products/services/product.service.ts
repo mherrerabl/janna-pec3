@@ -48,9 +48,9 @@ export class ProductService {
       .pipe(catchError(this.sharedService.handleError));
   }
 
-  getProductsByCategoryId(categoryId: string): Observable<ProductClass[]> {
+  getProductsRelated(productId: string): Observable<ProductClass[]> {
     return this.http
-      .get<ProductClass[]>(this.urlApi + '/category/id/' + categoryId)
+      .get<ProductClass[]>(this.urlApi + '/related/' + productId)
       .pipe(catchError(this.sharedService.handleError));
   }
 

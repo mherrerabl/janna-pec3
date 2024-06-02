@@ -8,6 +8,9 @@ import {
   deleteCategoryFailure,
   deleteCategorySuccess,
   getCategories,
+  getCategoriesBreadcrumbs,
+  getCategoriesBreadcrumbsFailure,
+  getCategoriesBreadcrumbsSuccess,
   getCategoriesByDepartment,
   getCategoriesByDepartmentFailure,
   getCategoriesByDepartmentSuccess,
@@ -34,7 +37,7 @@ import { CategoryClass, Department } from '../models/category';
 export interface CategoriesState {
   categories: CategoryClass[];
   category: CategoryClass;
-  breadcrumb: BreadcrumbDTO;
+  breadcrumbs: BreadcrumbDTO[];
   loading: boolean;
   loaded: boolean;
   error: any;
@@ -43,7 +46,7 @@ export interface CategoriesState {
 export const initialState: CategoriesState = {
   categories: new Array<CategoryClass>(),
   category: new CategoryClass('', '', Department.init, ''),
-  breadcrumb: { name: '', url: '' },
+  breadcrumbs: new Array<BreadcrumbDTO>(),
   loading: false,
   loaded: false,
   error: null,
@@ -159,7 +162,7 @@ const _categoriesReducer = createReducer(
   })),
   on(getCategoryNamebyUrlSuccess, (state, action) => ({
     ...state,
-    breadcrumb: action.breadcrumb,
+    breadcrumbs: action.breadcrumbs,
     loading: false,
     loaded: true,
     error: null,
@@ -170,7 +173,25 @@ const _categoriesReducer = createReducer(
     loaded: false,
     error: { payload },
   })),
-
+  on(getCategoriesBreadcrumbs, (state) => ({
+    ...state,
+    loading: true,
+    loaded: false,
+    error: null,
+  })),
+  on(getCategoriesBreadcrumbsSuccess, (state, action) => ({
+    ...state,
+    breadcrumbs: action.breadcrumbs,
+    loading: false,
+    loaded: true,
+    error: null,
+  })),
+  on(getCategoriesBreadcrumbsFailure, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    loaded: false,
+    error: { payload },
+  })),
   on(createCategory, (state) => ({
     ...state,
     loading: true,
